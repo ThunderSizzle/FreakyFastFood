@@ -1,0 +1,7 @@
+﻿@model IEnumerable<FFF.Models.ItemSystem.Item>
+
+
+@foreach(var item in Model)
+{
+	@Html.DisplayFor( Item => item, "Item" )
+}

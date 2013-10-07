@@ -1,0 +1,22 @@
+﻿@model FFF.Models.OrderSystem.ShoppingCart
+
+@using ( Html.BeginForm( "Index", "ShoppingCart", FormMethod.Post, new { id="ShoppingCartLink", @class="LoadModal" } ) )
+{
+	@Html.AntiForgeryToken()
+}
+<a href="#" onclick="$('#ShoppingCartLink').submit()">
+	<span class="glyphicon glyphicon-shopping-cart"></span>
+	Shopping Cart:
+	@if ( Model.Products.Count == 0 )
+	{
+		@:Empty
+		}
+	else if ( Model.Products.Count == 1 )
+	{
+		@:1 Item @@ $@Model.Subtotal
+		}
+	else
+	{
+		@:@Model.Products.Count Items @@ $@Model.Subtotal
+		}
+</a>

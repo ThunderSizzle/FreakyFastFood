@@ -1,0 +1,78 @@
+﻿@model FFF.ViewModels.Order.OrderInput
+
+@section Scripts {
+	@Scripts.Render( "~/bundles/jqueryval" )
+}
+
+<div class="modal fade" id="CreateOrder">
+	<div class="modal-dialog">
+		<div class="modal-content" id="CreateOrder">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3>
+					Create A New Order
+				</h3>
+			</div>
+			@using (Html.BeginForm("CreateOrder", "Account", FormMethod.Post, new { id="CreateOrderForm" } ))
+			{
+				<div class="modal-body">
+					@Html.AntiForgeryToken()
+					@Html.ValidationSummary( true )
+					<div>
+						<span class="help-inline field-validation-error">
+							<span id="CreateOrderErrors">
+							</span>
+						</span>
+					</div>
+					@Html.EditorForModel("Order")
+				</div>
+				<div class="modal-footer">
+					<a id="CreateOrderCancel" href="#" class="btn btn" data-dismiss="modal">Cancel</a>
+					<button class="btn btn-primary" type="submit">
+						Submit
+						<span class="glyphicon glyphicon-arrow-right"></span>
+					</button>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function ()
+	{
+		$('#CreateOrderForm').submit(function ()
+		{
+			if ($(this).valid())
+			{
+				$('#CreateOrder').modal('hide');
+				$('body').removeClass('modal-open');
+				$('.modal-backdrop').remove();
+				$('#OrdersUpdated').hide();
+				$('#OrdersUpdating').show();
+				$.ajax(
+				{
+					url: this.action,
+					type: this.method,
+					data: $(this).serialize(),
+					success: function (result)
+					{
+						AjaxOrderCompleted(result);
+						$('#CreateOrderForm').reset();
+					},
+					error: function(xhr, textStatus, errorThrown)
+					{
+						$('#OrdersUpdated').show();
+						$('#OrdersUpdating').hide();
+						if (xhr.status == 400)
+						{
+							$('#CreateOrder').modal('show');
+							$("#CreateOrderErrors").html(xhr.statusText);
+						}
+					}
+				});
+			}
+			return false;
+		});
+	});
+</script>

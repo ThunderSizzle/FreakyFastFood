@@ -1,0 +1,33 @@
+@model FFF.Models.UserSystem.Account
+
+<legend>Account</legend>
+<div class="form-group">
+	@Html.LabelFor( model => model.ReviewsBy, new { @class = "col-lg-2 control-label" } )
+	<div class="col-lg-10">
+		@Html.DisplayFor( model => model.ReviewsBy, new { @class = "form-control-static" )
+	</div>
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.Orders, new { @class = "col-lg-2 control-label" } )
+	<div class="col-lg-10">
+		@Html.DisplayFor( model => model.Orders, new { @class = "form-control-static" )
+	</div>
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.Addresses, new { @class = "col-lg-2 control-label" } )
+	<div class="col-lg-10">
+		@Html.DisplayFor( model => model.Addresses, new { @class = "form-control-static" )
+	</div>
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.Payments, new { @class = "col-lg-2 control-label" } )
+	<div class="col-lg-10">
+		@Html.DisplayFor( model => model.Payments, new { @class = "form-control-static" )
+	</div>
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.User, new { @class = "col-lg-2 control-label" } )
+	<div class="col-lg-10">
+		@Html.DisplayFor( model => model.User, new { @class = "form-control-static" )
+	</div>
+</div>

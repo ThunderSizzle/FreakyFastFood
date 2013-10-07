@@ -1,0 +1,29 @@
+@model FFF.ViewModels.Profile.EmailInput
+
+<div class="form-group">
+	@Html.HiddenFor( model => model.RID )
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.EmailAddress )
+	@Html.TextBoxFor( model => model.EmailAddress, new { @class = "form-control" } )
+	@Html.DescriptionFor( model => model.EmailAddress )
+	@Html.ValidationMessageFor( model => model.EmailAddress, null, new { @class = "help-inline" } )
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.defaultMethod )
+	@Html.EditorFor( model => model.defaultMethod, new { @class = "form-control" } )
+	@Html.DescriptionFor( model => model.EmailAddress )
+	@Html.ValidationMessageFor( model => model.EmailAddress, null, new { @class = "help-inline" } )
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.ReceiveOrderUpdates )
+	@Html.EditorFor( model => model.ReceiveOrderUpdates, new { @class = "form-control" } )
+	@Html.DescriptionFor( model => model.ReceiveOrderUpdates )
+	@Html.ValidationMessageFor( model => model.ReceiveOrderUpdates, null, new { @class = "help-inline" } )
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.ReceiveSpecialOffers )
+	@Html.EditorFor( model => model.ReceiveSpecialOffers, new { @class = "form-control" } )
+	@Html.DescriptionFor( model => model.ReceiveSpecialOffers )
+	@Html.ValidationMessageFor( model => model.ReceiveSpecialOffers, null, new { @class = "help-inline" } )
+</div>
