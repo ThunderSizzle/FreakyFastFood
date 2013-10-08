@@ -1,0 +1,78 @@
+﻿@model FFF.ViewModels.Review.ReviewInput
+
+@section Scripts {
+	@Scripts.Render( "~/bundles/jqueryval" )
+}
+
+<div class="modal fade" id="CreateReview">
+	<div class="modal-dialog">
+		<div class="modal-content" id="CreateReview">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3>
+					Create New Review
+				</h3>
+			</div>
+			@using (Html.BeginForm("CreateReview", "Account", FormMethod.Post, new { id="CreateReviewForm" } ))
+			{
+				<div class="modal-body">
+					@Html.AntiForgeryToken()
+					@Html.ValidationSummary( true )
+					<div>
+						<span class="help-inline field-validation-error">
+							<span id="CreateReviewErrors">
+							</span>
+						</span>
+					</div>
+					@Html.EditorForModel("Review")
+				</div>
+				<div class="modal-footer">
+					<a id="CreateReviewCancel" href="#" class="btn btn" data-dismiss="modal">Cancel</a>
+					<button class="btn btn-primary" type="submit">
+						Submit
+						<span class="glyphicon glyphicon-arrow-right"></span>
+					</button>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function ()
+	{
+		$('#CreateReviewForm').submit(function ()
+		{
+			if ($(this).valid())
+			{
+				$('#CreateReview').modal('hide');
+				$('body').removeClass('modal-open');
+				$('.modal-backdrop').remove();
+				$('#ReviewsUpdated').hide();
+				$('#ReviewsUpdating').show();
+				$.ajax(
+				{
+					url: this.action,
+					type: this.method,
+					data: $(this).serialize(),
+					success: function (result)
+					{
+						AjaxReviewCompleted(result);
+						$('#CreateReviewForm').reset();
+					},
+					error: function(xhr, textStatus, errorThrown)
+					{
+						$('#ReviewesUpdated').show();
+						$('#ReviewesUpdating').hide();
+						if (xhr.status == 400)
+						{
+							$('#CreateReview').modal('show');
+							$("#CreateReviewErrors").html(xhr.statusText);
+						}
+					}
+				});
+			}
+			return false;
+		});
+	});
+</script>

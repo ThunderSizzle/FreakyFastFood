@@ -1,0 +1,12 @@
+@model FFF.Models.ItemSystem.Product
+
+<table class="table table-condensed">
+	<tr>
+		<td>@Html.LabelFor( model => model.Item.Title )</td>
+		<td>@Html.DisplayFor( model => model.Item.Title  )</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor( model => model.Price )</td>
+		<td>@Html.DisplayFor( model => model.Price )</td>
+	</tr>
+</table>

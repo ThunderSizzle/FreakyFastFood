@@ -1,0 +1,29 @@
+﻿@model FFF.Models.ReviewSystem.Review
+
+@Html.DisplayForModel( "Review" )
+
+<div class="row">
+	<div class="col-xs-4">
+		@using ( Html.BeginForm( "Edit", "Review", new { id = Model.RID }, FormMethod.Post, new { @class="LoadModal" } ) )
+		{
+			@Html.AntiForgeryToken()
+			<button class="btn btn-info" type="submit">
+				<span class="glyphicon glyphicon-edit">
+				</span>
+				Edit
+			</button>
+		}
+	</div>
+	<div class="col-xs-8">
+		@using ( Html.BeginForm( "Delete", "Review", new { id = Model.RID }, FormMethod.Post, new { @class="LoadModal" } ) )
+		{
+			@Html.AntiForgeryToken()
+			<button class="btn btn-danger" type="submit">
+				<span class="glyphicon glyphicon-remove">
+				</span>
+				Delete
+			</button>
+		}
+
+	</div>
+</div>

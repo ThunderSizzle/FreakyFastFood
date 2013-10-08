@@ -1,0 +1,26 @@
+﻿@model IEnumerable<FFF.Models.PaymentSystem.PaymentMethod>
+
+
+<div class="subcontainer" id="PaymentMethods">
+	<div class="row">
+		<div class="col-xs-6">
+			<h2>Payment Methods</h2>
+		</div>
+		<div class="col-sm-6">
+			<h2>
+				@using ( Html.BeginForm( "Create", "PaymentMethod", FormMethod.Post, new { @class="LoadModal" } ) )
+				{
+					@Html.AntiForgeryToken()
+					<button class="btn btn-success pull-right" type="submit">
+						<span class="glyphicon glyphicon-plus-sign">
+						</span>
+						Add A New Payment Method
+					</button>
+				}
+			</h2>
+		</div>
+	</div>
+	<div class="subcontent" id="PaymentMethodsContent">
+		@{Html.RenderPartial( "_PaymentMethods" );}
+	</div>
+</div>

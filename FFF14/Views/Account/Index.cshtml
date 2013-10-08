@@ -1,0 +1,25 @@
+@model FFF.Models.UserSystem.Account
+@{
+	ViewBag.Title = "My Account";
+	ViewBag.ListContents = new String[] { "Orders", "Profile", "Payment Methods", "Addresses", "Reviews", "Settings" } ;
+@*	ViewBag.ListContents[0] =  
+				"<li><a href=\"#Orders\">Orders</a></li>" +
+				"<li><a href=\"#Profile\">Profile</a></li>" +
+				"<li><a href=\"#PaymentMethods\">Payment Methods</a></li>" +
+				"<li><a href=\"#Addresses\">Addresses</a></li>" +
+				"<li><a href=\"#Reviews\">Reviews</a></li>" +
+				"<li><a href=\"#Settings\">Settings</a></li>";*@
+}
+@{
+	FFF.Models.UserSystem.Employee Employee = Model as FFF.Models.UserSystem.Employee;
+	FFF.Models.UserSystem.Representative Representative = Model as FFF.Models.UserSystem.Representative;
+	if ( Employee != null  )
+	{
+		Html.RenderPartial( "_EmployeeWrapper", Employee );
+	}
+	else if ( Representative != null )
+	{
+		Html.RenderPartial( "_RepresentativeWrapper", Representative );
+	}
+	Html.RenderPartial( "_AccountWrapper", @Model);
+}

@@ -1,0 +1,29 @@
+﻿@model FFF.Models.OrderSystem.ShoppingCart
+
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>
+		<span class="glyphicon glyphicon-shopping-cart"></span>
+		Your Shopping Cart
+	</h3>
+</div>
+<div class="modal-body">
+	@if ( Model.Products.Count == 0 )
+	{
+		<p>You have no Products in your Shopping Cart!</p>
+	}
+	else
+	{
+		foreach ( var product in Model.Products )
+		{
+			<div>
+				<span>
+					@Html.DisplayFor( Product => product )
+				</span>
+			</div>
+		}
+	}
+</div>
+<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal" id="ShoppingCartCancel">Cancel</a>
+</div>

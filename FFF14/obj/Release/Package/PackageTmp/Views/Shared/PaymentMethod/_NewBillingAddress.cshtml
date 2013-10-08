@@ -1,0 +1,54 @@
+﻿@model FFF.ViewModels.PaymentMethod.NewAddressInput
+
+@* Get View Bag of Addresses for the "select list" *@
+
+
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<h3>
+		Create New Billing Address
+		@using ( Html.BeginForm( "SelectAddress", "PaymentMethod", FormMethod.Post, new { @class="LoadModal" } ) )
+		{
+			@Html.AntiForgeryToken()
+			@Html.HiddenFor( m => m.CardHolderName )
+			@Html.HiddenFor( m => m.CardNumber )
+			@Html.HiddenFor( m => m.CardTypeID )
+			@Html.HiddenFor( m => m.CCV )
+			@Html.HiddenFor( m => m.Month )
+			@Html.HiddenFor( m => m.Year )
+			@Html.HiddenFor( m => m.RID )
+			if ( ViewBag.Addresses.Count > 0 )
+			{
+				<button class="btn btn-success btn-lg" type="submit">
+					<span class="glyphicon glyphicon-plus-sign">
+					</span>
+					Or Select An Existing Address
+				</button>
+			}
+		}
+	</h3>
+</div>
+@using ( Html.BeginForm( "CreateWithNewAddress", "PaymentMethod", FormMethod.Post, new { id="ModalForm", @for="#PaymentMethodContent" } ) )
+{
+	@Html.AntiForgeryToken()
+	@Html.HiddenFor( m => m.CardHolderName )
+	@Html.HiddenFor( m => m.CardNumber )
+	@Html.HiddenFor( m => m.CardTypeID )
+	@Html.HiddenFor( m => m.CCV )
+	@Html.HiddenFor( m => m.Month )
+	@Html.HiddenFor( m => m.Year )
+	@Html.HiddenFor( m => m.RID )
+	<div class="modal-body">
+		@Html.ValidationSummary( true )
+		<span class="help-inline field-validation-error">
+		</span>
+		@Html.EditorFor( m => m.Address, "Address")
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn btn" data-dismiss="modal">Cancel</a>
+		<button class="btn btn-primary" type="submit">
+			Submit
+			<span class="glyphicon glyphicon-arrow-right"></span>
+		</button>
+	</div>
+}

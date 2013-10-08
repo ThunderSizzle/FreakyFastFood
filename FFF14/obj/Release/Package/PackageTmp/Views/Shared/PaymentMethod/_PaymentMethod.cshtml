@@ -1,0 +1,42 @@
+﻿@model FFF.Models.PaymentSystem.PaymentMethod
+
+@Html.DisplayForModel("_PaymentMethod")
+
+<div class="row">
+	<div class="col-xs-4">
+		@using ( Html.BeginForm( "Edit", "PaymentMethod", new { id = Model.RID }, FormMethod.Post, new { @class="LoadModal" } ) )
+		{
+			@Html.AntiForgeryToken()
+			<button class="btn btn-info" type="submit">
+				<span class="glyphicon glyphicon-edit">
+				</span>
+				Edit
+			</button>
+		}
+	</div>
+	<div class="col-xs-8">
+		@using ( Html.BeginForm( "Delete", "PaymentMethod", new { id = Model.RID }, FormMethod.Post, new { @class="LoadModal" } ) )
+		{
+			@Html.AntiForgeryToken()
+			<button class="btn btn-danger" type="submit">
+				<span class="glyphicon glyphicon-remove">
+				</span>
+				Delete
+			</button>
+		}
+
+	</div>
+</div>
+
+
+<button class="btn btn-info" data-toggle="modal" type="button" value="@Model.RID">
+	<span class="glyphicon glyphicon-edit">
+	</span>
+	Edit
+</button>
+
+<button class="btn btn-danger" data-toggle="modal" type="button" value="@Model.RID">
+	<span class="glyphicon glyphicon-remove">
+	</span>
+	Delete
+</button>
