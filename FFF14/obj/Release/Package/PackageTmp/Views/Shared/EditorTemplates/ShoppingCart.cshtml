@@ -1,0 +1,10 @@
+@model FFF.Models.OrderSystem.ShoppingCart
+
+<legend>Shopping Cart</legend>
+<div class="form-group">
+	@Html.LabelFor( model => model.Items, new { @class = "col-lg-2 control-label" } )
+	<div class="col-lg-10">
+		@Html.TextBoxFor( model => model.Items, new { @class = "form-control" )
+		@Html.ValidationMessageFor( model => model.Items, null, new { @class = "help-inline" } )
+	</div>
+</div>

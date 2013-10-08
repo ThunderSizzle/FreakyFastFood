@@ -248,6 +248,10 @@
     <Compile Include="ViewModels\Review.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\FFF.mdf" />
+    <Content Include="App_Data\FFF_log.ldf">
+      <DependentUpon>FFF.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-signin.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -481,7 +485,6 @@
     <Content Include="Views\Shared\Layouts\_Empty.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Areas\Employee\Controllers\" />
     <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Employee\Views\Shared\" />

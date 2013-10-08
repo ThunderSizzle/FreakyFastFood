@@ -1,0 +1,17 @@
+﻿@model IEnumerable<FFF.Models.OrderSystem.Order>
+
+<div>
+	@foreach( var item in Model)
+	{
+    <div>
+        <span>
+            Html.DisplayFor(modelItem => item)
+        </span>
+        <span>
+            @Html.ActionLink("Edit", "Edit", new { id=item.RID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.RID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.RID })
+        </span>
+    </div>		
+	}
+</div>

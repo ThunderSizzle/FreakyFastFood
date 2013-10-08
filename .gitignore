@@ -152,3 +152,4 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/FFF14/App_Data/FFF.mdf

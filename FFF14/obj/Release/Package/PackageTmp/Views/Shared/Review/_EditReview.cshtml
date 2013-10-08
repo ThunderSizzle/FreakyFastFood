@@ -1,0 +1,66 @@
+﻿@model FFF.ViewModels.Review.ReviewInput
+
+<div class="modal fade" id="EditReview">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3>Editing Review</h3>
+			</div>
+			@using ( Html.BeginForm( "EditReview", "Account", FormMethod.Post, new { id="EditReviewForm" } ) )
+			{
+				@Html.AntiForgeryToken()
+				<div class="modal-body">
+					<div>
+						<span class="help-inline field-validation-error">
+							<span id="EditReviewErrors">
+							</span>
+						</span>
+					</div>
+					@Html.EditorForModel("Review")
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn" data-dismiss="modal" id="EditReviewCancel">Cancel</a>
+					<button type="submit" class="btn btn-primary" id="EditReviewSubmit">
+						<span class="glyphicon glyphicon-floppy-disk">
+						</span>
+						Save Changes
+					</button>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+
+
+<script>
+	$(function () {
+		$('#EditReviewForm').submit(function () {
+			if ($(this).valid()) {
+				$('#EditReview').modal('hide');
+				$('body').removeClass('modal-open');
+				$('.modal-backdrop').remove();
+				$('#ReviewsUpdated').hide();
+				$('#ReviewsUpdating').show();
+				$.ajax(
+				{
+					url: this.action,
+					type: this.method,
+					data: $(this).serialize(),
+					success: function (result) {
+						AjaxReviewCompleted(result);
+					},
+					error: function (xhr, textStatus, errorThrown) {
+						$('#ReviewsUpdated').show();
+						$('#ReviewsUpdating').hide();
+						if (xhr.status == 400) {
+							$('#EditReview').modal('show');
+							$("#EditReviewErrors").html(xhr.statusText);
+						}
+					}
+				});
+			}
+			return false;
+		});
+	});
+</script>
