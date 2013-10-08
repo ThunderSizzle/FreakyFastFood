@@ -14,7 +14,12 @@ namespace FFF.Controllers
 	[Authorize]
     public class AddressController : MainController
     {
-		#region Addresses
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public PartialViewResult Index()
+		{
+			return PartialView( "_Addresses", this.Account.Addresses );
+		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public PartialViewResult Create()
@@ -30,7 +35,9 @@ namespace FFF.Controllers
 				Address Address = new Address( model.Nick, model.Line1, model.Line2, model.City, db.States.Find( model.StateID ), model.ZIP );
 				Account.Addresses.Add( Address );
 				db.SaveChanges();
-				return PartialView( "_Addresses", Account.Addresses );
+				ViewBag.Refresh = new string[] {"Addresses"};
+				return PartialView("_Empty");
+				//return PartialView( "_Addresses", Account.Addresses );
 			}
 			else
 			{
@@ -101,6 +108,5 @@ namespace FFF.Controllers
 				return PartialView( "_Addresses", Account.Addresses );
 			}
 		}
-		#endregion Addresses
 	}
 }

@@ -38,6 +38,7 @@ namespace FFF.Controllers
 			#region Logging System
 				public ActionResult Index()
 				{
+					ViewBag.Refresh = new string[] { "Addresses" };
 					return View(this.Account);
 				}
 				public PartialViewResult Sidebar()
@@ -222,7 +223,8 @@ namespace FFF.Controllers
 							this.Account.LastName = model.LastName;
 							this.Account.Gender = db.Genders.First(c => c.RID ==  model.GenderID);
 							db.SaveChanges();
-							FormsAuthentication.SetAuthCookie( model.UserName, false );
+							//FormsAuthentication.SetAuthCookie( model.UserName, false );
+							
 							if(returnUrl == Url.Action("Index", "Store"))
 								return RedirectToAction("Index", "Account");
 							else

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -32,11 +33,13 @@ namespace FFF.Controllers
 			{
 				if ( ModelState.IsValid )
 				{
+					this.Account.User.UserName = model.UserName;
 					this.Account.FirstName = model.FirstName;
 					this.Account.LastName = model.LastName;
 					this.Account.Gender = db.Genders.First( c => c.RID ==  model.GenderID );
 					db.Entry( Account ).State = EntityState.Modified;
 					db.SaveChanges();
+					FormsAuthentication.SetAuthCookie(this.Account.User.UserName, true);
 					return PartialView( "_Personal", Account );
 				}
 				else

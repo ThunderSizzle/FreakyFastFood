@@ -11,7 +11,6 @@
 		<span class="help-inline field-validation-error">
 		</span>
 		@Html.HiddenFor( c => c.RID)
-		@Html.HiddenFor( c => c.UserName )
 		<div class="form-group">			
 			<label class="control-label">Account ID</label>
 			<p class="form-control-static">@Html.DisplayFor( m => m.RID )</p>
@@ -19,7 +18,8 @@
 		</div>
 		<div class="form-group">
 			@Html.LabelFor(c => c.UserName)
-			<p class="form-control-static">@Html.DisplayFor( m => m.UserName )</p>
+			@Html.TextBoxFor( m => m.UserName, new { @class = "form-control" } )
+			@Html.ValidationMessageFor( m => m.UserName, null, new { @class = "help-inline" } )
 		</div>
 		<div class="form-group">
 			@Html.LabelFor( c => c.FirstName )
