@@ -1,0 +1,81 @@
+﻿<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="@Url.Action("Index", "Store")">
+			<span class="hidden-xs">
+				<img src="@Url.Content( "~/Content/Images/tiny.png" )" width="24px" height="24px" style="display:inline" />
+				Freaky Fast Food
+			</span>
+			<span class="visible-xs">
+				<img src="@Url.Content( "~/Content/Images/tiny.png" )" width="24px" height="24px" style="display:inline" />
+			</span>
+		</a>
+		<a href="#body" class="navbar-brand">
+			<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" class="updating" id="Updating" width="20px" height="20px" style="display:none" />
+			<span class="glyphicon glyphicon-saved updated" id=" updated"></span>
+			@ViewBag.Title
+		</a>
+	</div>
+
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse navbar-ex1-collapse">
+		<ul class="nav navbar-nav">
+			<li>
+
+			</li>
+		</ul>
+		@using(Html.BeginForm( null, null, FormMethod.Post, new { @class="navbar-form navbar-left" } ))
+		{
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+			<button class="btn btn-success" type="submit">
+				<span class="glyphicon glyphicon-search"></span>
+				Search
+			</button>
+		}
+		<ul class="nav navbar-nav navbar-right">
+
+			@if ( Request.IsAuthenticated )
+			{
+				<li>
+					<a href="@Url.Action("Index", "Account")" title="Go to My Account">
+						<span class="glyphicon glyphicon-user"></span>
+						Hello @User.Identity.Name!
+					</a>
+				</li>
+				<li>
+					@using ( Html.BeginForm( "LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class="navbar-form navbar-right" } ) )
+					{
+						@Html.AntiForgeryToken()
+						<button class="btn btn-danger" type="submit">
+							<span class="glyphicon glyphicon-log-out"></span>
+							Log Out
+						</button>
+					}
+				</li>
+			}
+			else
+			{
+				<li>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+						<span class="glyphicon glyphicon-log-in"></span>
+						Log In<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						@Html.Action( "ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl } )
+					</ul>
+				</li>
+			}
+			<li>
+				@{ Html.PartialView( "_ShoppingCartNavBar", @Model.ShoppingCart ); }
+			</li>
+		</ul>
+	</div>
+</nav>

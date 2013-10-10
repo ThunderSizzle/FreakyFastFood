@@ -1,0 +1,19 @@
+@model FFF.Models.ReviewSystem.Review
+
+<table class="table table-condensed">
+	<tr>
+		<td>@Html.LabelFor( model => model.Reviewed )</td>
+		<td>@Html.DisplayFor( model => model.Reviewed )</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor( model => model.Rating )</td>
+		<td>@Html.DisplayFor( model => model.Rating )</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor( model => model.Message )</td>
+		<td>@Html.DisplayFor( model => model.Message )</td>
+	</tr>
+	<tr>
+		<td>@Html.DisplayFor( model => model.Helpful ) out of @Model.TotalRating() found this Review Helpful.</td>
+	</tr>
+</table>

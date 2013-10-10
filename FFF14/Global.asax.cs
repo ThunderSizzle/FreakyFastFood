@@ -39,7 +39,6 @@ namespace FFF
 
 			EnhancedViewLocator.AddFolder( "views/account/employee" );
 			EnhancedViewLocator.AddFolder( "views/account/representative" );
-
 			EnhancedViewLocator.AddFolder( "views/shared/address" );
 			EnhancedViewLocator.AddFolder( "views/shared/paymentmethod" );
 			EnhancedViewLocator.AddFolder( "views/shared/order" );

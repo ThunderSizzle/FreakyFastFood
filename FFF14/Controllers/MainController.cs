@@ -77,5 +77,10 @@ namespace FFF.Controllers
 			base.Dispose( disposing );
 		}
 
+		public ActionResult Index()
+		{
+			return RedirectToAction("Index", "Store", new { Area="Store" } );
+		}
+
 	}
 }

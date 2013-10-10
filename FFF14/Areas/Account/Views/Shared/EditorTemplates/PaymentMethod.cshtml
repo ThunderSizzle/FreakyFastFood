@@ -1,0 +1,83 @@
+@model FFF.ViewModels.PaymentMethod.PaymentMethodInput
+
+<fieldset>
+	<div class="form-group">
+		@Html.LabelFor( model => model.CardHolderName )
+		@Html.TextBoxFor( model => model.CardHolderName, new { @class = "form-control" } )
+		@Html.ValidationMessageFor( model => model.CardHolderName, null, new { @class = "help-inline" } )
+	</div>
+	<div class="form-group">
+		@Html.LabelFor( model => model.CardTypeID )
+		@Html.DropDownListFor( model => model.CardTypeID, ViewBag.CardTypes as SelectList, "Select Card Type", new { @class = "form-control" } )
+		@Html.ValidationMessageFor( model => model.CardTypeID, null, new { @class = "help-inline" } )
+	</div>
+	<div class="form-group">
+		@Html.LabelFor( model => model.CardNumber )
+		@Html.TextBoxFor( model => model.CardNumber, new { @class = "form-control" } )
+		@Html.ValidationMessageFor( model => model.CardNumber, null, new { @class = "help-inline" } )
+	</div>
+	<div class="form-group">
+		<div class="row">
+			<div  class="col-xs-6" >
+				@Html.LabelFor( model => model.Month )
+				@Html.DropDownListFor( model => model.Month, ViewBag.Months as SelectList, "Select Month", new { @class="form-control" } )
+				@Html.ValidationMessageFor( model => model.Month, null, new { @class = "help-inline" } )
+			</div>
+			<div class="col-xs-6">
+				@Html.LabelFor( model => model.Year )
+				@Html.DropDownListFor( model => model.Year, ViewBag.Years as SelectList, "Select Year", new { @class="form-control" } )
+				@Html.ValidationMessageFor( model => model.Year, null, new { @class = "help-inline" } )
+			</div>
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor( model => model.CCV )
+		@Html.TextBoxFor( model => model.CCV, new { @class = "form-control" } )
+		@Html.ValidationMessageFor( model => model.CCV, null, new { @class = "help-inline" } )
+	</div>
+</fieldset>
+@*
+<!--
+@if(Model != null)
+{
+	if(Model.Account.Addresses.Count != 0)
+	{
+		<fieldset class="form-horizontal">
+			<div class="row">
+				<h4>Select An Address:</h4>
+				@foreach ( var address in Model.Account.Addresses )
+				{
+					<div class="well col-md-4">
+						@Html.DisplayFor( Address => address, "Address" )
+						@Html.Hidden( "BillingAddressID", address.RID )
+						<span><input type="submit" value="Select Address" class="btn btn-default" name="submitButton" /></span>
+						<span>@Html.ActionLink( "Cancel", "Index", null, new { @class = "btn btn-warning" } )</span>
+					</div>
+				}
+			</div>
+		</fieldset>
+	}
+}
+	<fieldset class="form-horizontal">
+		@if(Model != null)
+		{
+			if(Model.Account.Addresses.Count != 0)
+			{
+				<legend>Or Add A New Address:</legend>
+			}
+		}
+		else
+		{
+			<legend>Add A New Address:</legend>
+		}
+	<div>
+		@Html.EditorFor( model => model.BillingAddress, "Address" )
+		<div class="form-group">
+			<div class="col-lg-offset-2 col-lg-10">
+				<input type="submit" value="Create New Address" class="btn btn-default" name="submitButton" />
+				@Html.ActionLink( "Cancel", "Index", null, new { @class = "btn btn-warning" } )
+			</div>
+		</div>
+	</div>
+</fieldset>
+-->*@

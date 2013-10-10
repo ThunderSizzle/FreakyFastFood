@@ -1,0 +1,68 @@
+﻿@model FFF.Models.PaymentSystem.PaymentMethod
+
+<div class="modal fade" id="DeletePaymentMethod">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h3>Deleting Payment Method</h3>
+			</div>
+			<div class="modal-body">
+				<div>
+					<span class="help-inline field-validation-error">
+						<span id="CreatePaymentMethodErrors">
+						</span>
+					</span>
+				</div>
+				<p>Are you sure you wish to delete this Payment Method?</p>
+				<div class="well">
+					@Html.DisplayForModel( "_PaymentMethod" )
+				</div>
+			</div>
+			<div class="modal-footer">
+				@using ( Html.BeginForm( "DeletePaymentMethodConfirmed", "Account", new { id=@Model.RID }, FormMethod.Post, new { id="DeletePaymentMethodForm" } ) )
+				{
+					@Html.AntiForgeryToken()
+					<a href="#" class="btn" data-dismiss="modal" id="DeletePaymentMethodCancel">Cancel</a>
+					<button type="submit" class="btn btn-danger" id="DeletePaymentMethodSubmit">
+						<span class="glyphicon glyphicon-remove">
+						</span>
+						Delete
+					</button>
+				}
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(function () {
+		$('#DeletePaymentMethodForm').submit(function () {
+			if ($(this).valid()) {
+				$('#DeletePaymentMethod').modal('hide');
+				$('body').removeClass('modal-open');
+				$('.modal-backdrop').remove();
+				$('#PaymentMethodsUpdated').hide();
+				$('#PaymentMethodsUpdating').show();
+				$.ajax(
+				{
+					url: this.action,
+					type: this.method,
+					data: $(this).serialize(),
+					success: function (result) {
+						AjaxPaymentCompleted(result);
+					},
+					error: function (xhr, textStatus, errorThrown) {
+						$('#PaymentMethodsUpdated').show();
+						$('#PaymentMethodsUpdating').hide();
+						if (xhr.status == 400) {
+							$('#DeletePaymentMethod').modal('show');
+							$("#DeletePaymentMethodErrors").html(xhr.statusText);
+						}
+					}
+				});
+			}
+			return false;
+		});
+	});
+</script>
