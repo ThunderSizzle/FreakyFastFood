@@ -1,0 +1,69 @@
+@model FFF.Models.OrderSystem.Order
+
+<legend>Order</legend>
+<div class="form-group">
+	@Html.LabelFor( model => model.CreateStamp, new { @class = "col-lg-2 control-label" } )
+	<div class="col-lg-10">
+		@Html.TextBoxFor( model => model.CreateStamp, new { @class = "form-control-static" )
+		@Html.ValidationMessageFor( model => model.CreateStamp, null, new { @class = "help-inline" } )
+	</div>
+</div>
+<table class="table table-condensed">
+	<tr>
+		<td>@Html.LabelFor( model => model.CreateStamp )</td>
+		<td>@Html.DisplayFor( model => model.CreateStamp )</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor( model => model.DeliveryAddress )</td>
+		<td>@Html.DisplayFor( model => model.DeliveryAddress.Nick )</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor( model => model.Items )</td>
+		<td>@Html.DisplayFor( model => model.Items )</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor( model => model.PaymentMethod )</td>
+		<td>@Html.DisplayFor( model => model.PaymentMethod )</td>
+	</tr>
+	<tr>
+		<td>@Html.LabelFor( model => model.Status)</td>
+		<td>@Html.DisplayFor( model => model.Status )</td>
+	</tr>
+</table>
+@Html.ActionLink("Edit", "Edit", new { id = @Model.RID }, new { @class="btn btn-primary" } )
+<!--
+<a type="button" class="btn btn-danger" href="#Delete-@Model.RID" data-toggle="modal">Delete</a>
+
+
+<div class="modal fade" id="Delete-@Model.RID">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>Deleting Payment Method</h3>
+			</div>
+			<div class="modal-body">
+				<p>Are you sure you wish to delete this Payment Method?</p>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+				<a class="btn btn-danger" data-id="@Model.RID" onclick="DeletePayment('@Model.RID')" data-dismiss="modal">Delete</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="Address-@Model.RID">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h3>Address Details</h3>
+			</div>
+			<div class="modal-body">
+				@Html.DisplayFor( model => model.Address, "Address")
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal">Close</a>
+			</div>
+		</div>
+	</div>
+</div>-->

@@ -19,7 +19,7 @@ namespace FFF.Areas.Account.Controllers
 	/// </summary>
 	[RequireHttps]
 	[Authorize]
-    public class OrderController : AccountController
+	public class OrderController : FFF.Controllers.MainController
     {
         //
         // GET: /Order/

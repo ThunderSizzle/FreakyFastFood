@@ -14,7 +14,7 @@ namespace FFF.Areas.Account.Controllers
 {
 	[RequireHttps]
 	[ValidateAntiForgeryToken]
-	public class ProfileController : AccountController
+	public class ProfileController : FFF.Controllers.MainController
     {
 		#region Personal Profile
 			[HttpPost]

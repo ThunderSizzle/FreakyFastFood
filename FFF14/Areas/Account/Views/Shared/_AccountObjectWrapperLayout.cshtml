@@ -1,0 +1,29 @@
+﻿<div class="subcontainer" id="@ViewBag.SubTitle">
+	<div class="row">
+		<div class="col-xs-6">
+			<h2>
+				@ViewBag.SubTitle
+			</h2>
+		</div>
+		<div class="col-sm-6">
+			<h2>
+				@using ( Html.BeginForm( "Create", ViewBag.Controller as String, FormMethod.Post, new { @class="LoadModal" } ) )
+				{
+					@Html.AntiForgeryToken()
+					<button class="btn btn-success pull-right" type="submit">
+						<span class="glyphicon glyphicon-plus-sign">
+						</span>
+						@ViewBag.CreateButtonMessage
+					</button>
+				}
+			</h2>
+		</div>
+	</div>
+	@using ( Html.BeginForm( "Index", ViewBag.Controller as String, FormMethod.Post, new { @class="refresher", @for="#" + ViewBag.SubTitle + "Content" } ) )
+	{
+		@Html.AntiForgeryToken()
+	}
+	<div class="subcontent" id="@(ViewBag.SubTitle)Content">
+
+	</div>
+</div>

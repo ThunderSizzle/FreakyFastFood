@@ -35,12 +35,12 @@ namespace FFF.Controllers
     public class UserController : MainController
     {
 		#region Logging System
-			public ActionResult Index()
+			protected override void HandleUnknownAction( string actionName )
 			{
-				return RedirectToAction("Index", "Account", new { area="Account" } );
+				this.Login();
 			}
 			[AllowAnonymous]
-			public ActionResult Login( String returnUrl )
+			public ActionResult Login( String returnUrl = null )
 			{
 				ViewBag.ReturnUrl = returnUrl;
 				return View("Login");
@@ -65,14 +65,14 @@ namespace FFF.Controllers
 
 			//
 			// GET: /Account/Manage
-			public async Task<ActionResult> Manage(ManageMessageId? message)
+			public ActionResult Manage(ManageMessageId? message)
 			{
 				ViewBag.StatusMessage =
 					message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
 					: message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
 					: message == ManageMessageId.RemoveLoginSuccess ? "The external login was removed."
 					: "";
-				ViewBag.HasLocalPassword = await IdentityManager.Logins.HasLocalLoginAsync(Account.User.Id);
+				ViewBag.HasLocalPassword =  IdentityManager.Logins.HasLocalLogin(Account.User.Id);
 				ViewBag.ReturnUrl = Url.Action("Manage");
 				return View();
 			}
@@ -116,7 +116,7 @@ namespace FFF.Controllers
 						try
 						{
 							// Create the local login info and link the local account to the user
-							var result = await IdentityManager.Logins.AddLocalLoginAsync( userId, User.Identity.GetUserName(), model.NewPassword );
+							var result = await IdentityManager.Logins.AddLocalLoginAsync( userId, User.Identity.GetUserName(), model.NewPassword, CancellationToken.None );
 							if ( result.Success )
 							{
 								return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });

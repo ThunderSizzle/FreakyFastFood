@@ -1,0 +1,36 @@
+﻿@model FFF.Models.UserSystem.Account
+
+
+<div class="row panel panel-primary">
+	<div class="well well-lg">
+		<ul class="nav nav-pills nav-justified">
+			<li class="active"><a href="#PersonalContent" data-toggle="pill">Personal Profile</a></li>
+			<li><a href="#SecurityContent" data-toggle="pill">Security Profile</a></li>
+			<li><a href="#ContactContent" data-toggle="pill">Contact Profile</a></li>
+			<li><a href="#FoodContent" data-toggle="pill">Food Profile</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade active in" id="PersonalContent">
+				@{ 
+					ViewBag.Path = "/Areas/Account/Views/Profile/Personal/";
+					Html.RenderPartial( ViewBag.Path as String + "_Personal.cshtml", @Model );
+				}
+			</div>
+			<div class="tab-pane fade " id="SecurityContent">
+				@{
+					Html.RenderAction("Manage", "User", new { area = "" });
+				}
+			</div>
+			<div class="tab-pane fade" id="ContactContent">
+				@{ 
+					ViewBag.Path = "/Areas/Account/Views/Profile/Contact/";
+					Html.RenderPartial( ViewBag.Path as String + "_Contact.cshtml", @Model ); }
+			</div>
+			<div class="tab-pane fade" id="FoodContent">
+				@{ 
+					ViewBag.Path = "/Areas/Account/Views/Profile/Food/";
+					Html.RenderPartial( ViewBag.Path as String + "_Food.cshtml", @Model ); }
+			</div>
+		</div>
+	</div>
+</div>

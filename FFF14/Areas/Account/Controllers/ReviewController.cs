@@ -17,7 +17,7 @@ namespace FFF.Areas.Account.Controllers
 	/// </summary>
 	[RequireHttps]
 	[Authorize]
-	public class ReviewController : AccountController
+	public class ReviewController : FFF.Controllers.MainController
     {
         //
         // GET: /Review/

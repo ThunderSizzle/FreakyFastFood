@@ -19,7 +19,7 @@ else
 	{
 		returnUrl = HttpContext.Current.Request.Url.AbsolutePath;
 	}
-	using ( Html.BeginForm( "ExternalLogin", "Account",  new { ReturnUrl = returnUrl }, FormMethod.Post ) )
+	using ( Html.BeginForm( "ExternalLogin", "User",  new { area="", ReturnUrl = returnUrl }, FormMethod.Post ) )
 	{
 		//ViewBag.ReturnUrls
 		@Html.AntiForgeryToken()

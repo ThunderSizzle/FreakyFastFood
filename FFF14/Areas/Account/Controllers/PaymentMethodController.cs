@@ -16,7 +16,7 @@ namespace FFF.Areas.Account.Controllers
 {
 	[RequireHttps]
 	[Authorize]
-	public class PaymentMethodController : AccountController
+	public class PaymentMethodController : FFF.Controllers.MainController
     {
 		[HttpPost]
 		[ValidateAntiForgeryToken]

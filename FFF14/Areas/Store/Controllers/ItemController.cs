@@ -6,12 +6,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace FFF.Controllers
+namespace FFF.Areas.Store.Controllers
 {
 	[RequireHttps]
 	[Authorize]
-    public class ItemController : MainController
+	public class ItemController : Controller
     {
+	/*
         //
         // GET: /Item/
 		//[ChildActionOnly]
@@ -38,10 +39,6 @@ namespace FFF.Controllers
 
 			return HttpNotFound();
 		}
-
-
-
-
-
+	*/
 	}
 }

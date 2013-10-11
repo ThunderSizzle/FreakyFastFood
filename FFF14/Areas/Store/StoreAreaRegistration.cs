@@ -17,7 +17,7 @@ namespace FFF.Areas.Store
             context.MapRoute(
                 "Store_default",
                 "Store/{controller}/{action}/{id}",
-                new { controller = "Store", action = "Index", id = UrlParameter.Optional }
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

@@ -1,0 +1,24 @@
+﻿@model FFF.ViewModels.Location.AddressInput
+
+@using ( Html.BeginForm( "EditConfirmed", "Address", FormMethod.Post, new { id="ModalForm", @for="#AddressesContent" } ) )
+{
+	@Html.AntiForgeryToken()
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Editing @Model.Nick Address</h3>
+	</div>
+	<div class="modal-body">
+		<span class="help-inline field-validation-error">
+		</span>
+		@Html.HiddenFor( m=> m.RID)
+		@Html.EditorForModel("Address")
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+		<button type="submit" class="btn btn-primary">
+			<span class="glyphicon glyphicon-floppy-disk">
+			</span>
+			Save Changes
+		</button>
+	</div>
+}

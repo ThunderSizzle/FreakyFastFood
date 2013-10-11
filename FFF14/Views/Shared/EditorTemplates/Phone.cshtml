@@ -1,0 +1,32 @@
+@model FFF.ViewModels.Profile.PhoneInput
+
+<div class="form-group">
+	@Html.HiddenFor( model => model.RID)
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.CarrierID )
+	@Html.DropDownListFor( model => model.CarrierID, ViewBag.Carriers as SelectList, "Select Carrier", new { @class = "form-control" } )
+	@Html.DescriptionFor( model => model.CarrierID )
+	@Html.ValidationMessageFor( model => model.CarrierID, null, new { @class = "help-inline" } )
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model )
+	@Html.TextBoxFor( model => model.AreaCode, new { @class = "form-control" } )
+	@Html.TextBoxFor( model => model.Prefix, new { @class = "form-control" } )
+	@Html.TextBoxFor( model => model.Line, new { @class = "form-control" } )
+	@Html.ValidationMessageFor( model => model.AreaCode, null, new { @class = "help-inline" } )
+	@Html.ValidationMessageFor( model => model.Prefix, null, new { @class = "help-inline" } )
+	@Html.ValidationMessageFor( model => model.Line, null, new { @class = "help-inline" } )
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.defaultMethod )
+	@Html.EditorFor( model => model.defaultMethod, new { @class = "form-control" } )
+	@Html.DescriptionFor( model => model.defaultMethod )
+	@Html.ValidationMessageFor( model => model.defaultMethod, null, new { @class = "help-inline" } )
+</div>
+<div class="form-group">
+	@Html.LabelFor( model => model.ReceiveOrderUpdates )
+	@Html.EditorFor( model => model.ReceiveOrderUpdates, new { @class = "form-control" } )
+	@Html.DescriptionFor( model => model.ReceiveOrderUpdates )
+	@Html.ValidationMessageFor( model => model.ReceiveOrderUpdates, null, new { @class = "help-inline" } )
+</div>

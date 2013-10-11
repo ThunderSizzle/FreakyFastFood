@@ -32,6 +32,7 @@ namespace FFF
 
 		private static void RegisterCustomViewLocations()
 		{
+		/*
 			// We can optionally enable the standard Razor view CS (or VB) locations 
 			// so we don't always search our extra / custom areas first when
 			// searching for a view.
@@ -57,6 +58,7 @@ namespace FFF
 
 			// Finally, have the locator install a custom view engine to manage the lookups.
 			EnhancedViewLocator.Install( ControllerBuilder.Current );
+		 */
 		}
 	}
 }

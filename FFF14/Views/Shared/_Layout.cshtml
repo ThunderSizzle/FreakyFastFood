@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+@{
+	if(ViewBag.Refresh == null)
+	{
+		ViewBag.Refresh = new string[0];
+	}
+}
+<html>
+	<head>
+		@{ Html.RenderPartial( "_Head-Full" ); }
+		@RenderSection( "scripts", required: false )
+	</head>
+	<body id="body" data-spy="scroll" data-target="#sidenav">
+		<!-- Modal Wrapper - This will be dynamically loaded. -->
+		<div class="modal fade" id="Modal">
+			<div class="modal-dialog">
+				<div class="modal-content" id="ModalContent">
+
+				</div>
+			</div>
+		</div>
+		<div id="wrap">
+			@{ Html.RenderPartial( "_Navbar-Full" ); }
+			<div class="container">
+				@RenderBody()
+			</div>
+		</div>
+		@{ Html.RenderPartial( "_Foot" ); }
+	</body>
+</html>

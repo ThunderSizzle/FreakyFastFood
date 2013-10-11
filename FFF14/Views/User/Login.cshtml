@@ -1,6 +1,6 @@
 @model FFF.ViewModels.Account.LoginViewModel
 @{
-	Layout = "~/Views/Shared/Layouts/_RegisterLayout.cshtml";
+	Layout = "~/Views/Shared/_RegisterLayout.cshtml";
 	ViewBag.Title = "Log In";
 }
 <h1>Log In Using One of the Following Services</h1>
@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-md-4">
         <section id="socialLoginForm">
-			@Html.Action( "ExternalLoginsList", "Account", new { ReturnUrl = ViewBag.ReturnUrl } )
+			@Html.Action( "ExternalLoginsList", "User", new { ReturnUrl = ViewBag.ReturnUrl } )
 		</section>
 	</div>
 	<div class="col-md-8">
@@ -16,10 +16,7 @@
 		<p>This allows you to Register and Login to Freaky Fast Food using one of these services. They provide secure and encrypted channels to ensure the safety of your Freaky Fast Food Account.</p>
 		<p>If you need to register with Freaky Fast Food, simply click on your perferred service on the left, and if redirected to a log in page for that service, log in, and enter the details when you return to Freaky Fast Food. You will now have a Freaky Fast Food Account</p>
 		<p>Lastly, after signing in, you can add the other services so you can choose any and all of the four services to connect with your one Freaky Fast Food Account.</p>
-		@Html.ActionLink("Cancel Log In", "Index", "Store", null, new { @class="btn btn-danger btn-lg" })
+		@Html.ActionLink("Cancel Log In", "Index", "Home", null, new { area="", @class="btn btn-danger btn-lg" })
 	
 	</div>
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

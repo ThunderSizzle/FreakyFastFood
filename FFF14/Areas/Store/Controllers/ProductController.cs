@@ -6,17 +6,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace FFF.Controllers
+namespace FFF.Areas.Store.Controllers
 {
 	[RequireHttps]
 	[Authorize]
-    public class ProductController : MainController
+    public class ProductController : Controller
     {
         //
         // GET: /Product/
         public PartialViewResult Create(Guid id)
         {
-			ProductInput model = new ProductInput( db.Items.Find( id ) );
+	//		ProductInput model = new ProductInput( db.Items.Find( id ) );
             return PartialView();
         }
 		public PartialViewResult CreateConfirmed()

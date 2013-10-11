@@ -1,0 +1,20 @@
+@model FFF.Models.UserSystem.Account
+@{
+	ViewBag.Path = "/Areas/Account/Views/Order/";
+	Html.RenderPartial( ViewBag.Path as String + "_OrdersWrapper.cshtml", @Model.Orders );
+
+	ViewBag.Path = "/Areas/Account/Views/Profile/";
+	Html.RenderPartial( ViewBag.Path as String + "_ProfileWrapper.cshtml", @Model );
+
+	ViewBag.Path = "/Areas/Account/Views/PaymentMethod/";
+	Html.RenderPartial( ViewBag.Path as String + "_PaymentMethodsWrapper.cshtml", @Model.PaymentMethods );
+
+	ViewBag.Path = "/Areas/Account/Views/Address/";
+	Html.RenderPartial( ViewBag.Path as String + "_AddressesWrapper.cshtml", @Model.Addresses );
+
+	ViewBag.Path = "/Areas/Account/Views/Review/";
+	Html.RenderPartial( ViewBag.Path as String + "_ReviewsWrapper.cshtml", @Model.Reviews );
+
+	ViewBag.Path = "/Areas/Account/Views/Settings/";
+	Html.RenderPartial( ViewBag.Path as String + "_SettingsWrapper.cshtml", @Model );
+}

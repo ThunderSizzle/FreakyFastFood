@@ -17,7 +17,7 @@ namespace FFF.Areas.Account
             context.MapRoute(
                 "Account_default",
                 "Account/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                new { controller="Home", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

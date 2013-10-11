@@ -1,0 +1,35 @@
+﻿@model FFF.Models.UserSystem.Account
+
+<ul class="nav bs-sidenav">
+	@{
+		FFF.Models.UserSystem.Employee Employee = Model as FFF.Models.UserSystem.Employee;
+		if ( Employee != null )
+		{
+			<li>
+				<a href="#Employee">Employee Section</a>
+				<ul class="nav">
+					<li><a href="#Shift">Shift</a></li>
+					<li><a href="#Pay">Pay</a></li>
+					<li><a href="#More">More</a></li>
+				</ul>
+			</li>
+		}
+		FFF.Models.UserSystem.Representative Representative = Model as FFF.Models.UserSystem.Representative;
+		if ( Representative != null )
+		{
+			<li>
+				<a href="#Representative">Representative Section</a>
+				<ul class="nav">
+					<li><a href="#Chains">Chains</a></li>
+					<li><a href="#Restaurants">Restaurants</a></li>
+				</ul>
+			</li>
+		}
+	}
+	<li><a href="#Orders">Orders</a></li>
+	<li><a href="#Profile">Profile</a></li>
+	<li><a href="#PaymentMethods">Payment Methods</a></li>
+	<li><a href="#Addresses">Addresses</a></li>
+	<li><a href="#Reviews">Reviews</a></li>
+	<li><a href="#Settings">Settings</a></li>
+</ul>

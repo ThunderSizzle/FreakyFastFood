@@ -16,7 +16,7 @@ namespace FFF
 			routes.MapRoute(
 				name: "Default",
 				url: "{controller}/{action}/{id}",
-				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+				defaults: new { controller = "Redirector", action = "Index", id = UrlParameter.Optional }
 			);
 		}
 	}

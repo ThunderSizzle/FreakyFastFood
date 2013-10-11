@@ -11,8 +11,8 @@
                     <td>@account.LoginProvider</td>
                     <td>
                         @if (ViewBag.ShowRemoveButton)
-                        {
-                            using (Html.BeginForm("Disassociate", "Account"))
+						{
+							using ( Html.BeginForm( "Disassociate", "User" ) )
                             {
                             @Html.AntiForgeryToken()
                             <fieldset>

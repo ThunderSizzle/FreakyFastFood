@@ -1,0 +1,9 @@
+@model FFF.Models.UserSystem.Account
+
+<legend>Account</legend>
+<div class="form-group">
+	@Html.LabelFor( model => model.CardHolderName, new { @class = "col-lg-2 control-label" } )
+	<div class="col-lg-10">
+		@Html.TextBoxFor( model => model.CardHolderName, new { @class = "form-control" )
+		@Html.ValidationMessageFor( model => model.CardHolderName, null, new { @class = "help-inline" } )
+	</div>

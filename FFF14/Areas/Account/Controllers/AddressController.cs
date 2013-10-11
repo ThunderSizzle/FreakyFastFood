@@ -12,11 +12,11 @@ namespace FFF.Areas.Account.Controllers
 {
 	[RequireHttps]
 	[Authorize]
-    public class AddressController : AccountController
+	public class AddressController : FFF.Controllers.MainController
     {
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public PartialViewResult All()
+		public PartialViewResult Index()
 		{
 			return PartialView( "_Addresses", this.Account.Addresses );
 		}

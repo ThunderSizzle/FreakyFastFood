@@ -1,0 +1,24 @@
+﻿<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="navbar-header">
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" href="@Url.Action("Index", "Store")">
+			<span class="hidden-xs">
+				<img src="@Url.Content("~/Content/Images/fff-logo-inverted.png")" width="20px" height="20px" style="display:inline" />
+				Freaky Fast Food
+			</span>
+			<span class="visible-xs">
+				<img src="@Url.Content( "~/Content/Images/fff-logo-inverted.png" )" width="20px" height="20px" style="display:inline" />
+			</span>
+		</a>
+		<a href="#body" class="navbar-brand">
+			<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" class="updating" id="Updating" width="20px" height="20px" style="display:none" />
+			<span class="glyphicon glyphicon-saved updated" id=" updated"></span>
+			@ViewBag.Title
+		</a>
+	</div>
+</nav>

@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	@{ Html.RenderPartial("_Head-Simple"); }
+	@RenderSection( "scripts", required: false )
+</head>
+<body id="body" data-spy="scroll" data-target="#sidenav">
+	<!-- Modal Wrapper - This will be dynamically loaded. -->
+	<div id="wrap">
+		@{ Html.RenderPartial("_Navbar-Simple"); }
+		<div class="container">
+			@RenderBody()
+		</div>
+	</div>
+	@{ Html.RenderPartial( "_Foot" ); }
+</body>
+</html>

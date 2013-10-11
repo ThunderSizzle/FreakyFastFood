@@ -1,0 +1,35 @@
+@model FFF.Models.UserSystem.Account
+@{
+	ViewBag.Title = "My Account";
+}
+<div class="row">
+	<div class="col-md-3">
+		<div class="bs-sidebar hidden-print affix" role="complementary" id="sidenav">
+			<h1 class="hidden-xs">
+				<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" class="updating" id="Updating" width="36px" height="36px" style="display:none" />
+				<span class="glyphicon glyphicon-saved updated" id="Updated"></span>
+				@ViewBag.Title
+			</h1>
+			@{ Html.RenderPartial( "_Sidebar" ); }
+		</div>
+	</div>
+	<div class="col-md-9">
+		@{
+			FFF.Models.UserSystem.Employee Employee = Model as FFF.Models.UserSystem.Employee;
+			FFF.Models.UserSystem.Representative Representative = Model as FFF.Models.UserSystem.Representative;
+			if ( Employee != null )
+			{
+				Html.RenderPartial( "_EmployeeWrapper", Employee );
+			}
+			else if ( Representative != null )
+			{
+				Html.RenderPartial( "_RepresentativeWrapper", Representative );
+			}
+			Html.RenderPartial( "_AccountWrapper", @Model );
+		}		
+	</div>
+</div>
+
+
+
+

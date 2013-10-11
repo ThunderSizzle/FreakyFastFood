@@ -1,0 +1,117 @@
+﻿@model FFF.Models.UserSystem.Account
+
+<div class="row">
+	<div class="col-lg-6">
+		<div class="row">
+			<div class="col-xs-9">
+				<h3>
+					Emails
+				</h3>
+			</div>
+			<div class="col-sm-3">
+				<h3>
+					@using ( Html.BeginForm( "CreateEmail", "Profile", FormMethod.Post, new { @class="LoadModal" } ) )
+					{
+						@Html.AntiForgeryToken()
+						<button class="btn btn-success pull-right" type="submit">
+							<span class="glyphicon glyphicon-plus-sign">
+							</span>
+							New Email
+						</button>
+					}
+				</h3>
+			</div>
+		</div>
+		@if(Model.Emails.Count != 0)
+		{
+			<table class="table table-hover">
+				@{
+					ViewBag.Path = "/Areas/Account/Views/Profile/Contact/Email/";
+					Html.RenderPartial( ViewBag.Path as String + "_Email.cshtml", Model.DefaultEmail );
+					foreach(var email in Model.Emails)
+					{
+						if(email != Model.DefaultEmail)
+						{
+							Html.RenderPartial("_Email", email);
+						}
+					}
+				}
+			</table>
+		}
+		else
+		{
+			<div class="row">
+				<strong>You have no Emails Yet!</strong>
+				<p>Enter your email addresses to receive delivery alerts and updates and/or special offers. Fully customizable and easy to set up.</p>
+				<p>If, for any reason, you do not wish to receive our emails, you can access the latest real-time order information above.</p>
+			</div>
+		}
+	</div>
+	<div class="col-lg-6">
+		<div class="row">
+			<div class="col-xs-9">
+				<h3>
+					Phone Numbers
+				</h3>
+			</div>
+			<div class="col-sm-3">
+				<h3>
+					@using ( Html.BeginForm( "CreatePhone", "Profile", FormMethod.Post, new { @class="LoadModal" } ) )
+					{
+						@Html.AntiForgeryToken()
+						<button class="btn btn-success pull-right" type="submit">
+							<span class="glyphicon glyphicon-plus-sign">
+							</span>
+							New Phone
+						</button>
+					}
+				</h3>
+			</div>
+		</div>
+		@if ( Model.Phones.Count != 0 )
+		{
+			<table class="table table-hover">
+				@{
+					Html.RenderPartial("_Phone", Model.DefaultPhone);
+					foreach(var phone in Model.Phones)
+					{
+						if ( phone != Model.DefaultPhone )
+						{
+							Html.RenderPartial( "_Phone", phone );
+						}
+					}
+				}
+			</table>
+		}
+		else
+		{
+			<div class="row">
+				<strong>You have no Phone Numbers Yet!</strong>
+				<p>Enter a new phone number in order to receive call or text alerts from us regarding your orders.</p>
+				<p>If, for any reason, you do not wish to receive our calls or texts, you can access the latest real-time order information above.</p>
+			</div>
+		}
+	</div>
+</div>
+<div class="row hidden-xs">
+	<h4>Default Contact Method</h4>
+	<p>
+		The first phone and/or email is the current default method we will use to contact you. 
+		This means if you place an order without updating the contact information, we will default to those at the top. 
+		However, for every order you place, you can change the contact method from any of your emails or phone numbers.
+	</p>
+	<p>
+		To set your default contact method, simply click "Edit" on the desired contact method.
+		In the pop-up dialog, there will be a check-box for "Primary Method of Contact".
+		Check this and we will start using that as your new default. If you wish to apply this for orders already placed, click the next check box "Set this for all Past Orders".
+	</p>
+</div>
+<div class="row visible-xs">
+	<h4>Default Contact Method</h4>
+	<p>
+		The first phone and/or email is the current default method we will use to contact you if not otherwise set.
+	</p>
+	<p>
+		To set your default contact method, simply click "Edit" on the desired contact method and check the appropriate boxes.
+	</p>
+</div>
