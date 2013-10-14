@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 
@@ -11,11 +12,13 @@ namespace FFF.Models.UserSystem
 	{
 		//todo Comment Class
 		public virtual Account Account { get; set; }
+		public virtual ICollection<Connection> Connections { get; set; }
 
 		public FFFUser()
 			: base()
 		{
 			this.Account = new Account();
+			this.Connections = new Collection<Connection>();
 		}
 		public FFFUser( RegisterViewModel Register )
 			: this()

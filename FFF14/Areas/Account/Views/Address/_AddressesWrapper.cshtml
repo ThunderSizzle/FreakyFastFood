@@ -2,8 +2,9 @@
 @{
 	ViewBag.SubTitle = "Addresses";
 	ViewBag.Controller = "Address";
+	ViewBag.Glyphicon = "home";
+	ViewBag.CreateButton = true;
 	ViewBag.CreateButtonMessage = "Add a New Address";
+	Html.RenderPartial("_AccountObjectWrapperLayout");
 }
-
-	@{ Html.RenderPartial("_AccountObjectWrapperLayout"); }
 

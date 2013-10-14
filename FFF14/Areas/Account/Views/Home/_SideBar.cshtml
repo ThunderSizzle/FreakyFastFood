@@ -1,8 +1,48 @@
 ﻿@model FFF.Models.UserSystem.Account
+@{
+	FFF.Models.UserSystem.Employee Employee = Model as FFF.Models.UserSystem.Employee;
+	FFF.Models.UserSystem.Representative Representative = Model as FFF.Models.UserSystem.Representative;
+}
+<nav class="navbar navbar-default navbar-brand navbar-fixed-bottom visible-xs visible-sm" role="navigation">
+	@*<div class="navbar-header">*@
+	<ul class="nav nav-tabs ">
+		@{
+			if ( Employee != null )
+			{
+				<li>
+					<a href="#Employee">Employee Section</a>
+					<ul class="nav">
+						<li><a href="#Shift">Shift</a></li>
+						<li><a href="#Pay">Pay</a></li>
+						<li><a href="#More">More</a></li>
+					</ul>
+				</li>
+			}
+			if ( Representative != null )
+			{
+				<li>
+					<a href="#Representative">Representative Section</a>
+					<ul class="nav">
+						<li><a href="#Chains">Chains</a></li>
+						<li><a href="#Restaurants">Restaurants</a></li>
+					</ul>
+				</li>
+			}
+		}
+		<li><a href="#Order">Orders</a></li>
+		<li><a href="#Profile">Profile</a></li>
+		<li><a href="#PaymentMethod">Payment Methods</a></li>
+		<li><a href="#Address">Addresses</a></li>
+		<li><a href="#Review">Reviews</a></li>
+		<li><a href="#Settings">Settings</a></li>
+	</ul>
+	@*</div>*@
+</nav>
 
-<ul class="nav bs-sidenav">
+
+
+<ul class="nav bs-sidenav" >
 	@{
-		FFF.Models.UserSystem.Employee Employee = Model as FFF.Models.UserSystem.Employee;
 		if ( Employee != null )
 		{
 			<li>
@@ -14,7 +54,6 @@
 				</ul>
 			</li>
 		}
-		FFF.Models.UserSystem.Representative Representative = Model as FFF.Models.UserSystem.Representative;
 		if ( Representative != null )
 		{
 			<li>
@@ -26,10 +65,10 @@
 			</li>
 		}
 	}
-	<li><a href="#Orders">Orders</a></li>
+	<li><a href="#Order">Orders</a></li>
 	<li><a href="#Profile">Profile</a></li>
-	<li><a href="#PaymentMethods">Payment Methods</a></li>
-	<li><a href="#Addresses">Addresses</a></li>
-	<li><a href="#Reviews">Reviews</a></li>
+	<li><a href="#PaymentMethod">Payment Methods</a></li>
+	<li><a href="#Address">Addresses</a></li>
+	<li><a href="#Review">Reviews</a></li>
 	<li><a href="#Settings">Settings</a></li>
 </ul>

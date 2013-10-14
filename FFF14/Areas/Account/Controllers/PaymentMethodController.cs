@@ -20,6 +20,13 @@ namespace FFF.Areas.Account.Controllers
     {
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		public override ActionResult Index()
+		{
+			return PartialView( "_PaymentMethods", this.Account.PaymentMethods );
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
 		[AjaxOnly]
 		public ActionResult Create( PaymentMethodInput model = null)
 		{

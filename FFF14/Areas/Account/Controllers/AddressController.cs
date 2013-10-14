@@ -16,27 +16,28 @@ namespace FFF.Areas.Account.Controllers
     {
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public PartialViewResult Index()
+		[AjaxOnly]
+		public override ActionResult Index()
 		{
 			return PartialView( "_Addresses", this.Account.Addresses );
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[AjaxOnly]
 		public PartialViewResult Create()
 		{
 			return PartialView( "_CreateAddress" );
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public PartialViewResult CreateConfirmed( AddressInput model )
+		[AjaxOnly]
+		public JsonResult CreateConfirmed( AddressInput model )
 		{
 			if ( ModelState.IsValid )
 			{
 				Address Address = new Address( model.Nick, model.Line1, model.Line2, model.City, db.States.Find( model.StateID ), model.ZIP );
 				Account.Addresses.Add( Address );
 				db.SaveChanges();
-				ViewBag.Refresh = new string[] {"Addresses"};
-				return PartialView("_Empty");
 				//return PartialView( "_Addresses", Account.Addresses );
 			}
 			else
@@ -44,11 +45,12 @@ namespace FFF.Areas.Account.Controllers
 				ModelState.AddModelError( "CreateAddressFailure", "There were errors with the Address." );
 				Response.StatusCode = 400;
 				Response.StatusDescription = "<h4>There were errors:</h4><p>One or more of the fields could not be saved. Please review the form and ensure everything is valid.</p>";
-				return PartialView( "_Addresses", Account.Addresses );
 			}
+			return Json( new { Value = "1", Text = "Address" });
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[AjaxOnly]
 		public PartialViewResult Edit( Guid id )
 		{
 			Address Address = db.Addresses.Find( id );
@@ -56,7 +58,8 @@ namespace FFF.Areas.Account.Controllers
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public PartialViewResult EditConfirmed( AddressInput model )
+		[AjaxOnly]
+		public JsonResult EditConfirmed( AddressInput model )
 		{
 			if ( ModelState.IsValid )
 			{
@@ -70,25 +73,26 @@ namespace FFF.Areas.Account.Controllers
 
 				db.Entry( Address ).State = EntityState.Modified;
 				db.SaveChanges();
-				return PartialView( "_Addresses", Account.Addresses );
 			}
 			else
 			{
 				ModelState.AddModelError( "CreateAddressFailure", "There were errors with the Address." );
 				Response.StatusCode = 400;
 				Response.StatusDescription = "<h4>There were errors:</h4><p>One or more of the fields could not be saved. Please review the form and ensure everything is valid.</p>";
-				return PartialView( "_Addresses", Account.Addresses );
 			}
+			return Json( new { Value = "1", Text = "Address" } );
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
+		[AjaxOnly]
 		public PartialViewResult Delete( Guid id )
 		{
 			return PartialView( "_DeleteAddress", db.Addresses.Find( id ) );
 		}
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public PartialViewResult DeleteConfirmed( Guid id )
+		[AjaxOnly]
+		public JsonResult DeleteConfirmed( Guid id )
 		{
 			if ( Account.Addresses.Any( c => c.RID == id ) )
 			{
@@ -99,14 +103,13 @@ namespace FFF.Areas.Account.Controllers
 				}
 				Account.Addresses.Remove( Address );
 				db.SaveChanges();
-				return PartialView( "_Addresses", Account.Addresses );
 			}
 			else
 			{
 				Response.StatusCode = 404;
 				Response.StatusDescription += "<ul>We could not find the Address. Please refresh your page and try again.</ul>";
-				return PartialView( "_Addresses", Account.Addresses );
 			}
+			return Json( new { Value = "1", Text = "Address" } );
 		}
 	}
 }

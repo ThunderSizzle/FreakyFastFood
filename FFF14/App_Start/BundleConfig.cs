@@ -15,7 +15,9 @@ namespace FFF
 						"~/Scripts/modernizr-*",
 						"~/Scripts/bootstrap.js",
 						"~/Scripts/jquery-ui-{version}.js",
-						"~/Scripts/bootbox.js"));
+						"~/Scripts/bootbox.js",
+						"~/Scripts/jquery.signalR-2.0.0-rc1.js",
+						"~/signalr/hubs" ) );
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

@@ -65,7 +65,7 @@ namespace FFF.Controllers
 
 			//
 			// GET: /Account/Manage
-			public ActionResult Manage(ManageMessageId? message)
+			public PartialViewResult Manage( ManageMessageId? message )
 			{
 				ViewBag.StatusMessage =
 					message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
@@ -74,24 +74,24 @@ namespace FFF.Controllers
 					: "";
 				ViewBag.HasLocalPassword =  IdentityManager.Logins.HasLocalLogin(Account.User.Id);
 				ViewBag.ReturnUrl = Url.Action("Manage");
-				return View();
+				return PartialView();
 			}
 
 			//
 			// POST: /Account/Manage
 			[HttpPost]
 			[ValidateAntiForgeryToken]
-			public async Task<ActionResult> Manage(ManageUserViewModel model)
+			public ActionResult Manage(ManageUserViewModel model)
 			{
 				string userId = Account.User.Id;
-				bool hasLocalLogin = await IdentityManager.Logins.HasLocalLoginAsync(userId);
+				bool hasLocalLogin = IdentityManager.Logins.HasLocalLogin(userId);
 				ViewBag.HasLocalPassword = hasLocalLogin;
 				ViewBag.ReturnUrl = Url.Action("Manage");
 				if (hasLocalLogin)
 				{               
 					if (ModelState.IsValid)
 					{
-						var result = await IdentityManager.Passwords.ChangePasswordAsync(User.Identity.GetUserName(), model.OldPassword, model.NewPassword);
+						var result = IdentityManager.Passwords.ChangePassword(User.Identity.GetUserName(), model.OldPassword, model.NewPassword);
 						if (result.Success)
 						{
 							return RedirectToAction("Manage", new { Message = ManageMessageId.ChangePasswordSuccess });
@@ -116,7 +116,7 @@ namespace FFF.Controllers
 						try
 						{
 							// Create the local login info and link the local account to the user
-							var result = await IdentityManager.Logins.AddLocalLoginAsync( userId, User.Identity.GetUserName(), model.NewPassword, CancellationToken.None );
+							var result = IdentityManager.Logins.AddLocalLogin( userId, User.Identity.GetUserName(), model.NewPassword );
 							if ( result.Success )
 							{
 								return RedirectToAction("Manage", new { Message = ManageMessageId.SetPasswordSuccess });
@@ -134,7 +134,7 @@ namespace FFF.Controllers
 				}
 
 				// If we got this far, something failed, redisplay form
-				return View(model);
+				return PartialView(model);
 			}
 
 			//
@@ -155,11 +155,14 @@ namespace FFF.Controllers
 			{
 				ClaimsIdentity id = await IdentityManager.Authentication.GetExternalIdentityAsync(AuthenticationManager);
 				var signin = await IdentityManager.Authentication.SignInExternalIdentityAsync( AuthenticationManager, id );
-		//		var email = id.Claims.First( c => c.Type == ClaimTypes.Email ).Value;
-
 				if ( signin.Success )
 				{
-				//	this.Account = db.Accounts.First( c => c.User.UserName == id.N );
+					var temp = this.Account.ShoppingCart;
+					var username = id.GetUserName();
+					this.Account = db.Accounts.First( c => c.User.UserName == username );
+					if ( temp.Products.Count > 0 )
+						this.Account.ShoppingCart.Products.Union(temp.Products);
+					db.SaveChanges();
 					return RedirectToLocal( returnUrl );
 				}
 				else if (User.Identity.IsAuthenticated)
@@ -168,7 +171,7 @@ namespace FFF.Controllers
 					var result = await IdentityManager.Authentication.LinkExternalIdentityAsync( id, Account.User.Id );
 					if ( result.Success )
 					{
-					//	this.Account.Emails.Add(new Email(email));
+						db.SaveChanges();
 						return RedirectToLocal(returnUrl);
 					}
 					else 
@@ -203,13 +206,16 @@ namespace FFF.Controllers
 					var result = await IdentityManager.Authentication.CreateAndSignInExternalUserAsync( AuthenticationManager, user , CancellationToken.None );
 					if ( result.Success )
 					{
+						var temp = this.Account.ShoppingCart;
 						db.SaveChanges();
 						this.Account = user.Account;
 						db.SaveChanges();
 						this.Account.User = user;
 						db.SaveChanges();
-						this.Account.ShoppingCart = new ShoppingCart();
-						db.SaveChanges();
+						if ( temp.Products.Count > 0 )
+						{ 
+							this.Account.ShoppingCart.Products.Union( temp.Products );
+						}
 						Email Email = new FFF.Models.ContactSystem.Email(model.Email);
 						this.Account.Emails.Add( Email );
 						this.Account.DefaultEmail = Email;
@@ -252,10 +258,10 @@ namespace FFF.Controllers
 
 			[AllowAnonymous]
 			[ChildActionOnly]
-			public ActionResult ExternalLoginsList(string returnUrl)
+			public PartialViewResult ExternalLoginsList( string returnUrl )
 			{
 				ViewBag.ReturnUrl = returnUrl;
-				return (ActionResult)PartialView("_ExternalLoginsListPartial", new List<AuthenticationDescription>(AuthenticationManager.GetExternalAuthenticationTypes()));
+				return PartialView("_ExternalLoginsListPartial", new List<AuthenticationDescription>(AuthenticationManager.GetExternalAuthenticationTypes()));
 			}
 
 			[ChildActionOnly]

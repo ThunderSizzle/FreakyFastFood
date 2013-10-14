@@ -18,7 +18,13 @@ namespace FFF.Areas.Account.Controllers
 	[RequireHttps]
 	[Authorize]
 	public class ReviewController : FFF.Controllers.MainController
-    {
+	{
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public override ActionResult Index()
+		{
+			return PartialView( "_Reviews", this.Account.Reviews );
+		}
         //
         // GET: /Review/
         public PartialViewResult All()

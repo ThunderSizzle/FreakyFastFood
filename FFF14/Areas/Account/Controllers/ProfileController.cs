@@ -16,6 +16,12 @@ namespace FFF.Areas.Account.Controllers
 	[ValidateAntiForgeryToken]
 	public class ProfileController : FFF.Controllers.MainController
     {
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public override ActionResult Index()
+		{
+			return PartialView( "_Profile", this.Account );
+		}
 		#region Personal Profile
 			[HttpPost]
 			[AjaxOnly]

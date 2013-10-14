@@ -4157,12 +4157,17 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 
-.navbar-fixed-top,
-.navbar-fixed-bottom {
+.navbar-fixed-top {
   position: fixed;
   right: 0;
   left: 0;
   border-width: 0 0 1px;
+}
+.navbar-fixed-bottom {
+  position: fixed;
+  right: 0;
+  left: 0;
+  border-width: 1px 0 0;
 }
 
 @media (min-width: 768px) {
@@ -4375,8 +4380,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default {
-  background-color: #f8f8f8;
-  border-color: #e7e7e7;
+  background-color: #bad2e0;
+  border-color: #428bca;
 }
 
 .navbar-default .navbar-brand {

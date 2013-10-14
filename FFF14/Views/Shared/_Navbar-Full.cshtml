@@ -18,7 +18,7 @@
 		</a>
 		<a href="#body" class="navbar-brand">
 			<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" class="updating" id="Updating" width="20px" height="20px" style="display:none" />
-			<span class="glyphicon glyphicon-saved updated" id=" updated"></span>
+			<span class="glyphicon glyphicon-@ViewBag.Glyphicon updated" id=" updated"></span>
 			@ViewBag.Title
 		</a>
 	</div>
@@ -73,9 +73,18 @@
 					</ul>
 				</li>
 			}
-			<li>
-				@{ Html.RenderAction( "Navbar", "ShoppingCart", new { area="" } ); }
+			<li  id="ShoppingCartNavbar">
+				<a href="#" onclick="$('#ShoppingCartLink').submit()">
+					<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" width="14px" height="14px" />
+					Shopping Cart: Loading
+				</a>
 			</li>
 		</ul>
+		<div style="display:none" id="ShoppingCart">
+			@using ( Html.BeginForm( "Navbar", "ShoppingCart", new { area = "" }, FormMethod.Post, new { @class="refresher", @for="#ShoppingCartNavbar" } ) )
+			{
+				@Html.AntiForgeryToken()
+			}
+		</div>
 	</div>
 </nav>

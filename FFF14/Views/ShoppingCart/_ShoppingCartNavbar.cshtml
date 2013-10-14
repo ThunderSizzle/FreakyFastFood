@@ -10,13 +10,13 @@
 	@if ( Model.Products.Count == 0 )
 	{
 		@:Empty
-		}
+	}
 	else if ( Model.Products.Count == 1 )
 	{
 		@:1 Item @@ $@Model.Subtotal
-		}
+	}
 	else
 	{
 		@:@Model.Products.Count Items @@ $@Model.Subtotal
-		}
+	}
 </a>

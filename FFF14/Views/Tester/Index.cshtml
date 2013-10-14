@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+@{
+	Layout = null;
+}
+
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="application-name" content="Freaky Fast Food" />
+		<meta name="msapplication-square70x70logo" content="@Url.Content("~/Content/Images/tiny.png")" />
+		<meta name="msapplication-square150x150logo" content="@Url.Content( "~/Content/Images/square.png" )" />
+		<meta name="msapplication-wide310x150logo" content="@Url.Content( "~/Content/Images/wide.png" )" />
+		<meta name="msapplication-square310x310logo" content="@Url.Content( "~/Content/Images/large.png" )" />
+		<meta content="name=My Account;
+				  action-uri=./Account;
+				  icon-uri=./favicon.ico" name="msapplication-task">
+		<link rel="shortcut icon" href="favicon.ico" />
+		<title>@ViewBag.Title - FreakyFastFood</title>
+		@Styles.Render( "~/Content/css" )
+		@Scripts.Render( "~/bundles/jquery" )
+		<script src="~/signalr/hubs"></script>
+		<script>
+			$(function () {
+				// Reference the auto-generated proxy for the hub.  
+				var account = $.connection.accountHub;
+				// Create a function that the hub can call back to display messages.
+				account.client.updateAddressList = function (addresses)
+				{
+					console.log(addresses);
+					$('#accountSignalR').html(addresses);
+				};
+
+
+				// Start the connection.
+				$.connection.hub.start().done(function ()
+				{
+					console.log("We are here!");
+					account.server.addressList();
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<H2>
+			This is our awesome tester page. No layout. No nothing. WYSIWYG :)
+		</H2>
+
+		<p>This is Index.cshtml. We will be running some SignalR Tests. We will be testing both logged in and logged out functions.</p>
+
+		<p>First Test: Get some of our Account info via SignalR:</p>
+		<div id="accountSignalR">
+
+
+		</div>
+	</body>
+</html>

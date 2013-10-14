@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 @{
-	if(ViewBag.Refresh == null)
+	if(ViewBag.Refresh != null)
 	{
-		ViewBag.Refresh = new string[0];
+		var RefreshList = ViewBag.Refresh as string[];
 	}
 }
 <html>

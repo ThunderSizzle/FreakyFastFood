@@ -23,9 +23,9 @@ namespace FFF.Areas.Account.Controllers
     {
         //
         // GET: /Order/
-		public PartialViewResult All()
+		public override ActionResult Index()
         {
-            return PartialView(Account.Orders.ToList());
+            return PartialView("_Orders", Account.Orders.ToList());
         }
 
         //

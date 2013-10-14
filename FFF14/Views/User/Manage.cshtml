@@ -1,28 +1,18 @@
 @using FFF.Models;
 @using Microsoft.AspNet.Identity;
 @{
-	ViewBag.Title = "Manage Account";
+	//ViewBag.Title = "Manage Account";
 }
-
-<hgroup>
-    <h1>@ViewBag.Title.</h1>
-</hgroup>
-
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div class="row-fluid">
-    <div class="span6">
-        @if (ViewBag.HasLocalPassword)
-        {
-            @Html.Partial("_ChangePasswordPartial")
-        }
-        else
-        {
-            @Html.Partial("_SetPasswordPartial")
-        }
-        <section id="externalLogins">
-            @Html.Action("RemoveAccountList")
-
-            @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
+<div class="row">
+	<div class="col-sm-4">
+		<section id="socialLoginForm">
+			@Html.Action( "ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl } )
+		</section>
+	</div>
+	<div class="col-sm-8">
+		<p>
+			You can add the other services so you can choose any and all of the four services to connect with your one Freaky Fast Food Account.
+		</p>
+	</div>
 </div>

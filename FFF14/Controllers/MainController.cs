@@ -34,7 +34,7 @@ namespace FFF.Controllers
         }
 		protected override void Initialize( System.Web.Routing.RequestContext requestContext )
 		{
-			String name = requestContext.HttpContext.User.Identity.Name;
+			var name = requestContext.HttpContext.User.Identity.Name;
 			if ( db.Accounts.Any( c => c.User.UserName == name ) )
 			{
 				this.Account = db.Accounts.First( c => c.User.UserName == name );
@@ -65,21 +65,15 @@ namespace FFF.Controllers
 			}
 			base.Initialize( requestContext );
 		}
-		protected override void OnActionExecuting( ActionExecutingContext filterContext )
-		{
-
-			base.OnActionExecuting( filterContext );
-		}
-
 		protected override void Dispose( bool disposing )
 		{
 			db.Dispose();
 			base.Dispose( disposing );
 		}
-
+		[AllowAnonymous]
 		public virtual ActionResult Index()
 		{
-			return RedirectToAction("Index", "Store", new { Area="Store" } );
+			return RedirectToRoutePermanent("Store_default", new { controller = "" });
 		}
 
 	}

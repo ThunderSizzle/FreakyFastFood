@@ -29,22 +29,27 @@ namespace FFF.Controllers
 		{
 			var name = filterContext.HttpContext.User.Identity.Name;
 			if ( filterContext.HttpContext.Session["Account"] != null )
+			{ 
 				filterContext.HttpContext.Session["Account"] = this.Account;
+			}
 			base.OnResultExecuted( filterContext );
 		}
 
 		// GET: /Order/
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public PartialViewResult Index()
+		[AjaxOnly]
+		public override ActionResult Index()
         {
 			return PartialView("_ShoppingCartModal", Account.ShoppingCart);
         }
 
-		[ChildActionOnly]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[AjaxOnly]
 		public PartialViewResult Navbar()
 		{
-			return PartialView( "_ShoppingCartNavbar", Account.ShoppingCart );
+			return PartialView( "_ShoppingCartNavbar", this.Account.ShoppingCart );
 		}
 
 		/*

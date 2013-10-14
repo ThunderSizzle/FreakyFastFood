@@ -1,25 +1,9 @@
 ﻿@model IEnumerable<FFF.Models.OrderSystem.Order>
-
-<div class="subcontainer" id="Orders">
-	<div class="row">
-		<div class="col-xs-6">
-			<h2>Orders</h2>
-		</div>
-		<div class="col-sm-6">
-			<h2>
-				@using ( Html.BeginForm( "Create", "Order", FormMethod.Post, new { @class="LoadModal" } ) )
-				{
-					@Html.AntiForgeryToken()
-					<button class="btn btn-success pull-right" type="submit">
-						<span class="glyphicon glyphicon-plus-sign">
-						</span>
-						Place A New Order
-					</button>
-				}
-			</h2>
-		</div>
-	</div>
-	<div class="subcontent" id="OrdersContent">
-		@{Html.RenderPartial( ViewBag.Path as String + "_Orders.cshtml" );}
-	</div>
-</div>
+@{
+	ViewBag.SubTitle = "Orders";
+	ViewBag.Controller = "Order";
+	ViewBag.Glyphicon = "briefcase";
+	ViewBag.CreateButton = true;
+	ViewBag.CreateButtonMessage = "Place A New Order";
+	Html.RenderPartial( "_AccountObjectWrapperLayout" );
+}

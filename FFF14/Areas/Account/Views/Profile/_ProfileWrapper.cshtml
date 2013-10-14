@@ -1,8 +1,8 @@
 ﻿@model FFF.Models.UserSystem.Account
-
-<div class="subcontainer" id="Profile">
-	<h2>Profile Information</h2>
-	<div class="subcontent" id="ProfileContent">
-		@{Html.RenderPartial( ViewBag.Path as String + "_Profile.cshtml", @Model );}
-	</div>
-</div>
+@{
+	ViewBag.SubTitle = "Profile";
+	ViewBag.Controller = "Profile";
+	ViewBag.Glyphicon = "font";
+	ViewBag.CreateButton = false;
+	Html.RenderPartial( "_AccountObjectWrapperLayout" );
+}

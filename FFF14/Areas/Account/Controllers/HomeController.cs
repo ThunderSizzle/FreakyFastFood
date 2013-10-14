@@ -30,7 +30,7 @@ namespace FFF.Areas.Account.Controllers
 		}
 		public override ActionResult Index()
 		{
-			ViewBag.Refresh = new string[] { "Addresses" };
+			ViewBag.Refresh = new string[] { "ShoppingCart", "Order", "Profile", "PaymentMethod", "Address", "Review", "Settings" };
 			return View(this.Account);
 		}
 		private ActionResult RedirectToLocal(string returnUrl)

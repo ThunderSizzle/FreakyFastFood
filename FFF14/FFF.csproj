@@ -74,6 +74,10 @@
     <Reference Include="Microsoft.AspNet.Identity.Owin">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.1.0.0-rc1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.0-rc1\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -109,8 +113,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.2.0.0-rc1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -181,6 +185,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
+    <Compile Include="Areas\Account\Controllers\SettingsController.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
     <Compile Include="Areas\Account\Controllers\AddressController.cs" />
@@ -190,6 +195,7 @@
     <Compile Include="Areas\Store\StoreAreaRegistration.cs" />
     <Compile Include="Areas\Support\SupportAreaRegistration.cs" />
     <Compile Include="Areas\Account\Controllers\HomeController.cs" />
+    <Compile Include="Controllers\TesterController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\Store\Controllers\ItemController.cs" />
     <Compile Include="Areas\Account\Controllers\OrderController.cs" />
@@ -197,16 +203,20 @@
     <Compile Include="Areas\Store\Controllers\ProductController.cs" />
     <Compile Include="Areas\Account\Controllers\ProfileController.cs" />
     <Compile Include="Areas\Account\Controllers\ReviewController.cs" />
-    <Compile Include="Controllers\RedirectorController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Areas\Store\Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\AccountHub.cs" />
     <Compile Include="Migrations\201310061534062_Zero.cs" />
     <Compile Include="Migrations\201310061534062_Zero.Designer.cs">
       <DependentUpon>201310061534062_Zero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201310141923173_AddedSignalRConnections.cs" />
+    <Compile Include="Migrations\201310141923173_AddedSignalRConnections.Designer.cs">
+      <DependentUpon>201310141923173_AddedSignalRConnections.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attributes.cs" />
@@ -241,6 +251,7 @@
     <Compile Include="Models\ReviewSystem\Review.cs" />
     <Compile Include="Models\ReviewSystem\Reviewable.cs" />
     <Compile Include="Models\UserSystem\Account.cs" />
+    <Compile Include="Models\UserSystem\Connection.cs" />
     <Compile Include="Models\UserSystem\Employee.cs" />
     <Compile Include="Models\UserSystem\FFFUser.cs" />
     <Compile Include="Models\UserSystem\Gender.cs" />
@@ -262,10 +273,6 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap\bootstrap-theme.min.css" />
-    <Content Include="Content\bootstrap\bootstrap.css" />
-    <Content Include="Content\bootstrap\bootstrap.min.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\Images\ajax-loader.gif" />
     <Content Include="Content\Images\fff-logo-inverted.png" />
@@ -434,6 +441,7 @@
     <Content Include="Areas\Account\Views\Settings\_SettingsWrapper.cshtml" />
     <Content Include="Areas\Account\Views\Shared\_AccountObjectWrapperLayout.cshtml" />
     <Content Include="Areas\Account\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Account\Views\Shared\_Empty.cshtml" />
     <None Include="Properties\PublishProfiles\SmarterASP.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <None Include="Scripts\jquery-2.0.3-vsdoc.js" />
@@ -441,6 +449,7 @@
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery.signalR-2.0.0-rc1.js" />
+    <Content Include="Scripts\jquery.signalR-2.0.0-rc1.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -555,6 +564,7 @@
     <Content Include="Views\Shared\_Foot.cshtml" />
     <Content Include="Views\Shared\_Head-Full.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Tester\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -594,6 +604,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201310061534062_Zero.resx">
       <DependentUpon>201310061534062_Zero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201310141923173_AddedSignalRConnections.resx">
+      <DependentUpon>201310141923173_AddedSignalRConnections.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

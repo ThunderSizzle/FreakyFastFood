@@ -43,6 +43,7 @@ namespace FFF.Models
 		{
 
 		}
+		public DbSet<Connection> Connections { get; set; }
 		public DbSet<CardType> CardTypes { get; set; }
 		public DbSet<ImagePath> ImagePaths { get; set; }
 		public DbSet<Carrier> Carriers { get; set; }
@@ -72,6 +73,10 @@ namespace FFF.Models
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<DatabaseObject>().ToTable( "Objects" ).
+				Map<Connection>( m =>
+				{
+					m.ToTable( "Connections" );
+				} ).
 				Map<CardType>( m =>
 				{
 					m.ToTable( "CardTypes" );

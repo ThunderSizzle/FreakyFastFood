@@ -1,6 +1,6 @@
 ﻿@model FFF.Models.LocationSystem.Address
 
-@using ( Html.BeginForm( "DeleteConfirmed", "Address", new { id=@Model.RID }, FormMethod.Post, new { id="ModalForm", @for="#AddressesContent" } ) )
+@using ( Html.BeginForm( "DeleteConfirmed", "Address", new { id=@Model.RID }, FormMethod.Post, new { id="ModalForm", @for="#AddressesContent", @class="finalsave" } ) )
 {
 	@Html.AntiForgeryToken()
 	<div class="modal-header">
