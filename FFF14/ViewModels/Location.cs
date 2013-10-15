@@ -21,6 +21,21 @@ namespace FFF.ViewModels.Location
 		public String CityTitle { get; set; }
 		public String StateAbbreviation { get; set; }
 		public String ZIP { get; set; }
+
+		public AddressView()
+		{
+
+		}
+		public AddressView(Guid ID, String Nick, String Line1, String Line2, String CityTitle, String StateAbbreviation, String ZIP)
+		{
+			this.ID = ID;
+			this.Nick = Nick;
+			this.Line1 = Line1;
+			this.Line2 = Line2;
+			this.CityTitle = CityTitle;
+			this.StateAbbreviation = StateAbbreviation;
+			this.ZIP = ZIP;
+		}
 	}
 	public class AddressInput
 	{

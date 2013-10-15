@@ -51,7 +51,7 @@
 					</a>
 				</li>
 				<li>
-					@using ( Html.BeginForm( "LogOff", "User", FormMethod.Post, new { area="", id = "logoutForm", @class="navbar-form navbar-right" } ) )
+					@using (Html.BeginForm("LogOff", "User", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-form navbar-right" }))
 					{
 						@Html.AntiForgeryToken()
 						<button class="btn btn-danger" type="submit">

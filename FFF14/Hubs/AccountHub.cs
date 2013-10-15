@@ -1,40 +1,55 @@
 ﻿using FFF.Models;
 using FFF.Models.UserSystem;
+using FFF.ViewModels.Location;
 using Microsoft.AspNet.SignalR;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 
 namespace FFF.Hubs
 {
-
 	[Authorize]
 	public class AccountHub : Hub
 	{
 		DatabaseContext db = new DatabaseContext();
-
-		public void AddressList()
+		FFFUser User;
+		public void GetAll()
 		{
-			
-			Connection Connection = db.Connections.First( c => c.ConnectionID == Context.ConnectionId);
-			
-			Clients.Client(Connection.ConnectionID).updateAddressList("This is the server message. If we smart, we can update the div with this.");
+			var Addresses = db.Accounts.First(c => c.User.UserName == Context.User.Identity.Name).Addresses;
+			if(Addresses.Count  == 0)
+			{
+				Clients.Client(Context.ConnectionId).addressesAll();			
+			}
+			else
+			{
+				ICollection<AddressView> AddressesView = new Collection<AddressView>();
+				foreach(var address in Addresses)
+				{
+					AddressesView.Add(new AddressView(address.RID, address.Nick, address.Line1, address.Line2, address.City, address.State.Abbreviation, address.ZIP));
+				}
+				Clients.Client(Context.ConnectionId).addressesAll(AddressesView);
+			}
 		}
 
 		public override System.Threading.Tasks.Task OnConnected()
 		{
 			var name = Context.User.Identity.Name;
 
-			FFFUser user = db.Users.FirstOrDefault(c => c.UserName == name);
-			if(user != null)
+			this.User = db.Users.First( c => c.UserName == name ) as FFFUser;
+			if (this.User != null)
 			{
-				user.Connections.Add(new Connection
-                {
-                    ConnectionID = Context.ConnectionId,
-                    UserAgent = Context.Request.Headers["User-Agent"],
-                    Connected = true
-                });
+				var connection = this.User.Connections.FirstOrDefault(c => c.ConnectionID == Context.ConnectionId);
+				if(connection == null)
+				{
+					this.User.Connections.Add(new Connection
+					{
+						ConnectionID = Context.ConnectionId,
+						UserAgent = Context.Request.Headers["User-Agent"],
+						Connected = true
+					});
+				}
 			}
 			else
 			{
@@ -47,7 +62,8 @@ namespace FFF.Hubs
 
 		public override System.Threading.Tasks.Task OnDisconnected()
 		{
-            var connection = db.Connections.Find(Context.ConnectionId);
+			this.User = null;
+			var connection = db.Connections.FirstOrDefault(c => c.ConnectionID == Context.ConnectionId);
             connection.Connected = false;
             db.SaveChanges();
 			return base.OnDisconnected();

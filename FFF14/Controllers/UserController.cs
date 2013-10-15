@@ -206,16 +206,11 @@ namespace FFF.Controllers
 					var result = await IdentityManager.Authentication.CreateAndSignInExternalUserAsync( AuthenticationManager, user , CancellationToken.None );
 					if ( result.Success )
 					{
-						var temp = this.Account.ShoppingCart;
-						db.SaveChanges();
-						this.Account = user.Account;
+
+						user.Account = this.Account;
 						db.SaveChanges();
 						this.Account.User = user;
 						db.SaveChanges();
-						if ( temp.Products.Count > 0 )
-						{ 
-							this.Account.ShoppingCart.Products.Union( temp.Products );
-						}
 						Email Email = new FFF.Models.ContactSystem.Email(model.Email);
 						this.Account.Emails.Add( Email );
 						this.Account.DefaultEmail = Email;

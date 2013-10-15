@@ -218,6 +218,10 @@
     <Compile Include="Migrations\201310141923173_AddedSignalRConnections.Designer.cs">
       <DependentUpon>201310141923173_AddedSignalRConnections.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201310150155488_FixedFFFUser.cs" />
+    <Compile Include="Migrations\201310150155488_FixedFFFUser.Designer.cs">
+      <DependentUpon>201310150155488_FixedFFFUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attributes.cs" />
     <Compile Include="Models\ContactSystem\Carrier.cs" />
@@ -454,6 +458,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\knockout-2.3.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <None Include="Scripts\_references.js" />
@@ -607,6 +612,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201310141923173_AddedSignalRConnections.resx">
       <DependentUpon>201310141923173_AddedSignalRConnections.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201310150155488_FixedFFFUser.resx">
+      <DependentUpon>201310150155488_FixedFFFUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

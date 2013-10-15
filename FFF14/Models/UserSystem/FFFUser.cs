@@ -17,7 +17,6 @@ namespace FFF.Models.UserSystem
 		public FFFUser()
 			: base()
 		{
-			this.Account = new Account();
 			this.Connections = new Collection<Connection>();
 		}
 		public FFFUser( RegisterViewModel Register )
