@@ -22,30 +22,6 @@
 		@Scripts.Render( "~/bundles/jquery" )
 		<script src="~/signalr/hubs"></script>
 		<script>
-	@*$(function ()
-	{
-		
-				// Reference the auto-generated proxy for the hub.
-				var account = $.connection.accountHub;
-				// Create a function that the hub can call back to display messages.
-				account.client.updateAddressList = function (addresses)
-				{
-					console.log("We are up!");
-					console.log(addresses);
-					addresses.forEach(function (entry)
-					{
-						console.log(entry);
-						$('#accountSignalR').append(addresses);
-					});
-				};
-				// Start the connection.
-				$.connection.hub.start().done(function ()
-				{
-					console.log("We are here!");
-					account.server.addressList();
-				});
-			});
-			*@
 			$(function ()
 			{
 				function AddressViewModel(rid, nick, line1, line2, city, state, zip)
@@ -60,14 +36,12 @@
 					console.log('We made an AVM :)');
 					console.log(this);
 				}
-
 				function AddressesViewModel()
 				{
 					console.log("Starting View Model!!");
 					this.hub = $.connection.accountHub;
 					this.addresses = ko.observableArray([]);
 					this.newAddress = ko.observable();
-
 
 					var addresses = this.addresses;
 					var newAddress = this.newAddress;
@@ -86,34 +60,52 @@
 						});
 					}
 				}
+
+
 				addressesVM = new AddressesViewModel()
 				ko.applyBindings(addressesVM);
 				$.connection.hub.start(function () { addressesVM.init(); });
 			});
 		</script>
 	</head>
-	<body>
-		<H2>
-			This is our awesome tester page. No layout. No nothing. WYSIWYG :)
-		</H2>
+<body>
+	<h2>
+		This is our awesome tester page. No layout. No nothing. WYSIWYG :)
+	</h2>
 
-		<p>This is Index.cshtml. We will be running some SignalR Tests. We will be testing both logged in and logged out functions.</p>
+	<p>This is Index.cshtml. We will be running some SignalR Tests. We will be testing both logged in and logged out functions.</p>
 
-		<p>First Test: Get some of our Account info via SignalR:</p>
-		<div id="accountSignalR">
-			We want this gone. But more importantly:
-		</div>
-		<div id="address" data-bind="template: {name: 'AddressTemplate', foreach: addresses }">
-			This is the knockout template div. We want this to be something with
-		</div>
+	<p>First Test: Get some of our Account info via SignalR:</p>
+	<div class="row" id="address" data-bind="template: { name: 'AddressTemplate', foreach: addresses }">
+	</div>
 </body>
 </html>
 
 <script type="text/html" id="AddressTemplate">
-	<address style="height:90px">
-		<strong data-bind="text: nick"></strong><br>
-		<span data-bind="text: line1"></span><br>
-		<span data-bind="text: line2"></span><br>
-		<span data-bind="text: city"></span>, <span data-bind="	text: state"></span><span data-bind="	text: zip"></span>
-	</address>
+	<div class="col-xs-4 well well-sm">
+		<address style="height:90px">
+			<strong data-bind="text: nick"></strong><br>
+			<span data-bind="text: line1"></span><br>
+			<span data-bind="text: line2"></span><br>
+			<span data-bind="text: city"></span>, <span data-bind="text: state"></span> <span data-bind="text: zip"></span>
+		</address>
+		<div class="col-xs-4">
+			<button class="btn btn-info" type="submit">
+				<span class="glyphicon glyphicon-edit">
+				</span>
+				Edit
+			</button>
+		</div>
+		<div class="col-xs-8">
+			<button class="btn btn-danger" type="submit">
+				<span class="glyphicon glyphicon-remove">
+				</span>
+				Delete
+			</button>
+		</div>
+	</div>
 </script>
+
+
+
+

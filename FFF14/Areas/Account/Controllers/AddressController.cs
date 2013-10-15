@@ -1,3 +1,4 @@
+using FFF.Hubs;
 using FFF.Models.LocationSystem;
 using FFF.ViewModels.Location;
 using System;

@@ -17,7 +17,8 @@ namespace FFF.Hubs
 		FFFUser User;
 		public void GetAll()
 		{
-			var Addresses = db.Accounts.First(c => c.User.UserName == Context.User.Identity.Name).Addresses;
+			var Account = db.Accounts.First(c => c.User.UserName == Context.User.Identity.Name);
+			var Addresses = Account.Addresses;
 			if(Addresses.Count  == 0)
 			{
 				Clients.Client(Context.ConnectionId).addressesAll();			
@@ -29,10 +30,15 @@ namespace FFF.Hubs
 				{
 					AddressesView.Add(new AddressView(address.RID, address.Nick, address.Line1, address.Line2, address.City, address.State.Abbreviation, address.ZIP));
 				}
-				Clients.Client(Context.ConnectionId).addressesAll(AddressesView);
+				ICollection<String> ConnectionIds = new Collection<String>();
+				foreach (var item in (Account.User as FFFUser).Connections)
+				{
+					ConnectionIds.Add(item.ConnectionID);
+				}
+
+				Clients.Clients(ConnectionIds.ToList()).addressesAll(AddressesView);
 			}
 		}
-
 		public override System.Threading.Tasks.Task OnConnected()
 		{
 			var name = Context.User.Identity.Name;
