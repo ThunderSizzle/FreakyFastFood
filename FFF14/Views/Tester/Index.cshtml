@@ -26,20 +26,23 @@
 			{
 				function AddressViewModel(rid, nick, line1, line2, city, state, zip)
 				{
-					this.rid = rid;
-					this.nick = nick;
-					this.line1 = line1;
-					this.line2 = line2;
-					this.city = city;
-					this.state = state;
-					this.zip = zip;
+					this.rid = ko.observable(rid);
+					this.nick = ko.observable(nick);
+					this.line1 = ko.observable(line1);
+					this.line2 = ko.observable(line2);
+					this.city = ko.observable(city);
+					this.state = ko.observable(state);
+					this.zip = ko.observable(zip);
 					console.log('We made an AVM :)');
 					console.log(this);
+
+					this.editURL = 'Account/Address/Edit/' + rid;
+					this.deleteURL = 'Account/Address/Delete/' + rid;
 				}
 				function AddressesViewModel()
 				{
 					console.log("Starting View Model!!");
-					this.hub = $.connection.accountHub;
+					this.hub = $.connection.addressHub;
 					this.addresses = ko.observableArray([]);
 					this.newAddress = ko.observable();
 
@@ -49,15 +52,84 @@
 					this.init = function ()
 					{
 						console.log("Calling Get All!!");
-						this.hub.server.getAll();
+						this.hub.server.index();
 					}
-
 					this.hub.client.addressesAll = function (addressesAll)
 					{
+						console.log("All Addresses Returned!!!");
 						$.map(addressesAll, function (item)
 						{
-							addresses.push(new AddressViewModel(item.ID, item.Nick, item.Line1, item.Line2, item.CityTitle, item.StateAbbreviation, item.ZIP))
+							addresses.push(new AddressViewModel(item.ID, item.Nick, item.Line1, item.Line2, item.CityTitle, item.StateAbbreviation, item.ZIP));
 						});
+						console.log("All Addresses Added to ArrayList");
+					}
+
+
+					this.createModal = function ()
+					{
+						this.hub.server.create();
+					}
+					this.hub.client.CreateBack = function (AddressInput)
+					{
+						this.displayMode = "AddressCreateTemplate";
+					}
+					this.editModal = function(addressID)
+					{
+						this.hub.server.edit(addressID);
+					}
+					this.hub.client.EditBack = function (AddressInput)
+					{
+						this.displayMode = "AddressEditTemplate";
+					}
+					this.deleteModal = function (addressID)
+					{
+						this.hub.server.remove(addressID);
+					}
+					this.hub.client.RemoveBack = function (Address)
+					{
+						this.displayMode = "AddressRemoveTemplate";
+					}
+
+					this.post = function (address)
+					{
+						this.hub.server.post(address);
+					}
+					this.hub.client.PostBack = function (Address)
+					{
+						this.addresses.push(new AddressesViewModel(Address.ID, Address.Nick, Address.Line1, Address.Line2, Address.CityTitle, Address.StateAbbreviation, Address.ZIP));
+					}
+
+					this.put = function (address)
+					{
+						this.hub.server.put(address);
+					}
+					this.hub.client.PutBack = function (Address)
+					{
+						var addressVM = ko.utils.arrayFilter(addresses(), function (item)
+						{
+							return Address.ID == item.rid;
+						});
+						addressVM.nick(Address.Nick);
+						addressVM.line1(Address.Line1);
+						addressVM.line2(Address.Line2);
+						addressVM.city(Address.CityTitle);
+						addressVM.state(Address.StateAbbreviation);
+						addressVM.zip(Address.ZIP);
+					}
+
+					this.delete = function (address)
+					{
+						this.hub.server.delete(address);
+					}
+					this.hub.client.DeleteBack = function (Address)
+					{
+						this.addresses.remove(function(item) { return item.rid == Address.ID }) 
+					}
+
+
+					this.hub.client.StateList = function (stateList)
+					{
+						
 					}
 				}
 
@@ -69,20 +141,29 @@
 		</script>
 	</head>
 <body>
-	<h2>
-		This is our awesome tester page. No layout. No nothing. WYSIWYG :)
-	</h2>
+	<div class="container">
+		<div class="modal fade" id="Modal">
+			<div class="modal-dialog">
+				<div class="modal-content" id="ModalContent" data-bind="template: { template: displayMode }">
 
-	<p>This is Index.cshtml. We will be running some SignalR Tests. We will be testing both logged in and logged out functions.</p>
+				</div>
+			</div>
+		</div>
+		<h2>
+			This is our awesome tester page. No layout. No nothing. WYSIWYG :)
+		</h2>
 
-	<p>First Test: Get some of our Account info via SignalR:</p>
-	<div class="row" id="address" data-bind="template: { name: 'AddressTemplate', foreach: addresses }">
+		<p>This is Index.cshtml. We will be running some SignalR Tests.</p>
+
+		<p>First Test: Get some of our Account info via SignalR:</p>
+		<div class="row" id="address" data-bind="template: { name: 'AddressTemplate', foreach: addresses }">
+		</div>
 	</div>
 </body>
 </html>
 
 <script type="text/html" id="AddressTemplate">
-	<div class="col-xs-4 well well-sm">
+	<div class="col-lg-3 col-xs-6 col-sm-4 well well-sm">
 		<address style="height:90px">
 			<strong data-bind="text: nick"></strong><br>
 			<span data-bind="text: line1"></span><br>
@@ -90,22 +171,52 @@
 			<span data-bind="text: city"></span>, <span data-bind="text: state"></span> <span data-bind="text: zip"></span>
 		</address>
 		<div class="col-xs-4">
-			<button class="btn btn-info" type="submit">
-				<span class="glyphicon glyphicon-edit">
-				</span>
-				Edit
-			</button>
+			<form data-bind="submit: editModal" method="get">
+				<button class="btn btn-info LoadModal">
+					<span class=" glyphicon glyphicon-edit">
+					</span>
+					Edit
+				</button>
+			</form>
 		</div>
 		<div class="col-xs-8">
-			<button class="btn btn-danger" type="submit">
-				<span class="glyphicon glyphicon-remove">
-				</span>
-				Delete
-			</button>
+			<form>
+				<button class="btn btn-danger LoadModal" data-bind="attr: { href: deleteURL }">
+					<span class="glyphicon glyphicon-remove">
+					</span>
+					Delete
+				</button>
+			</form>
 		</div>
 	</div>
 </script>
 
+<script type="text/html" id="AddressEditTemplate">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h3>Editing <span data-bind="text: nick"></span> Address</h3>
+	</div>
+	<div class="modal-body">
+		<span class="help-inline field-validation-error">
+		</span>
+		<p>This is our awesome edit Modal!!!!</p>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn" data-dismiss="modal">Cancel</a>
+		<button type="submit" class="btn btn-primary">
+			<span class="glyphicon glyphicon-floppy-disk">
+			</span>
+			Save Changes
+		</button>
+	</div>
+</script>
+
+<script id="AddressCreateTemplate">
 
 
+</script>
 
+<script id="AddressRemoveTemplate">
+
+
+</script>

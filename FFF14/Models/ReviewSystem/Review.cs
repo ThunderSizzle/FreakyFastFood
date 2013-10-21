@@ -1,24 +1,25 @@
-﻿using FFF.Models.UserSystem;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
+﻿using System;
 
-namespace FFF.Models.ReviewSystem
+namespace FFF.Models
 {
 	//todo Comment Class
-	public class Review : DatabaseObject
+	public class Review : ReviewDatabaseObject
 	{
-		public Account Poster { get; set; }
+		public virtual Account Poster { get; set; }
 		public String Message { get; set; }
 		public DateTime Timestamp { get; set; }
 		public int Helpful { get; private set; }
 		public int Unhelpful { get; private set; }
 		public int Rating { get; set; }
 		public Boolean Reported { get; set; }
-		public Reviewable Reviewed { get; set; }
+		public virtual Reviewable Reviewed { get; set; }
+		public override bool Removeable
+		{
+			get
+			{
+				return false;
+			}
+		}
 
 		public Review()
 		{

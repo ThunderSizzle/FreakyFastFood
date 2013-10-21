@@ -1,29 +1,22 @@
-﻿using System;
+﻿using FFF.Models;
+using FFF.ViewModels;
+using FFF.ViewModels.Profile;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
+using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Validation;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security;
-using FFF.Models;
-using FFF.Models.UserSystem;
-using System.Threading;
 using System.Web.Security;
-using FFF.Models.OrderSystem;
-using System.Data.Entity;
-using FFF.ViewModels.Location;
-using FFF.Models.LocationSystem;
-using System.Data.Entity.Infrastructure;
-using FFF.ViewModels.PaymentMethod;
-using FFF.Models.PaymentSystem;
-using FFF.Models.ContactSystem;
-using FFF.ViewModels.Account;
-using FFF.ViewModels.Profile;
 
 namespace FFF.Controllers
 {
@@ -76,7 +69,7 @@ namespace FFF.Controllers
 				ViewBag.ReturnUrl = Url.Action("Manage");
 				return PartialView();
 			}
-
+			/*
 			//
 			// POST: /Account/Manage
 			[HttpPost]
@@ -136,7 +129,7 @@ namespace FFF.Controllers
 				// If we got this far, something failed, redisplay form
 				return PartialView(model);
 			}
-
+			*/
 			//
 			// POST: /Account/ExternalLogin
 			[HttpPost]
@@ -211,7 +204,7 @@ namespace FFF.Controllers
 						db.SaveChanges();
 						this.Account.User = user;
 						db.SaveChanges();
-						Email Email = new FFF.Models.ContactSystem.Email(model.Email);
+						Email Email = new FFF.Models.Email(model.Email);
 						this.Account.Emails.Add( Email );
 						this.Account.DefaultEmail = Email;
 						this.Account.FirstName = model.FirstName;

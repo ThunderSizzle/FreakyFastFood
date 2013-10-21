@@ -1,14 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using FFF.Models.ReviewSystem;
-using FFF.Models;
-using FFF.Models.ProfileSystem;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace FFF.Areas.Account.Controllers
 {
@@ -19,80 +12,30 @@ namespace FFF.Areas.Account.Controllers
 	[Authorize]
 	public class ReviewController : FFF.Controllers.MainController
 	{
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public override ActionResult Index()
+		[HttpGet]
+		public PartialViewResult Index()
 		{
-			return PartialView( "_Reviews", this.Account.Reviews );
+			return PartialView( "_Reviews" );
 		}
-        //
-        // GET: /Review/
-        public PartialViewResult All()
-        {
-			return PartialView( Account.Reviews.ToList() );
-        }
-
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public PartialViewResult ReportReview( Guid id )
+		[HttpGet]
+		public PartialViewResult Details()
 		{
-			db.Reviews.Find( id ).Reported = true;
-			db.SaveChanges();
-			return PartialView();
+			return PartialView( "_DetailsReview" );
 		}
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult ReportHelpful ( Guid id )
+		[HttpGet]
+		public PartialViewResult Create()
 		{
-			db.Reviews.Find( id ).AddHelpful();
-			return View();
+			return PartialView( "_CreateReview" );
 		}
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult ReportUnHelpful ( Guid id )
+		[HttpGet]
+		public PartialViewResult Edit()
 		{
-			db.Reviews.Find( id ).AddUnHelpful();
-			return View();
+			return PartialView( "_EditReview" );
 		}
-
-
-        //
-        // GET: /Review/Details/5
-        public ActionResult Details(Guid id)
-        {
-			if ( Account.Reviews.Any( c => c.RID == id ) )
-			{
-				return View( Account.Reviews.First( c => c.RID == id ) );
-			}
-			return HttpNotFound();
-        }
-
-		//
-		// POST: /Payment/Delete/5
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Delete ( Guid id )
+		[HttpGet]
+		public PartialViewResult Delete()
 		{
-			try
-			{
-				if ( db.Reviews.Any( c => c.RID == id ) )
-				{
-					db.Reviews.Remove( db.Reviews.First( c => c.RID == id ) );
-					db.SaveChanges();
-					return Json( new { success = "true" } );
-				}
-				return HttpNotFound();
-			}
-			catch ( DbUpdateException e )
-			{
-				return Json( new { success = "false" } );
-			}
+			return PartialView( "_DeleteReview" );
 		}
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
-        }
     }
 }

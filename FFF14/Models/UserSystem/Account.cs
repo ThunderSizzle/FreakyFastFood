@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
-using System.Linq;
-using Microsoft.AspNet.Identity;
+﻿using FFF.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
-using FFF.Models.ProfileSystem;
-using FFF.Models.PaymentSystem;
-using FFF.Models.OrderSystem;
+using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using FFF.Models.LocationSystem;
-using FFF.Models.ReviewSystem;
-using FFF.ViewModels.Account;
 
-namespace FFF.Models.UserSystem
+namespace FFF.Models
 {
 	//todo Comment Class
 	public class Account : Profile
@@ -28,11 +16,16 @@ namespace FFF.Models.UserSystem
 		public virtual User User { get; set; }
 		public String FirstName { get; set; }
 		public String LastName { get; set; }
-		/// <summary>
-		/// True for Man. False for Woman. Null for Neither
-		/// </summary>
 		public virtual Gender Gender { get; set; }
-		//public DateTime Birthday { get; set; }
+		public virtual DateTime Birthday { get; set; }
+
+		public override bool Removeable
+		{
+			get
+			{
+				return false;
+			}
+		}
 
         public Account()
 			: base()
@@ -41,13 +34,6 @@ namespace FFF.Models.UserSystem
 			this.PaymentMethods = new Collection<PaymentMethod>();
 			this.Orders = new Collection<Order>();
         }
-		public Account (RegisterViewModel Register)
-			: this()
-		{
-			this.User = new User();
-			this.User.Id = this.RID.ToString();
-			this.User.UserName = Register.UserName;
-		}
 	}
 	/*
     public class UserLogin : IUserLogin

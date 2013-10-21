@@ -5,13 +5,19 @@ using System.IO;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.ImagesSystem
+namespace FFF.Models
 {
-	public class ImagePath : DatabaseObject
+	public class ImagePath : ProfileDatabaseObject
 	{
 		public String Description { get; set; }
-		public ImageOwner ImageOwner { get; set; }
-
+		public virtual ImageOwner ImageOwner { get; set; }
+		public override bool Removeable
+		{
+			get
+			{
+				return true;
+			}
+		}
 		public ImagePath()
 		{
 

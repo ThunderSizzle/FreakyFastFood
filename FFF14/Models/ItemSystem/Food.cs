@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.ItemSystem
+namespace FFF.Models
 {
 	//todo Comment Class
 	public class Food : Comestible
@@ -14,8 +14,8 @@ namespace FFF.Models.ItemSystem
 		{
 
 		}
-		public Food( Menu Menu, String Title, String Description, Decimal Price = 0M )
-			: base( Menu, Title, Description, Price )
+		public Food( Chain Chain, String Title, String Description, Decimal Price = 0M )
+			: base( Chain, Title, Description, Price )
 		{
 
 		}

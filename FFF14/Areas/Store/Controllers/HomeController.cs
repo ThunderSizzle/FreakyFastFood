@@ -11,7 +11,7 @@ namespace FFF.Areas.Store.Controllers
 	[AllowAnonymous]
 	public class HomeController : FFF.Controllers.MainController
 	{
-		public override ActionResult Index()
+		public ActionResult Index()
 		{
 			return View();
 		}

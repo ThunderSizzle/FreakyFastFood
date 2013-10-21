@@ -1,18 +1,15 @@
-﻿using FFF.Models.LocationSystem;
-using FFF.Models.UserSystem;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-using FFF.Models.ProfileSystem;
-using FFF.ViewModels.PaymentMethod;
 
-namespace FFF.Models.PaymentSystem
+namespace FFF.Models
 {
 	//todo Comment Class
-	public class PaymentMethod : DatabaseObject
+	public class PaymentMethod : PaymentMethodDatabaseObject
 	{
 		[Required]
 		[DataType( DataType.Text )]
@@ -21,7 +18,7 @@ namespace FFF.Models.PaymentSystem
 		public String CardHolderName { get; set; }
 		[Required]
 		[DataType( DataType.Text )]
-		public CardType CardType { get; private set; }
+		public virtual CardType CardType { get; private set; }
 		[Required]
 		[DataType( DataType.CreditCard )]
 		[MinLength( 15 )]
@@ -38,8 +35,27 @@ namespace FFF.Models.PaymentSystem
 		public String CCV { get; set; }
 		public virtual Account Account { get; set; }
 		public virtual Address BillingAddress { get; set; }
-		public bool Expired { get; private set; }
-
+		public bool Expired
+		{
+			get
+			{
+				if(DateTime.Compare(DateTime.Now, this.Expiration) > 0)
+					return true;
+				else
+					return false;
+			}
+		}
+		public virtual ICollection<Order> Orders { get; set; }
+		public override bool Removeable
+		{
+			get
+			{
+				if(Orders.Count > 0)
+					return false;
+				else
+					return base.Removeable;
+			}
+		}
 		public PaymentMethod ()
 			: base()
 		{
@@ -53,21 +69,7 @@ namespace FFF.Models.PaymentSystem
 			this.Expiration = Expiration;
 			this.CCV = CCV;
 			this.BillingAddress = BillingAddress;
-			//this.DeriveCardType();
-			this.VerifyExpiration();
-		}
-		
-		public void VerifyExpiration()
-		{
-			if(DateTime.Compare(this.Expiration, DateTime.Now) > 0)
-			{
-				this.Expired = false;
-			}
-			else
-			{
-				this.Expired = true;
-			}
-
+			this.Orders = new Collection<Order>();
 		}
 		/// <summary>
 		/// Tests the Card Number and identifies the CardType.

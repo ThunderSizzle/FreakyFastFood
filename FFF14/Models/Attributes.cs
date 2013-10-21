@@ -1,10 +1,5 @@
-﻿using FFF.Models.PaymentSystem;
-using FFF.ViewModels.PaymentMethod;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using FFF.Models;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace System.Web.Mvc
 {

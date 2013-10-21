@@ -4,13 +4,24 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
-namespace FFF.Models.ContactSystem
+namespace FFF.Models
 {
-	public class Carrier : DatabaseObject
+	public class Carrier : ContactDatabaseObject
 	{
 		public string Title { get; set; }
 		public string Email { get; set; }
 		public virtual ICollection<Phone> PhoneNumbers { get; set; }
+
+		public override bool Removeable
+		{
+			get
+			{
+				if(PhoneNumbers.Count > 0)
+					return true;
+				else
+					return base.Removeable;
+			}
+		}
 
 		public Carrier()
 			: base()

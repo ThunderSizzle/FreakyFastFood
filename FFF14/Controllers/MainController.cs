@@ -1,17 +1,14 @@
 using FFF.Models;
-using FFF.Models.UserSystem;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security;
 using System.Web.Security;
-using Microsoft.AspNet.Identity.Owin;
-using FFF.Models.OrderSystem;
-using FFF.Models.ItemSystem;
 
 namespace FFF.Controllers
 {
@@ -70,11 +67,5 @@ namespace FFF.Controllers
 			db.Dispose();
 			base.Dispose( disposing );
 		}
-		[AllowAnonymous]
-		public virtual ActionResult Index()
-		{
-			return RedirectToRoutePermanent("Store_default", new { controller = "" });
-		}
-
 	}
 }

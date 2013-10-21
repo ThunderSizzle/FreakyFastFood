@@ -1,15 +1,10 @@
-﻿using FFF.Models.ProfileSystem;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
-namespace FFF.Models.ContactSystem
+namespace FFF.Models
 {
 
-	public class Email : DatabaseObject
+	public class Email : ContactDatabaseObject
 	{
 
 		[Required]

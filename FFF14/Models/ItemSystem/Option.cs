@@ -5,13 +5,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace FFF.Models.ItemSystem
+namespace FFF.Models
 {
 	//todo Comment Class
 	/// <summary>
 	/// 
 	/// </summary>
-	public class Option : DatabaseObject
+	public class Option : ItemDatabaseObject
 	{
 		/// <summary>
 		/// 
@@ -27,6 +27,16 @@ namespace FFF.Models.ItemSystem
 		public virtual Choice Choice { get; set; }
 		public virtual Decimal AdditionalPrice { get; set; }
 		public virtual ICollection<Product> Products { get; set; }
+		public override bool Removeable
+		{
+			get
+			{
+				if(Products.Count > 0)
+					return false;
+				else
+					return base.Removeable;
+			}
+		}
 
 		/// <summary>
 		/// 

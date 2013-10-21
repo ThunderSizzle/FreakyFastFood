@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.ItemSystem
+namespace FFF.Models
 {
 	//todo Finish Comment Class
 	/// <summary>
@@ -21,7 +21,16 @@ namespace FFF.Models.ItemSystem
 		/// List of Allergens in Product
 		/// </summary>
 		public virtual ICollection<Allergen> Allergens { get; set; }
-
+		public override bool Removeable
+		{
+			get
+			{
+				if(Ingredients.Count + Allergens.Count > 0)
+					return false;
+				else
+					return base.Removeable;
+			}
+		}
 
 		/// <summary>
 		/// 
@@ -34,8 +43,8 @@ namespace FFF.Models.ItemSystem
 			this.Allergens = new Collection<Allergen>();
 			this.Choices = new Collection<Choice>();
 		}
-		public Comestible(Menu Menu, String Title, String Description, Decimal Price = 0M)
-			: base(Menu, Title, Description, Price)
+		public Comestible( Chain Chain, String Title, String Description, Decimal Price = 0M )
+			: base( Chain, Title, Description, Price )
 		{
 			this.Nutrition = new Nutrition();
 			this.Ingredients = new Collection<Ingredient>();

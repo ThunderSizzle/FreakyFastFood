@@ -1,7 +1,4 @@
-﻿using FFF.Models.ContactSystem;
-using FFF.Models.ItemSystem;
-using FFF.Models.ProfileSystem;
-using FFF.Models.UserSystem;
+﻿using FFF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.FoodProviderSystem
+namespace FFF.Models
 {
 	//todo Comment Class
 	public class Chain : Provider
@@ -17,12 +14,22 @@ namespace FFF.Models.FoodProviderSystem
 		public String Title { get; set; }
 		public String Description { get; set; }
 		public virtual ICollection<Representative> Representatives { get; set; }
-		public virtual ICollection<Menu> Menus { get; set; }
+		public virtual ICollection<Item> Items { get; set; }
 		public virtual ICollection<Restaurant> Restaurants { get; set; }
+		public override bool Removeable
+		{
+			get
+			{
+				if ( Representatives.Count + Items.Count + Restaurants.Count > 0 )
+					return false;
+				else
+					return base.Removeable;
+			}
+		}
 		public Chain()
 			: base()
 		{
-			this.Menus = new Collection<Menu>();
+			this.Items = new Collection<Item>();
 			this.Restaurants = new Collection<Restaurant>();
 			this.Representatives = new Collection<Representative>();
 		}
@@ -30,7 +37,7 @@ namespace FFF.Models.FoodProviderSystem
 			: base()
 		{
 			this.Title = Title;
-			this.Menus = new Collection<Menu>();
+			this.Items = new Collection<Item>();
 			this.Restaurants = new Collection<Restaurant>();
 			this.Representatives = new Collection<Representative>();
 		}

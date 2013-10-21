@@ -1,7 +1,4 @@
-﻿using FFF.Models.ContactSystem;
-using FFF.Models.LocationSystem;
-using FFF.Models.ProfileSystem;
-using FFF.Models.UserSystem;
+﻿using FFF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,15 +6,24 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.FoodProviderSystem
+namespace FFF.Models
 {
 	//todo Comment Class
 	public class Restaurant : Provider
 	{
-		public Chain Chain { get; set; }
-		public Address Address { get; set; }
-		public ICollection<Representative> Representatives { get; set; }
-
+		public virtual Chain Chain { get; set; }
+		public virtual Address Address { get; set; }
+		public virtual ICollection<Representative> Representatives { get; set; }
+		public override bool Removeable
+		{
+			get
+			{
+				if(Representatives.Count > 0)
+					return false;
+				else
+					return base.Removeable;
+			}
+		}
 		public Restaurant()
 			: base ()
 		{

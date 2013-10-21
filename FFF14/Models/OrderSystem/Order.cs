@@ -1,6 +1,4 @@
-﻿using FFF.Models.UserSystem;
-using FFF.Models.ItemSystem;
-using FFF.Models.ReviewSystem;
+﻿using FFF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,10 +6,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-using FFF.Models.PaymentSystem;
-using FFF.Models.LocationSystem;
 
-namespace FFF.Models.OrderSystem
+namespace FFF.Models
 {
 	//todo Comment Class
 	
@@ -35,7 +31,13 @@ namespace FFF.Models.OrderSystem
 				return subtotal;
 			}
 		}
-
+		public override bool Removeable
+		{
+			get
+			{
+				return false;
+			}
+		}
 		public Order()
 			: base()
 		{

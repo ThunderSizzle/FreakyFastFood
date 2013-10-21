@@ -1,4 +1,4 @@
-﻿using FFF.Models.UserSystem;
+﻿using FFF.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -15,7 +15,7 @@ namespace FFF.Areas.Store
         public override void RegisterArea(AreaRegistrationContext context) 
 		{
             context.MapRoute(
-                "Store_default",
+                "Default",
                 "Store/{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );

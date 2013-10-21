@@ -1,8 +1,4 @@
-﻿using FFF.Models.ItemSystem;
-using FFF.Models.LocationSystem;
-using FFF.Models.PaymentSystem;
-using FFF.Models.ReviewSystem;
-using FFF.Models.UserSystem;
+﻿using FFF.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.OrderSystem
+namespace FFF.Models
 {
 	//todo Comment Class
 
@@ -30,6 +26,13 @@ namespace FFF.Models.OrderSystem
 					subtotal += product.Price;
 				}
 				return subtotal;
+			}
+		}
+		public override bool Removeable
+		{
+			get
+			{
+				return false;
 			}
 		}
 		public ShoppingCart()

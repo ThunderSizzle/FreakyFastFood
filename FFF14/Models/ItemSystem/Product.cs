@@ -1,14 +1,11 @@
-﻿using FFF.Models.OrderSystem;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 
-namespace FFF.Models.ItemSystem
+namespace FFF.Models
 {
-	public class Product : DatabaseObject
+	public class Product : ItemDatabaseObject
 	{
 		public decimal Price
 		{
@@ -27,7 +24,16 @@ namespace FFF.Models.ItemSystem
 		public virtual ICollection<Option> SelectedOptions { get; set; }
 		public virtual ShoppingCart ShoppingCart { get; set; }
 		public virtual Order Order { get; set; }
-
+		public override bool Removeable
+		{
+			get
+			{
+				if(Order != null)
+					return false;
+				else
+					return base.Removeable;
+			}
+		}
 		public Product()
 			: base()
 		{

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace FFF.Models.ItemSystem
+namespace FFF.Models
 {
 	//todo Finish Comment Class
 	/// <summary>
@@ -13,7 +13,7 @@ namespace FFF.Models.ItemSystem
 	/// If the Item is to represent a specific ordered item, then the Option value will be populated.
 	/// 
 	/// </summary>
-	public class Choice : DatabaseObject
+	public class Choice : ItemDatabaseObject
 	{
 		/// <summary>
 		/// 
@@ -26,12 +26,21 @@ namespace FFF.Models.ItemSystem
 		/// <summary>
 		/// A List of Options for the Choice
 		/// </summary>
-		public ICollection<Option> Options { get; set; }
+		public virtual ICollection<Option> Options { get; set; }
 		/// <summary>
 		/// A List of Comestibles this Choice is applicable for
 		/// </summary>
-		public ICollection<Item> Items { get; set; }
-		
+		public virtual ICollection<Item> Items { get; set; }
+		public override bool Removeable
+		{
+			get
+			{
+				if(Options.Count + Items.Count > 0)
+					return false;
+				else
+					return base.Removeable;
+			}
+		}
 		/// <summary>
 		/// 
 		/// </summary>

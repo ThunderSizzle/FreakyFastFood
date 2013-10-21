@@ -1,21 +1,12 @@
-﻿using FFF.Models.OrderSystem;
-using FFF.Models.PaymentSystem;
-using FFF.Models.ProfileSystem;
-using FFF.Models.UserSystem;
-using FFF.ViewModels.Location;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Web;
 
-namespace FFF.Models.LocationSystem
+namespace FFF.Models
 {
 	//todo Comment Class
-	public class Address : DatabaseObject
+	public class Address : LocationDatabaseObject
 	{
 
 		public virtual Profile Profile { get; set; }
@@ -43,7 +34,16 @@ namespace FFF.Models.LocationSystem
 		public virtual ICollection<PaymentMethod> Payments { get; set; }
 		public virtual ICollection<Order> Orders { get; set; }
 		public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
-
+		public override bool Removeable
+		{
+			get
+			{
+				if(Payments.Count + Orders.Count + ShoppingCarts.Count > 0)
+					return false;
+				else
+					return base.Removeable;
+			}
+		}
 		public Address()
 			: base()
 		{

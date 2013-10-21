@@ -1,26 +1,7 @@
-﻿using FFF.Models.FoodProviderSystem;
-using FFF.Models.ItemSystem;
-using FFF.Models.LocationSystem;
-using FFF.Models.OrderSystem;
-using FFF.Models.ProfileSystem;
-using FFF.Models.ReviewSystem;
-using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
-using System.Linq;
-using System.Web.Security;
-using System.Data.Entity.Validation;
-using System.Data.Entity.Infrastructure;
-using Microsoft.AspNet.Identity.EntityFramework;
-using FFF.Models.UserSystem;
-using FFF.Models.PaymentSystem;
-using System.Collections.ObjectModel;
-using System.Collections;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
-using FFF.Models.ContactSystem;
-using System.Security.Cryptography;
-using FFF.Models.ImagesSystem;
 
 namespace FFF.Models
 {
@@ -29,7 +10,7 @@ namespace FFF.Models
 	{
 		[Key]
 		public Guid RID { get; set; }
-
+		public virtual bool Removeable { get { return true; } }
 
 		public DatabaseObject()
 		{
@@ -57,7 +38,6 @@ namespace FFF.Models
 		public DbSet<Review> Reviews { get; set; }
 		public DbSet<State> States { get; set; }
 		public DbSet<Address> Addresses { get; set; }
-		public DbSet<Menu> Menus { get; set; }
 		public DbSet<Comestible> Comestibles { get; set; }
 		public DbSet<Profile> Profiles { get; set; }
 		public DbSet<Item> Items { get; set; }
@@ -70,9 +50,15 @@ namespace FFF.Models
 		public DbSet<Choice> Choices { get; set; }
 		public DbSet<Option> Option { get; set; }
 		public DbSet<Category> Categories { get; set; }
+		public DbSet<Setting> Settings { get; set; }
+		public DbSet<DatabaseObject> DatabaseObjects { get; set; }
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			modelBuilder.Entity<DatabaseObject>().ToTable( "Objects" ).
+				Map<Setting>( m =>
+				{
+					m.ToTable( "Settings" );
+				} ).
 				Map<Connection>( m =>
 				{
 					m.ToTable( "Connections" );
@@ -109,15 +95,42 @@ namespace FFF.Models
 				{
 					m.ToTable( "Products" );
 				}).
-				Map<Category>( m => m.ToTable( "Categories" ) ).
-				Map<PaymentMethod>( m => m.ToTable( "PaymentMethods" ) ).
-				Map<Address>( m => m.ToTable( "Addresses" ) ).
-				Map<Option>( m => m.ToTable( "Options" ) ).
-				Map<Choice>( m => m.ToTable( "Choices" ) ).
-				Map<Allergen>( m => m.ToTable( "Allergens" ) ).
-				Map<Ingredient>( m => m.ToTable( "Ingredients" ) ).
-				Map<Review>( m => m.ToTable( "Reviews" ) ).
-				Map<Reviewable>(m => m.ToTable("Reviewables")).
+				Map<Category>( m => 
+				{
+					m.ToTable( "Categories" ) ;
+				}).
+				Map<PaymentMethod>( m =>
+				{
+					m.ToTable( "PaymentMethods" );
+				}).
+				Map<Address>( m =>
+				{
+					m.ToTable( "Addresses" );
+				}).
+				Map<Option>( m => 
+				{
+					m.ToTable( "Options" ) ;
+				}).
+				Map<Choice>( m =>
+				{
+					m.ToTable( "Choices" ) ;
+				}).
+				Map<Allergen>( m => 
+				{
+					m.ToTable( "Allergens" ) ;
+				}).
+				Map<Ingredient>( m =>
+				{
+					m.ToTable( "Ingredients" ) ;
+				}).
+				Map<Review>( m =>
+				{
+					m.ToTable( "Reviews" ) ;
+				}).
+				Map<Reviewable>(m =>
+				{
+					m.ToTable("Reviewables");
+				}).
 				Map<ImageOwner>( m =>
 				{
 					m.ToTable( "ImageOwners" );

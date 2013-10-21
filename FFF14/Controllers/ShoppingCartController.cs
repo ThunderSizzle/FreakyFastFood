@@ -1,19 +1,15 @@
+using FFF.Models;
+using FFF.ViewModels;
+using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using FFF.Models.OrderSystem;
-using FFF.Models;
-using FFF.Models.ProfileSystem;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.Owin.Security;
-using FFF.Models.UserSystem;
-using FFF.ViewModels.Item;
-using FFF.Models.ItemSystem;
+using System.Web;
+using System.Web.Mvc;
 
 
 namespace FFF.Controllers
@@ -39,7 +35,7 @@ namespace FFF.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[AjaxOnly]
-		public override ActionResult Index()
+		public ActionResult Index()
         {
 			return PartialView("_ShoppingCartModal", Account.ShoppingCart);
         }

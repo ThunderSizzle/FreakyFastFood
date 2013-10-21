@@ -1,20 +1,23 @@
-﻿using FFF.Models.LocationSystem;
-using FFF.Models.UserSystem;
+﻿using FFF.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
-using FFF.Models.ProfileSystem;
-using FFF.ViewModels.PaymentMethod;
 
-namespace FFF.Models.PaymentSystem
+namespace FFF.Models
 {
-	public class CardType : DatabaseObject
+	public class CardType : PaymentMethodDatabaseObject
 	{
 		public String Title { get; set; }
-
+		public override bool Removeable
+		{
+			get
+			{
+				return false;
+			}
+		}
 		public CardType()
 			: base()
 		{

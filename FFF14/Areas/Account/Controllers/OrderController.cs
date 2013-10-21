@@ -1,16 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using FFF.Models.OrderSystem;
 using FFF.Models;
-using FFF.Models.ProfileSystem;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.Owin.Security;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace FFF.Areas.Account.Controllers
 {
@@ -22,90 +13,34 @@ namespace FFF.Areas.Account.Controllers
 	public class OrderController : FFF.Controllers.MainController
     {
         //
-        // GET: /Order/
-		public override ActionResult Index()
+		// GET: /Order/
+		[HttpGet]
+		public PartialViewResult Index()
         {
-            return PartialView("_Orders", Account.Orders.ToList());
+            return PartialView("_Orders");
         }
 
         //
         // GET: /Order/Details/5
-		public PartialViewResult Details( Guid id )
+		[HttpGet]
+		public PartialViewResult Details( )
         {
-			if(Account.Orders.Any(c => c.RID == id))
-			{
-				return PartialView( Account.Orders.First( c => c.RID == id ) );
-			}
-			return PartialView();
+			return PartialView( "_DetailsOrder" );
         }
-
-        //
-        // POST: /Order/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-		public ActionResult Migrate()
-        {
-			if ( Account.ShoppingCart.Products.Count == 0 )
-			{	 
-				return View( "Index" , "ShoppingCart");
-			}
-			else
-			{
-				Order Order = new Order();
-				Order.Products = Account.ShoppingCart.Products;
-				Order.Status = "Order Migrated";
-				Account.Orders.Add( Order );
-                db.SaveChanges();
-				return View( "SelectAddress", Order );
-            }
-        }
-
-		[HttpPost]
-		public ActionResult SelectAddress(Guid OrderID, Guid AddressID)
+		[HttpGet]
+		public PartialViewResult Create( )
 		{
-			if(this.Account.Orders.Any(c => c.RID == OrderID))
-			{
-				if ( this.Account.Addresses.Any( c => c.RID == AddressID ) )
-				{
-					this.Account.Orders.First( c => c.RID == OrderID ).Status = "Address Verified";
-					this.Account.Orders.First( c => c.RID == OrderID ).DeliveryAddress = this.Account.Addresses.First( c => c.RID == AddressID );
-					db.SaveChanges();
-					return View("SelectPayment", this.Account.Orders.First(c => c.RID == OrderID));
-				}
-			}
-			return HttpNotFound();
+			return PartialView( "_CreateOrder" );
 		}
-		[HttpPost]
-		public ActionResult SelectPayment( Guid OrderID, Guid PaymentID )
+		[HttpGet]
+		public PartialViewResult Edit( )
 		{
-			if(this.Account.Orders.Any(c => c.RID == OrderID))
-			{
-				if ( this.Account.PaymentMethods.Any( c => c.RID == PaymentID ) )
-				{
-					this.Account.Orders.First( c => c.RID == OrderID ).Status = "Payment Verified";
-					this.Account.Orders.First( c => c.RID == OrderID ).PaymentMethod = this.Account.PaymentMethods.First( c => c.RID == PaymentID );
-					db.SaveChanges();
-					return View("VerifyOrder", this.Account.Orders.First(c => c.RID == OrderID));
-				}
-			}
-			return HttpNotFound();
+			return PartialView( "_EditOrder" );
 		}
-		[HttpPost]
-		public ActionResult VerifyOrder( Guid OrderID )
+		[HttpGet]
+		public PartialViewResult Delete( )
 		{
-			if(this.Account.Orders.Any(c => c.RID == OrderID))
-			{
-				this.Account.Orders.First( c => c.RID == OrderID ).Status = "Submitted";
-				this.Account.ShoppingCart.Products.Clear();
-				db.SaveChanges();
-				return View("Details", this.Account.Orders.First(c => c.RID == OrderID));
-			}
-			return HttpNotFound();
+			return PartialView( "_DeleteOrder" );
 		}
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
-        }
     }
 }

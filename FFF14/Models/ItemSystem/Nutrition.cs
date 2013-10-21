@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.ItemSystem
+namespace FFF.Models
 {
 	//todo Finish Comment Class
 	/// <summary>

@@ -1,11 +1,10 @@
-﻿using FFF.Models.ContactSystem;
-using FFF.Models.ProfileSystem;
+﻿using FFF.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.FoodProviderSystem
+namespace FFF.Models
 {
 	//todo Comment Class
 	public class Provider : Profile

@@ -6,13 +6,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.ReviewSystem
+namespace FFF.Models
 {
 	//todo Comment Class
-	public abstract class Reviewable : DatabaseObject
+	public abstract class Reviewable : ReviewDatabaseObject
 	{
-		public ICollection<Review> Reviews { get; set; }
-
+		public virtual ICollection<Review> Reviews { get; set; }
+		public override bool Removeable
+		{
+			get
+			{
+				if(Reviews.Count > 0)
+					return false;
+				else
+					return base.Removeable;
+			}
+		}
 		public Reviewable()
 			: base()
 		{

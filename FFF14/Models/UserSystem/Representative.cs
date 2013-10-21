@@ -1,5 +1,5 @@
-﻿using FFF.Models.FoodProviderSystem;
-using FFF.ViewModels.Account;
+﻿using FFF.Models;
+using FFF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Security;
 
-namespace FFF.Models.UserSystem
+namespace FFF.Models
 {
 	//todo Comment Class
 	public class Representative : Account
@@ -15,12 +15,6 @@ namespace FFF.Models.UserSystem
 		public virtual ICollection<Chain> Chains { get; set; }
 		public virtual ICollection<Restaurant> Restaurants { get; set; }
 
-		public Representative ( RegisterViewModel Register )
-			: base (Register)
-		{
-			this.Chains = new Collection<Chain>();
-			this.Restaurants = new Collection<Restaurant>();
-		}
 		public Representative( )
 			: base( )
 		{

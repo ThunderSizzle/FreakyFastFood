@@ -1,11 +1,6 @@
 namespace FFF.Migrations
 {
-	using FFF.Models.ContactSystem;
-	using FFF.Models.FoodProviderSystem;
-	using FFF.Models.ItemSystem;
-	using FFF.Models.LocationSystem;
-	using FFF.Models.PaymentSystem;
-	using FFF.Models.UserSystem;
+	using FFF.Models;
 	using System;
 	using System.Data.Entity;
 	using System.Data.Entity.Migrations;
@@ -797,62 +792,63 @@ namespace FFF.Migrations
 			context.SaveChanges();
 			#region Seed Menus
 			Chain McDonalds = context.Chains.First( c => c.Title == "McDonalds" );
-
-			context.Menus.AddOrUpdate
+			
+			Category menu = new Category("Menus");
+			context.Categories.AddOrUpdate
 			(
 				c => c.Title,
-				new Menu( "Burgers & Sandwiches", McDonalds ),
-				new Menu( "Chicken & Fish", McDonalds ),
-				new Menu( "Breakfast", McDonalds ),
-				new Menu( "Salads", McDonalds ),
-				new Menu( "Snack & Sides", McDonalds ),
-				new Menu( "McCafé", McDonalds ),
-				new Menu( "Beverages", McDonalds ),
-				new Menu( "Desserts & Shakes", McDonalds )
+				menu,
+				new Category( "Burgers & Sandwiches", menu ),
+				new Category( "Chicken & Fish", menu ),
+				new Category( "Breakfast", menu ),
+				new Category( "Salads", menu ),
+				new Category( "Snack & Sides", menu ),
+				new Category( "McCafé", menu ),
+				new Category( "Beverages", menu ),
+				new Category( "Desserts & Shakes", menu )
 			);
 			#endregion
 			context.SaveChanges();
 			#region Seed Items
-			Menu Burgers = context.Menus.First( c => c.Title == "Burgers & Sandwiches" );
 			context.Items.AddOrUpdate
 			(
 				c => c.Title,
-				new Food( Burgers, "Big Mac", "" ),
-				new Food( Burgers, "Cheeseburger", "" ),
-				new Food( Burgers, "ChipotleBBQSnackWrap(Crispy)", "" ),
-				new Food( Burgers, "ChipotleBBQSnackWrap(Grilled)", "" ),
-				new Food( Burgers, "DailyDouble", "" ),
-				new Food( Burgers, "DoubleCheeseburger", "" ),
-				new Food( Burgers, "DoubleQuarterPounderwithCheese", "" ),
-				new Food( Burgers, "Filet-O-Fish", "" ),
-				new Food( Burgers, "GrilledOnionCheddar", "" ),
-				new Food( Burgers, "Hamburger", "" ),
-				new Food( Burgers, "HoneyMustardSnackWrap(Crispy)", "" ),
-				new Food( Burgers, "HoneyMustardSnackWrap(Grilled)", "" ),
-				new Food( Burgers, "MacSnackWrap", "" ),
-				new Food( Burgers, "McChicken®", "" ),
-				new Food( Burgers, "McDouble", "" ),
-				new Food( Burgers, "McRib®", "" ),
-				new Food( Burgers, "PremiumCrispyChickenClassicSandwich", "" ),
-				new Food( Burgers, "PremiumCrispyChickenClubSandwich", "" ),
-				new Food( Burgers, "PremiumCrispyChickenRanchBLTSandwich", "" ),
-				new Food( Burgers, "PremiumGrilledChickenClassicSandwich", "" ),
-				new Food( Burgers, "PremiumGrilledChickenClubSandwich", "" ),
-				new Food( Burgers, "PremiumGrilledChickenRanchBLTSandwich", "" ),
-				new Food( Burgers, "PremiumMcWrapChicken&Bacon(Crispy)", "" ),
-				new Food( Burgers, "PremiumMcWrapChicken&Bacon(Grilled)", "" ),
-				new Food( Burgers, "PremiumMcWrapChicken&Ranch(Crispy)", "" ),
-				new Food( Burgers, "PremiumMcWrapChicken&Ranch(Grilled)", "" ),
-				new Food( Burgers, "PremiumMcWrapChickenSweetChili(Crispy)", "" ),
-				new Food( Burgers, "PremiumMcWrapChickenSweetChili(Grilled)", "" ),
-				new Food( Burgers, "QuarterPounderBacon&Cheese", "" ),
-				new Food( Burgers, "QuarterPounderBaconHabaneroRanch", "" ),
-				new Food( Burgers, "QuarterPounderBLT", "" ),
-				new Food( Burgers, "QuarterPounderDeluxe", "" ),
-				new Food( Burgers, "QuarterPounder®withCheese", "" ),
-				new Food( Burgers, "RanchSnackWrap®(Crispy)", "" ),
-				new Food( Burgers, "RanchSnackWrap®(Grilled)", "" ),
-				new Food( Burgers, "SouthernStyleCrispyChickenSandwich", "" )
+				new Food( McDonalds, "Big Mac", "" ),
+				new Food( McDonalds, "Cheeseburger", "" ),
+				new Food( McDonalds, "ChipotleBBQSnackWrap(Crispy)", "" ),
+				new Food( McDonalds, "ChipotleBBQSnackWrap(Grilled)", "" ),
+				new Food( McDonalds, "DailyDouble", "" ),
+				new Food( McDonalds, "DoubleCheeseburger", "" ),
+				new Food( McDonalds, "DoubleQuarterPounderwithCheese", "" ),
+				new Food( McDonalds, "Filet-O-Fish", "" ),
+				new Food( McDonalds, "GrilledOnionCheddar", "" ),
+				new Food( McDonalds, "Hamburger", "" ),
+				new Food( McDonalds, "HoneyMustardSnackWrap(Crispy)", "" ),
+				new Food( McDonalds, "HoneyMustardSnackWrap(Grilled)", "" ),
+				new Food( McDonalds, "MacSnackWrap", "" ),
+				new Food( McDonalds, "McChicken®", "" ),
+				new Food( McDonalds, "McDouble", "" ),
+				new Food( McDonalds, "McRib®", "" ),
+				new Food( McDonalds, "PremiumCrispyChickenClassicSandwich", "" ),
+				new Food( McDonalds, "PremiumCrispyChickenClubSandwich", "" ),
+				new Food( McDonalds, "PremiumCrispyChickenRanchBLTSandwich", "" ),
+				new Food( McDonalds, "PremiumGrilledChickenClassicSandwich", "" ),
+				new Food( McDonalds, "PremiumGrilledChickenClubSandwich", "" ),
+				new Food( McDonalds, "PremiumGrilledChickenRanchBLTSandwich", "" ),
+				new Food( McDonalds, "PremiumMcWrapChicken&Bacon(Crispy)", "" ),
+				new Food( McDonalds, "PremiumMcWrapChicken&Bacon(Grilled)", "" ),
+				new Food( McDonalds, "PremiumMcWrapChicken&Ranch(Crispy)", "" ),
+				new Food( McDonalds, "PremiumMcWrapChicken&Ranch(Grilled)", "" ),
+				new Food( McDonalds, "PremiumMcWrapChickenSweetChili(Crispy)", "" ),
+				new Food( McDonalds, "PremiumMcWrapChickenSweetChili(Grilled)", "" ),
+				new Food( McDonalds, "QuarterPounderBacon&Cheese", "" ),
+				new Food( McDonalds, "QuarterPounderBaconHabaneroRanch", "" ),
+				new Food( McDonalds, "QuarterPounderBLT", "" ),
+				new Food( McDonalds, "QuarterPounderDeluxe", "" ),
+				new Food( McDonalds, "QuarterPounder®withCheese", "" ),
+				new Food( McDonalds, "RanchSnackWrap®(Crispy)", "" ),
+				new Food( McDonalds, "RanchSnackWrap®(Grilled)", "" ),
+				new Food( McDonalds, "SouthernStyleCrispyChickenSandwich", "" )
 			);
 			#endregion
 			context.SaveChanges();

@@ -6,15 +6,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.LocationSystem
+namespace FFF.Models
 {
 	//todo Comment Class
-	public class State : DatabaseObject
+	public class State : LocationDatabaseObject
 	{
 		[StringLength( 2 )]
 		public String Abbreviation { get; set; }
 		public String Title { get; set; }
 		public Boolean Allowed { get; set; }
+		public override bool Removeable
+		{
+			get
+			{
+				return false;
+			}
+		}
 
 		public State()
 			: base()

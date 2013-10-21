@@ -6,11 +6,13 @@ using System.Web.Mvc;
 
 namespace FFF.Controllers
 {
-    public class TesterController : MainController
+	[Authorize]
+	[RequireHttps]
+    public class TesterController : Controller
     {
         //
         // GET: /Tester/
-        public override ActionResult Index()
+        public ActionResult Index()
         {
             return View();
         }

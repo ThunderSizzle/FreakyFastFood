@@ -123,6 +123,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0-rc1\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -132,6 +136,14 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0-rc1\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.0.0-rc1\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0-rc1\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -184,16 +196,25 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Account\AccountAreaRegistration.cs" />
-    <Compile Include="Areas\Account\Controllers\SettingsController.cs" />
+    <Compile Include="Areas\Account\Controllers\API\AccountObjectController.cs" />
+    <Compile Include="Areas\Account\Controllers\API\SettingsController.cs" />
+    <Compile Include="Areas\Account\Controllers\API\ReviewController.cs" />
+    <Compile Include="Areas\Account\Controllers\API\ProfileController.cs" />
+    <Compile Include="Areas\Account\Controllers\API\OrderController.cs" />
+    <Compile Include="Areas\Account\Controllers\API\PaymentMethodController.cs" />
+    <Compile Include="Areas\Account\Controllers\API\AddressController.cs" />
+    <Compile Include="Areas\Account\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\API\AdminObjectController.cs" />
+    <Compile Include="Areas\Employee\Controllers\API\EmployeeObjectController.cs" />
     <Compile Include="Areas\Employee\EmployeeAreaRegistration.cs" />
     <Compile Include="Areas\Account\Controllers\AddressController.cs" />
-    <Compile Include="Areas\Manager\ManagerAreaRegistration.cs" />
-    <Compile Include="Areas\Profile\ProfileAreaRegistration.cs" />
+    <Compile Include="Areas\Representative\Controllers\API\RepresentativeObjectController.cs" />
     <Compile Include="Areas\Representative\RepresentativeAreaRegistration.cs" />
+    <Compile Include="Areas\Store\Controllers\API\AccountObjectController.cs" />
     <Compile Include="Areas\Store\StoreAreaRegistration.cs" />
-    <Compile Include="Areas\Support\SupportAreaRegistration.cs" />
     <Compile Include="Areas\Account\Controllers\HomeController.cs" />
     <Compile Include="Controllers\TesterController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -209,22 +230,26 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Hubs\AccountHub.cs" />
-    <Compile Include="Migrations\201310061534062_Zero.cs" />
-    <Compile Include="Migrations\201310061534062_Zero.Designer.cs">
-      <DependentUpon>201310061534062_Zero.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201310141923173_AddedSignalRConnections.cs" />
-    <Compile Include="Migrations\201310141923173_AddedSignalRConnections.Designer.cs">
-      <DependentUpon>201310141923173_AddedSignalRConnections.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201310150155488_FixedFFFUser.cs" />
-    <Compile Include="Migrations\201310150155488_FixedFFFUser.Designer.cs">
-      <DependentUpon>201310150155488_FixedFFFUser.cs</DependentUpon>
+    <Compile Include="Hubs\Admin\AdminObjectHub.cs" />
+    <Compile Include="Hubs\DatabaseObjectHub.cs" />
+    <Compile Include="Hubs\Account\AccountReviewHub.cs" />
+    <Compile Include="Hubs\Account\AccountSettingHub.cs" />
+    <Compile Include="Hubs\Account\AccountProfileHub.cs" />
+    <Compile Include="Hubs\Account\AccountOrderHub.cs" />
+    <Compile Include="Hubs\Account\AccountPaymentMethodHub.cs" />
+    <Compile Include="Hubs\Account\AccountAddressHub.cs" />
+    <Compile Include="Hubs\Account\AccountObjectHub.cs" />
+    <Compile Include="Hubs\Employee\EmployeeObjectHub.cs" />
+    <Compile Include="Hubs\Representative\RepresentativeObjectHub.cs" />
+    <Compile Include="Hubs\Store\StoreObjectHub.cs" />
+    <Compile Include="Migrations\201310200051163_Zero.cs" />
+    <Compile Include="Migrations\201310200051163_Zero.Designer.cs">
+      <DependentUpon>201310200051163_Zero.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attributes.cs" />
     <Compile Include="Models\ContactSystem\Carrier.cs" />
+    <Compile Include="Models\ContactSystem\ContactDatabaseObject.cs" />
     <Compile Include="Models\ContactSystem\Email.cs" />
     <Compile Include="Models\ContactSystem\Phone.cs" />
     <Compile Include="Models\Context.cs" />
@@ -241,19 +266,24 @@
     <Compile Include="Models\ItemSystem\Food.cs" />
     <Compile Include="Models\ItemSystem\Ingredient.cs" />
     <Compile Include="Models\ItemSystem\Item.cs" />
-    <Compile Include="Models\ItemSystem\Menu.cs" />
+    <Compile Include="Models\ItemSystem\ItemDatabaseObject.cs" />
     <Compile Include="Models\ItemSystem\Nutrition.cs" />
     <Compile Include="Models\ItemSystem\Option.cs" />
     <Compile Include="Models\ItemSystem\Product.cs" />
     <Compile Include="Models\LocationSystem\Address.cs" />
+    <Compile Include="Models\LocationSystem\LocationDatabaseObject.cs" />
     <Compile Include="Models\LocationSystem\State.cs" />
     <Compile Include="Models\OrderSystem\Order.cs" />
     <Compile Include="Models\OrderSystem\ShoppingCart.cs" />
     <Compile Include="Models\PaymentSystem\CardType.cs" />
+    <Compile Include="Models\PaymentSystem\PaymentMethodDatabaseObject.cs" />
     <Compile Include="Models\PaymentSystem\PaymentMethod.cs" />
     <Compile Include="Models\ProfileSystem\Profile.cs" />
+    <Compile Include="Models\ProfileSystem\ProfileDatabaseObject.cs" />
     <Compile Include="Models\ReviewSystem\Review.cs" />
     <Compile Include="Models\ReviewSystem\Reviewable.cs" />
+    <Compile Include="Models\ReviewSystem\ReviewDatabaseObject.cs" />
+    <Compile Include="Models\UserSystem\Setting.cs" />
     <Compile Include="Models\UserSystem\Account.cs" />
     <Compile Include="Models\UserSystem\Connection.cs" />
     <Compile Include="Models\UserSystem\Employee.cs" />
@@ -262,15 +292,11 @@
     <Compile Include="Models\UserSystem\Representative.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\Account.cs" />
     <Compile Include="ViewModels\HtmlExtensions.cs" />
-    <Compile Include="ViewModels\Item.cs" />
-    <Compile Include="ViewModels\Location.cs" />
-    <Compile Include="ViewModels\Order.cs" />
-    <Compile Include="ViewModels\PaymentMethod.cs" />
-    <Compile Include="ViewModels\Product.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="ViewModels\InputModel.cs" />
+    <Compile Include="ViewModels\DropDownModels.cs" />
     <Compile Include="ViewModels\Profile.cs" />
-    <Compile Include="ViewModels\Review.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-signin.css" />
@@ -358,10 +384,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Areas\Account\Views\Web.Config" />
     <Content Include="Areas\Store\Views\Web.Config" />
-    <Content Include="Areas\Support\Views\Web.Config" />
     <Content Include="Areas\Representative\Views\Web.Config" />
-    <Content Include="Areas\Profile\Views\Web.Config" />
-    <Content Include="Areas\Manager\Views\Web.Config" />
     <Content Include="Areas\Admin\Views\Web.Config" />
     <Content Include="Areas\Account\Views\Home\_AccountWrapper.cshtml" />
     <Content Include="Areas\Account\Views\Home\_SideBar.cshtml" />
@@ -462,7 +485,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\jquery-2.0.3.min.map" />
     <None Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -573,26 +598,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Account\Models\" />
-    <Folder Include="Areas\Admin\Controllers\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\Product\" />
-    <Folder Include="Areas\Employee\Controllers\" />
-    <Folder Include="Areas\Employee\Models\" />
     <Folder Include="Areas\Employee\Views\Shared\" />
-    <Folder Include="Areas\Manager\Controllers\" />
-    <Folder Include="Areas\Manager\Models\" />
-    <Folder Include="Areas\Manager\Views\Shared\" />
-    <Folder Include="Areas\Profile\Controllers\" />
-    <Folder Include="Areas\Profile\Models\" />
-    <Folder Include="Areas\Profile\Views\Shared\" />
-    <Folder Include="Areas\Representative\Controllers\" />
-    <Folder Include="Areas\Representative\Models\" />
     <Folder Include="Areas\Representative\Views\Shared\" />
-    <Folder Include="Areas\Store\Models\" />
-    <Folder Include="Areas\Support\Controllers\" />
-    <Folder Include="Areas\Support\Models\" />
-    <Folder Include="Areas\Support\Views\Shared\" />
     <Folder Include="Content\Images\Store\" />
   </ItemGroup>
   <ItemGroup>
@@ -607,14 +615,8 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201310061534062_Zero.resx">
-      <DependentUpon>201310061534062_Zero.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201310141923173_AddedSignalRConnections.resx">
-      <DependentUpon>201310141923173_AddedSignalRConnections.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201310150155488_FixedFFFUser.resx">
-      <DependentUpon>201310150155488_FixedFFFUser.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201310200051163_Zero.resx">
+      <DependentUpon>201310200051163_Zero.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

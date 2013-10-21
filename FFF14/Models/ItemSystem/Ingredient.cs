@@ -5,14 +5,23 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
-namespace FFF.Models.ItemSystem
+namespace FFF.Models
 {
 	//todo Comment Class
-	public class Ingredient : DatabaseObject
+	public class Ingredient : ItemDatabaseObject
 	{
 		public String Name { get; set; }
-		public ICollection<Comestible> Comestibles { get; set; }
-
+		public virtual ICollection<Comestible> Comestibles { get; set; }
+		public override bool Removeable
+		{
+			get
+			{
+				if(Comestibles.Count > 0)
+					return false;
+				else
+					return base.Removeable;
+			}
+		}
 		public Ingredient()
 		{
 			this.Comestibles = new Collection<Comestible>();

@@ -1,4 +1,4 @@
-﻿using FFF.ViewModels.Account;
+﻿using FFF.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Web;
 
-namespace FFF.Models.UserSystem
+namespace FFF.Models
 {
 	public class FFFUser : User
 	{
@@ -18,11 +18,6 @@ namespace FFF.Models.UserSystem
 			: base()
 		{
 			this.Connections = new Collection<Connection>();
-		}
-		public FFFUser( RegisterViewModel Register )
-			: this()
-		{
-			this.UserName = Register.UserName;
 		}
 		public FFFUser ( String UserName )
 			: this()
