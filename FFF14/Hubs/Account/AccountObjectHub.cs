@@ -30,5 +30,13 @@ namespace FFF.Hubs
 			}
 			return ConnectionIds;
 		}
+
+		protected async Task<Account> Account()
+		{
+			var name = Context.User.Identity.Name;
+			Account Account;
+			Account = await db.Accounts.FirstAsync( c => c.User.UserName == name);
+			return Account;
+		}
 	}
 }

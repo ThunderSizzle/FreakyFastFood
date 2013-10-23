@@ -69,7 +69,7 @@
 						Log In<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						@Html.Action( "ExternalLoginsList", "User", new { area="", ReturnUrl = ViewBag.ReturnUrl } )
+						@{ Html.RenderAction( "ExternalLoginsList", "User", new { area = "", returnURL = ViewBag.ReturnUrl } ); }
 					</ul>
 				</li>
 			}

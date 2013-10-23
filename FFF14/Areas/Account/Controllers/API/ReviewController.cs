@@ -13,6 +13,16 @@ namespace FFF.Areas.Account.Controllers.API
 	[Authorize]
 	public class ReviewController : AccountObjectController
     {
+		public ReviewController()
+			: base()
+		{
+
+		}
+		public ReviewController( FFF.Models.Account Account )
+			: base (Account)
+		{
+
+		}
         // GET api/Address
 		public ICollection<Review> Get()
         {

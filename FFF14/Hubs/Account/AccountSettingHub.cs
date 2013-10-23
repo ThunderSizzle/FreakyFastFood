@@ -17,7 +17,7 @@ namespace FFF.Hubs
 	{
 		public override async Task Index()
 		{
-			using ( SettingController api = new SettingController() )
+			using ( SettingController api = new SettingController( await this.Account() ) )
 			{
 				var Settingss = api.Get();
 				ICollection<SettingView> SettingsView = new Collection<SettingView>();
@@ -30,7 +30,7 @@ namespace FFF.Hubs
 		}
 		public async Task Post( SettingInput model )
 		{
-			using ( SettingController api = new SettingController() )
+			using ( SettingController api = new SettingController( await this.Account() ) )
 			{
 				var result = await api.Post( model );
 				var contentresult = result as OkNegotiatedContentResult<Setting>;
@@ -49,7 +49,7 @@ namespace FFF.Hubs
 		}
 		public async Task Put( SettingInput model )
 		{
-			using ( SettingController api = new SettingController() )
+			using ( SettingController api = new SettingController( await this.Account() ) )
 			{
 				var result = await api.Put( model );
 				var contentresult = result as OkNegotiatedContentResult<Setting>;
@@ -65,7 +65,7 @@ namespace FFF.Hubs
 		}
 		public override async Task Delete( Guid SettingRID )
 		{
-			using ( SettingController api = new SettingController() )
+			using ( SettingController api = new SettingController( await this.Account() ) )
 			{
 				var result = await api.Delete( SettingRID );
 				var contentresult = result as OkNegotiatedContentResult<Address>;

@@ -17,7 +17,7 @@ namespace FFF.Hubs
 	{
 		public override async Task Index()
 		{
-			using ( ReviewController api = new ReviewController() )
+			using ( ReviewController api = new ReviewController( await this.Account() ) )
 			{
 				var Reviews = api.Get();
 				ICollection<ReviewView> ReviewsView = new Collection<ReviewView>();
@@ -30,7 +30,7 @@ namespace FFF.Hubs
 		}
 		public async Task Post( ReviewInput model )
 		{
-			using ( ReviewController api = new ReviewController() )
+			using ( ReviewController api = new ReviewController( await this.Account() ) )
 			{
 				var result = await api.Post( model );
 				var contentresult = result as OkNegotiatedContentResult<Review>;
@@ -49,7 +49,7 @@ namespace FFF.Hubs
 		}
 		public async Task Put( ReviewInput model )
 		{
-			using ( ReviewController api = new ReviewController() )
+			using ( ReviewController api = new ReviewController( await this.Account() ) )
 			{
 				var result = await api.Put( model );
 				var contentresult = result as OkNegotiatedContentResult<Address>;
@@ -65,7 +65,7 @@ namespace FFF.Hubs
 		}
 		public override async Task Delete( Guid ReviewRID )
 		{
-			using ( ReviewController api = new ReviewController() )
+			using ( ReviewController api = new ReviewController( await this.Account() ) )
 			{
 				var result = await api.Delete( ReviewRID );
 				var contentresult = result as OkNegotiatedContentResult<Review>;

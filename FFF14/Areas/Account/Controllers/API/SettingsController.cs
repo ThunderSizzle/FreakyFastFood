@@ -13,6 +13,16 @@ namespace FFF.Areas.Account.Controllers.API
 	[Authorize]
 	public class SettingController : AccountObjectController
     {
+		public SettingController()
+			: base()
+		{
+
+		}
+		public SettingController( FFF.Models.Account Account )
+			: base (Account)
+		{
+
+		}
         // GET api/Address
         public ICollection<Setting> Get()
         {

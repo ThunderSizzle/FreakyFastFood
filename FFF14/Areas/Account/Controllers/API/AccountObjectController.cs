@@ -20,11 +20,15 @@ namespace FFF.Areas.Account.Controllers.API
 		protected DatabaseContext db = new DatabaseContext();
 		protected FFF.Models.Account Account;
 
-		protected override void Initialize( System.Web.Http.Controllers.HttpControllerContext controllerContext )
+		protected AccountObjectController()
+			: base()
 		{
-			var name = controllerContext.RequestContext.Principal.Identity.Name;
-			this.Account = db.Accounts.First( c => c.User.UserName == name );
-			base.Initialize( controllerContext );
+
+		}
+		protected AccountObjectController( FFF.Models.Account Account )
+			: base()
+		{
+			this.Account = Account;
 		}
         protected override void Dispose(bool disposing)
         {

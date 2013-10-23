@@ -29,6 +29,11 @@ namespace FFF.Controllers
 			db = new DatabaseContext();
 			IdentityManager = new AuthenticationIdentityManager(new IdentityStore(db));
         }
+		[AllowAnonymous]
+		public RedirectToRouteResult Redirect()
+		{
+			return RedirectToRoutePermanent( "Store_default", new { action="", controller = "" } );
+		}
 		protected override void Initialize( System.Web.Routing.RequestContext requestContext )
 		{
 			var name = requestContext.HttpContext.User.Identity.Name;

@@ -1,6 +1,7 @@
 ﻿using FFF.Models;
 using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace FFF.Hubs
 {

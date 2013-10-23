@@ -377,6 +377,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Properties\PublishProfiles\SmarterASP.pubxml.user" />
+    <Content Include="Scripts\app\account.viewmodels.js" />
     <Content Include="Scripts\bootbox.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />

@@ -18,6 +18,16 @@ namespace FFF.Areas.Account.Controllers.API
 	[Authorize]
 	public class PaymentMethodController : AccountObjectController
     {
+		public PaymentMethodController()
+			: base()
+		{
+
+		}
+		public PaymentMethodController( FFF.Models.Account Account )
+			: base (Account)
+		{
+
+		}
         // GET api/Address
 		public ICollection<PaymentMethod> Get()
         {

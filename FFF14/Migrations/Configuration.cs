@@ -19,7 +19,8 @@ namespace FFF.Migrations
 			context.Genders.AddOrUpdate(
 				s => s.Title,
 				new Gender( "Male" ),
-				new Gender( "Female" ) 
+				new Gender( "Female" ),
+				new Gender( "Neither" ) 
 			);
 			context.SaveChanges();
 

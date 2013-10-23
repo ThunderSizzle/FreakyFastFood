@@ -13,6 +13,17 @@ namespace FFF.Areas.Account.Controllers.API
 	[Authorize]
     public class AddressController : AccountObjectController
     {
+		public AddressController()
+			: base()
+		{
+
+		}
+		public AddressController( FFF.Models.Account Account )
+			: base (Account)
+		{
+
+		}
+
         // GET api/Address
         public ICollection<Address> Get()
         {

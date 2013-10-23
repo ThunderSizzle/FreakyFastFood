@@ -22,129 +22,50 @@
 		@Scripts.Render( "~/bundles/jquery" )
 		<script src="~/signalr/hubs"></script>
 		<script>
-			$(function ()
+			var account =
 			{
-				function AddressViewModel(rid, nick, line1, line2, city, state, zip)
+				addresses: new Addresses(),
+				orders: new Orders(),
+				paymentMethods: new PaymentMethods(),
+				reviews: new Reviews(),
+				settings: new Settings()
+			}
+			$(function () 
+			{
+				ko.applyBindings(account);
+				$.connection.hub.start(function ()
 				{
-					this.rid = ko.observable(rid);
-					this.nick = ko.observable(nick);
-					this.line1 = ko.observable(line1);
-					this.line2 = ko.observable(line2);
-					this.city = ko.observable(city);
-					this.state = ko.observable(state);
-					this.zip = ko.observable(zip);
-					console.log('We made an AVM :)');
-					console.log(this);
-
-					this.editURL = 'Account/Address/Edit/' + rid;
-					this.deleteURL = 'Account/Address/Delete/' + rid;
-				}
-				function AddressesViewModel()
-				{
-					console.log("Starting View Model!!");
-					this.hub = $.connection.addressHub;
-					this.addresses = ko.observableArray([]);
-					this.newAddress = ko.observable();
-
-					var addresses = this.addresses;
-					var newAddress = this.newAddress;
-
-					this.init = function ()
-					{
-						console.log("Calling Get All!!");
-						this.hub.server.index();
-					}
-					this.hub.client.addressesAll = function (addressesAll)
-					{
-						console.log("All Addresses Returned!!!");
-						$.map(addressesAll, function (item)
-						{
-							addresses.push(new AddressViewModel(item.ID, item.Nick, item.Line1, item.Line2, item.CityTitle, item.StateAbbreviation, item.ZIP));
-						});
-						console.log("All Addresses Added to ArrayList");
-					}
-
-
-					this.createModal = function ()
-					{
-						this.hub.server.create();
-					}
-					this.hub.client.CreateBack = function (AddressInput)
-					{
-						this.displayMode = "AddressCreateTemplate";
-					}
-					this.editModal = function(addressID)
-					{
-						this.hub.server.edit(addressID);
-					}
-					this.hub.client.EditBack = function (AddressInput)
-					{
-						this.displayMode = "AddressEditTemplate";
-					}
-					this.deleteModal = function (addressID)
-					{
-						this.hub.server.remove(addressID);
-					}
-					this.hub.client.RemoveBack = function (Address)
-					{
-						this.displayMode = "AddressRemoveTemplate";
-					}
-
-					this.post = function (address)
-					{
-						this.hub.server.post(address);
-					}
-					this.hub.client.PostBack = function (Address)
-					{
-						this.addresses.push(new AddressesViewModel(Address.ID, Address.Nick, Address.Line1, Address.Line2, Address.CityTitle, Address.StateAbbreviation, Address.ZIP));
-					}
-
-					this.put = function (address)
-					{
-						this.hub.server.put(address);
-					}
-					this.hub.client.PutBack = function (Address)
-					{
-						var addressVM = ko.utils.arrayFilter(addresses(), function (item)
-						{
-							return Address.ID == item.rid;
-						});
-						addressVM.nick(Address.Nick);
-						addressVM.line1(Address.Line1);
-						addressVM.line2(Address.Line2);
-						addressVM.city(Address.CityTitle);
-						addressVM.state(Address.StateAbbreviation);
-						addressVM.zip(Address.ZIP);
-					}
-
-					this.delete = function (address)
-					{
-						this.hub.server.delete(address);
-					}
-					this.hub.client.DeleteBack = function (Address)
-					{
-						this.addresses.remove(function(item) { return item.rid == Address.ID }) 
-					}
-
-
-					this.hub.client.StateList = function (stateList)
-					{
-						
-					}
-				}
-
-
-				addressesVM = new AddressesViewModel()
-				ko.applyBindings(addressesVM);
-				$.connection.hub.start(function () { addressesVM.init(); });
+					account.addresses.init();
+					account.orders.init();
+					account.paymentMethods.init();
+					account.reviews.init();
+					account.settings.init();
+				});
 			});
+			function LoadModal(form)
+			{
+				$.ajax(
+				{
+					url: form.action,
+					type: form.method,
+					data: $(form).serialize(),
+					context: $(form),
+					success: function (data)
+					{
+						$('#ModalContent').html(data);
+						$('#Modal').modal('show');
+						$.validator.unobtrusive.parse('#ModalForm');
+						ko.applyBindings(account, document.getElementById("ModalContent"));
+					}
+				});
+			}
 		</script>
 	</head>
 <body>
 	<div class="container">
 		<div class="modal fade" id="Modal">
 			<div class="modal-dialog">
-				<div class="modal-content" id="ModalContent" data-bind="template: { template: displayMode }">
+				<div class="modal-content" id="ModalContent">
 
 				</div>
 			</div>
@@ -156,13 +77,45 @@
 		<p>This is Index.cshtml. We will be running some SignalR Tests.</p>
 
 		<p>First Test: Get some of our Account info via SignalR:</p>
-		<div class="row" id="address" data-bind="template: { name: 'AddressTemplate', foreach: addresses }">
+
+		<div id="Addresses" class="subcontainer">
+			<div class="row subheader">
+				<div class="col-xs-6 subtitle">
+					<h2>
+						<span class="glyphicon glyphicon-home">
+						</span>
+						Addresses
+					</h2>
+				</div>
+				<div class="col-xs-6 createbtn">
+					<form action="~/Account/Address/Create" method="get" data-bind="submit: LoadModal">
+						<h2>
+							<button class="btn btn-success pull-right" type="submit">
+								<span class="glyphicon glyphicon-plus-sign">
+								</span>
+								Add a New Address
+							</button>
+						</h2>
+					</form>
+				</div>
+			</div>
+			<div id="AddressesContent" class="subcontent">
+				<div data-bind="if: addresses.empty">
+					<div class="well well-lg">
+						<p class="text-center"><strong>You have no Addresses.</strong> If you add an Address, you can view, edit, and delete it here.</p>
+					</div>
+				</div>
+				<div data-bind="ifnot: addresses.empty">
+					<div class="row" id="address" data-bind="template: { name: addresses.displayMode, foreach: addresses.list }">
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </body>
 </html>
 
-<script type="text/html" id="AddressTemplate">
+<script type="text/html" id="AddressTemplate" data-bind="with: AddressViewModel">
 	<div class="col-lg-3 col-xs-6 col-sm-4 well well-sm">
 		<address style="height:90px">
 			<strong data-bind="text: nick"></strong><br>

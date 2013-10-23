@@ -199,8 +199,9 @@ namespace FFF.Controllers
 					var result = await IdentityManager.Authentication.CreateAndSignInExternalUserAsync( AuthenticationManager, user , CancellationToken.None );
 					if ( result.Success )
 					{
-
+						
 						user.Account = this.Account;
+						user.Account.Birthday = DateTime.Now;
 						db.SaveChanges();
 						this.Account.User = user;
 						db.SaveChanges();
@@ -209,6 +210,7 @@ namespace FFF.Controllers
 						this.Account.DefaultEmail = Email;
 						this.Account.FirstName = model.FirstName;
 						this.Account.LastName = model.LastName;
+						this.Account.Birthday = DateTime.Now;
 						this.Account.Gender = db.Genders.First(c => c.RID ==  model.GenderID);
 						db.SaveChanges();
 						//FormsAuthentication.SetAuthCookie( model.UserName, false );
@@ -245,7 +247,7 @@ namespace FFF.Controllers
 			}
 
 			[AllowAnonymous]
-			[ChildActionOnly]
+			//[ChildActionOnly]
 			public PartialViewResult ExternalLoginsList( string returnUrl )
 			{
 				ViewBag.ReturnUrl = returnUrl;

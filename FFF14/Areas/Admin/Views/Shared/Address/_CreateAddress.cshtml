@@ -1,8 +1,6 @@
-﻿@model FFF.ViewModels.Location.AddressInput
+﻿@model FFF.InputModels.AddressInput
 
-@using ( Html.BeginForm( "CreateConfirmed", "Address", FormMethod.Post, new { id="ModalForm", @for="#AddressesContent" } ) )
-{
-	@Html.AntiForgeryToken()
+<form data-bind="submit: account.addresses.post">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 		<h3>
@@ -13,7 +11,7 @@
 		@Html.ValidationSummary( true )
 		<span class="help-inline field-validation-error">
 		</span>
-		@Html.EditorForModel("Address")
+		@Html.EditorForModel( "Address" )
 	</div>
 	<div class="modal-footer">
 		<a href="#" class="btn btn" data-dismiss="modal">Cancel</a>
@@ -22,4 +20,4 @@
 			<span class="glyphicon glyphicon-arrow-right"></span>
 		</button>
 	</div>
-}
+</form>

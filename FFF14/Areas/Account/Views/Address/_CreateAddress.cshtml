@@ -1,6 +1,6 @@
-﻿@model FFF.ViewModels.Location.AddressInput
+﻿@model FFF.InputModels.AddressInput
 
-@using ( Html.BeginForm( "CreateConfirmed", "Address", FormMethod.Post, new { id="ModalForm", @for="#AddressesContent", @class="finalsave" } ) )
+@using ( Html.BeginForm( "CreateConfirmed", "Address", FormMethod.Post, new { id="ModalForm", @for="#AddressesContent", @class="finalsave", data_bind="submit: account.addresses.post" } ) )
 {
 	@Html.AntiForgeryToken()
 	<div class="modal-header">

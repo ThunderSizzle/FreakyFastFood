@@ -11,7 +11,17 @@ namespace FFF.Areas.Account.Controllers.API
 	[Authorize]
 	public class ProfileController : AccountObjectController
     {
-        // GET api/Address
+		public ProfileController()
+			: base()
+		{
+
+		}
+		public ProfileController( FFF.Models.Account Account )
+			: base (Account)
+		{
+
+		}
+		// GET api/Address
         public FFF.Models.Account Get()
         {
 			return this.Account;

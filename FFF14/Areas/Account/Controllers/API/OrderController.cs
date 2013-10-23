@@ -18,6 +18,17 @@ namespace FFF.Areas.Account.Controllers.API
 	[Authorize]
 	public class OrderController : AccountObjectController
     {
+		public OrderController()
+			: base()
+		{
+
+		}
+		public OrderController( FFF.Models.Account Account )
+			: base (Account)
+		{
+
+		}
+
 		// GET api/Order
 		public ICollection<Order> Get()
         {

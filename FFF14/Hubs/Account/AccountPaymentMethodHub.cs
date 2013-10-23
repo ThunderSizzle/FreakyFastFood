@@ -17,7 +17,7 @@ namespace FFF.Hubs
 	{
 		public override async Task Index()
 		{
-			using ( PaymentMethodController api = new PaymentMethodController() )
+			using ( PaymentMethodController api = new PaymentMethodController( await this.Account() ) )
 			{
 				var PaymentMethods = api.Get();
 				ICollection<PaymentMethodView> PaymentMethodsView = new Collection<PaymentMethodView>();
@@ -30,7 +30,7 @@ namespace FFF.Hubs
 		}
 		public async Task Post( PaymentMethodInput model)
 		{
-			using ( PaymentMethodController api = new PaymentMethodController() )
+			using ( PaymentMethodController api = new PaymentMethodController( await this.Account() ) )
 			{
 				var result = await api.Post(model);
 				var contentresult = result as OkNegotiatedContentResult<PaymentMethod>;
@@ -49,7 +49,7 @@ namespace FFF.Hubs
 		}
 		public async Task Put( PaymentMethodInput model )
 		{
-			using ( PaymentMethodController api = new PaymentMethodController() )
+			using ( PaymentMethodController api = new PaymentMethodController( await this.Account() ) )
 			{
 				var result = await api.Put( model );
 				var contentresult = result as OkNegotiatedContentResult<PaymentMethod>;
@@ -65,7 +65,7 @@ namespace FFF.Hubs
 		}
 		public override async Task Delete( Guid PaymentMethodRID )
 		{
-			using ( PaymentMethodController api = new PaymentMethodController() )
+			using ( PaymentMethodController api = new PaymentMethodController( await this.Account() ) )
 			{
 				var result = await api.Delete( PaymentMethodRID );
 				var contentresult = result as OkNegotiatedContentResult<Address>;

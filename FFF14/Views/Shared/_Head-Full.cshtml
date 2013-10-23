@@ -1,198 +1,201 @@
-﻿<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+﻿<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<meta name="application-name" content="Freaky Fast Food" />
-@*<meta name="msapplication-TileColor" content="#ffa940" />*@
-<meta name="msapplication-square70x70logo" content="@Url.Content("~/Content/Images/tiny.png")" />
-<meta name="msapplication-square150x150logo" content="@Url.Content( "~/Content/Images/square.png" )" />
-<meta name="msapplication-wide310x150logo" content="@Url.Content( "~/Content/Images/wide.png" )" />
-<meta name="msapplication-square310x310logo" content="@Url.Content( "~/Content/Images/large.png" )" />
-<meta content="name=My Account;
-			  action-uri=./Account;
-			  icon-uri=./favicon.ico" name="msapplication-task">
-<link rel="shortcut icon" href="favicon.ico" />
+	<meta name="application-name" content="Freaky Fast Food" />
+	@*<meta name="msapplication-TileColor" content="#ffa940" />*@
+	<meta name="msapplication-square70x70logo" content="@Url.Content("~/Content/Images/tiny.png")" />
+	<meta name="msapplication-square150x150logo" content="@Url.Content( "~/Content/Images/square.png" )" />
+	<meta name="msapplication-wide310x150logo" content="@Url.Content( "~/Content/Images/wide.png" )" />
+	<meta name="msapplication-square310x310logo" content="@Url.Content( "~/Content/Images/large.png" )" />
+	<meta content="name=My Account;
+				  action-uri=./Account;
+				  icon-uri=./favicon.ico" name="msapplication-task">
+	<link rel="shortcut icon" href="favicon.ico" />
 
 
-<title>@ViewBag.Title - FreakyFastFood</title>
+	<title>@ViewBag.Title - FreakyFastFood</title>
 
-<script type="text/javascript">
-	(function ()
-	{
-		if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/))
+	<script type="text/javascript">
+		(function ()
 		{
-			var msViewportStyle = document.createElement("style");
-			msViewportStyle.appendChild(document.createTextNode("@@-ms-viewport{width:auto!important}"));
-			document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
-		}
-	})();
-</script>
+			if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/))
+			{
+				var msViewportStyle = document.createElement("style");
+				msViewportStyle.appendChild(document.createTextNode("@@-ms-viewport{width:auto!important}"));
+				document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+			}
+		})();
+	</script>
 
-@Styles.Render( "~/Content/css" )
-@Scripts.Render( "~/bundles/jquery" )
+	@Styles.Render( "~/Content/css" )
+	@Scripts.Render( "~/bundles/jquery" )
+	<script src="~/signalr/hubs"></script>
 
-<script type="text/javascript">
-	$(function ()
-	{
-		$('.container').attr('style', "margin-top:" + $('.navbar').outerHeight(true) + "px;");
-	});
-	function ReloadScripts()
-	{
+	<script type="text/javascript">
 		$(function ()
 		{
-			$('[data-spy="scroll"]').each(function ()
-			{
-				var $spy = $(this).scrollspy('refresh')
-			})
+			$('.container').attr('style', "margin-top:" + $('.navbar').outerHeight(true) + "px;");
 		});
-		$(function ()
+		@*function ReloadScripts()
 		{
-			$(window).resize(function ()
+			$(function ()
 			{
-				$('.container').attr('style', "margin-top:" + $('.navbar').outerHeight(true) + "px;");
-			});
-		});
-		$(function ()
-		{
-			$('.refresher').off('submit');
-			$('.refresher').submit(function (e)
-			{
-				e.preventDefault();
-				if ($(this).valid())
+				$('[data-spy="scroll"]').each(function ()
 				{
+					var $spy = $(this).scrollspy('refresh')
+				})
+			});
+			$(function ()
+			{
+				$(window).resize(function ()
+				{
+					$('.container').attr('style', "margin-top:" + $('.navbar').outerHeight(true) + "px;");
+				});
+			});
+			$(function ()
+			{
+				$('.refresher').off('submit');
+				$('.refresher').submit(function (e)
+				{
+					e.preventDefault();
+					if ($(this).valid())
+					{
+						$('.updating').show();
+						$('.updated').hide();
+						$.ajax(
+						{
+							url: this.action,
+							type: this.method,
+							data: $(this).serialize(),
+							context: $(this),
+							success: function (result, textStatus, jqXHR)
+							{
+								$('.updating').hide();
+								$('.updated').show();
+								$($(this).attr("for")).html(result);
+								ReloadScripts();
+							}
+						});
+					}
+				});
+			});
+			$(function ()
+			{
+				$('#ModalForm').off('submit');
+				$('#ModalForm').submit(function (e)
+				{
+					if ($(this).valid())
+					{
+						e.preventDefault();
+						$('#Modal').modal('hide');
+						$('body').removeClass('modal-open');
+						$('.modal-backdrop').remove();
+						$('.updating').show();
+						$('.updated').hide();
+
+						if ($(this).hasClass('finalsave'))
+						{
+							$.ajax(
+							{
+								url: this.action,
+								type: this.method,
+								data: $(this).serialize(),
+								dataType: "json",
+								context: $(this),
+								success: function (result, textStatus, jqXHR)
+								{
+									$('.updating').hide();
+									$('.updated').show();
+									$.each(result, function (i, item)
+									{
+										$('#' + item).find('.refresher').submit();
+									});
+									ReloadScripts();
+								}
+							});
+						}
+						else if ($(this).hasClass('tempsave'))
+						{
+							$.ajax(
+							{
+								url: this.action,
+								type: this.method,
+								data: $(this).serialize(),
+								context: $(this),
+								success: function (result, textStatus, jqXHR)
+								{
+									$('.updating').hide();
+									$('.updated').show();
+									$('#ModalContent').html(result);
+									$('#Modal').modal('show');
+									$.validator.unobtrusive.parse('#ModalForm');
+									ReloadScripts();
+								},
+								error: function (result, textStatus, jqXHR)
+								{
+
+								}
+							});
+						}
+					}
+					else
+					{
+						return false;
+					}
+				});
+			});
+			$(function ()
+			{
+				$('.LoadModal').off('submit');
+				$('.LoadModal').submit(function (e)
+				{
+					e.preventDefault();
 					$('.updating').show();
 					$('.updated').hide();
+					var parent = $(this).parents('.subcontainer');
 					$.ajax(
 					{
 						url: this.action,
 						type: this.method,
 						data: $(this).serialize(),
 						context: $(this),
-						success: function (result, textStatus, jqXHR)
+						success: function (data)
 						{
+							$('#ModalContent').html(data);
 							$('.updating').hide();
 							$('.updated').show();
-							$($(this).attr("for")).html(result);
+							$('#Modal').modal('show');
+							$.validator.unobtrusive.parse('#ModalForm');
 							ReloadScripts();
 						}
 					});
-				}
+				});
 			});
-		});
-		$(function ()
-		{
-			$('#ModalForm').off('submit');
-			$('#ModalForm').submit(function (e)
+			$(function ()
 			{
-				if ($(this).valid())
+				$('#sidenav').affix(
 				{
-					e.preventDefault();
-					$('#Modal').modal('hide');
-					$('body').removeClass('modal-open');
-					$('.modal-backdrop').remove();
-					$('.updating').show();
-					$('.updated').hide();
-
-					if ($(this).hasClass('finalsave'))
+					offset:
 					{
-						$.ajax(
+						top: 100,
+						bottom: function ()
 						{
-							url: this.action,
-							type: this.method,
-							data: $(this).serialize(),
-							dataType: "json",
-							context: $(this),
-							success: function (result, textStatus, jqXHR)
-							{
-								$('.updating').hide();
-								$('.updated').show();
-								$.each(result, function (i, item)
-								{
-									$('#' + item).find('.refresher').submit();
-								});
-								ReloadScripts();
-							}
-						});
-					}
-					else if ($(this).hasClass('tempsave'))
-					{
-						$.ajax(
-						{
-							url: this.action,
-							type: this.method,
-							data: $(this).serialize(),
-							context: $(this),
-							success: function (result, textStatus, jqXHR)
-							{
-								$('.updating').hide();
-								$('.updated').show();
-								$('#ModalContent').html(result);
-								$('#Modal').modal('show');
-								$.validator.unobtrusive.parse('#ModalForm');
-								ReloadScripts();
-							},
-							error: function (result, textStatus, jqXHR)
-							{
-
-							}
-						});
-					}
-				}
-				else
-				{
-					return false;
-				}
-			});
-		});
-		$(function ()
-		{
-			$('.LoadModal').off('submit');
-			$('.LoadModal').submit(function (e)
-			{
-				e.preventDefault();
-				$('.updating').show();
-				$('.updated').hide();
-				var parent = $(this).parents('.subcontainer');
-				$.ajax(
-				{
-					url: this.action,
-					type: this.method,
-					data: $(this).serialize(),
-					context: $(this),
-					success: function (data)
-					{
-						$('#ModalContent').html(data);
-						$('.updating').hide();
-						$('.updated').show();
-						$('#Modal').modal('show');
-						$.validator.unobtrusive.parse('#ModalForm');
-						ReloadScripts();
+							return (this.bottom = $('.bs-footer').outerHeight(true))
+						}
 					}
 				});
 			});
-		});
+		}
+		ReloadScripts();
 		$(function ()
 		{
-			$('#sidenav').affix(
+			@foreach ( var item in ViewBag.Refresh )
 			{
-				offset:
-				{
-					top: 100,
-					bottom: function ()
-					{
-						return (this.bottom = $('.bs-footer').outerHeight(true))
-					}
+					@:$('#@(item)').find('.refresher').submit();
 				}
-			});
-		});
-	}
-	ReloadScripts();
-	$(function ()
-	{
-		@foreach ( var item in ViewBag.Refresh )
-			{
-				@:$('#@(item)').find('.refresher').submit();
-			}
-	});
-</script>
+		});*@
+	</script>
+</head>
 

@@ -15,7 +15,7 @@ namespace FFF.Hubs
 	{
 		public override async Task Index()
 		{
-			using ( ProfileController api = new ProfileController() )
+			using ( ProfileController api = new ProfileController( await this.Account() ) )
 			{
 				var Profiles = api.Get();
 				ProfileView ProfileView = new ProfileView();
@@ -25,7 +25,7 @@ namespace FFF.Hubs
 		}
 		public async Task Post( ProfileInput model )
 		{
-			using ( ProfileController api = new ProfileController() )
+			using ( ProfileController api = new ProfileController( await this.Account() ) )
 			{
 				var result = await api.Post( model );
 				var contentresult = result as OkNegotiatedContentResult<Profile>;
@@ -44,7 +44,7 @@ namespace FFF.Hubs
 		}
 		public async Task Put( ProfileInput model )
 		{
-			using ( ProfileController api = new ProfileController() )
+			using ( ProfileController api = new ProfileController( await this.Account() ) )
 			{
 				var result = await api.Put( model );
 				var contentresult = result as OkNegotiatedContentResult<Address>;
@@ -60,7 +60,7 @@ namespace FFF.Hubs
 		}
 		public override async Task Delete( Guid ProfileRID )
 		{
-			using ( ProfileController api = new ProfileController() )
+			using ( ProfileController api = new ProfileController( await this.Account() ) )
 			{
 				var result = await api.Delete( ProfileRID );
 				var contentresult = result as OkNegotiatedContentResult<Profile>;
