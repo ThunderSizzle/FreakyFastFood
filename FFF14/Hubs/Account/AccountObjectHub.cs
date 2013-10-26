@@ -1,5 +1,4 @@
-﻿using FFF.Areas.Account.Controllers.API;
-using FFF.Models;
+﻿using FFF.Models;
 using FFF.ViewModels;
 using Microsoft.AspNet.SignalR;
 using System;

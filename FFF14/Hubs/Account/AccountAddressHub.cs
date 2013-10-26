@@ -1,4 +1,4 @@
-﻿using FFF.Areas.Account.Controllers.API;
+﻿using FFF.Controllers.AccountObject;
 using FFF.DropDownModels;
 using FFF.InputModels;
 using FFF.Models;
@@ -15,6 +15,7 @@ using System.Web.Http.Results;
 namespace FFF.Hubs
 {
 	[Authorize]
+	
 	public class AccountAddressHub : AccountObjectHub
 	{
 		public override async Task Index()

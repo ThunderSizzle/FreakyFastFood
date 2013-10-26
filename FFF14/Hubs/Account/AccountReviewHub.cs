@@ -1,4 +1,4 @@
-﻿using FFF.Areas.Account.Controllers.API;
+﻿using FFF.Controllers.AccountObject;
 using FFF.InputModels;
 using FFF.Models;
 using FFF.ViewModels;

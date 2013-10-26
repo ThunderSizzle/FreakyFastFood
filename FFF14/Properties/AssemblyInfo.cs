@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle( "FFF" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyTitle( "FreakyFastFood" )]
+[assembly: AssemblyDescription( "Web App that runs the back-bone of FreakyFastFood. Acts as a store front for consumers and a back-end for employees and management." )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "" )]
 [assembly: AssemblyProduct( "FFF" )]

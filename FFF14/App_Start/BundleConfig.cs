@@ -18,7 +18,8 @@ namespace FFF
 						"~/Scripts/bootbox.js",
 						"~/Scripts/jquery.signalR-2.0.0-rc1.js",
 						"~/Scripts/knockout-2.3.0.js", 
-						"~/Scripts/app/account.viewmodels.js" ) );
+						"~/Scripts/app/account.viewmodels.js",
+						"~/Scripts/app/modal.viewmodels.js" ) );
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

@@ -45,7 +45,7 @@
 			@if ( Request.IsAuthenticated )
 			{
 				<li>
-					<a href="@Url.RouteUrl( "Account_default" )" title="Go to My Account">
+					<a href="@Url.Action("Index", "Account", new { area="" } )" title="Go to My Account">
 						<span class="glyphicon glyphicon-user"></span>
 						Hello @User.Identity.Name!
 					</a>
