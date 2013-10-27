@@ -1,0 +1,63 @@
+@{
+	ViewBag.Title = "My Account";
+	ViewBag.Glyphicon = "user";
+}
+<script>
+	var Page = 
+	{
+		Modal: new Modal(),
+		Account: new Account()
+		//Account: 
+		//{
+		//	Addresses: new Addresses()
+		//}
+	}
+
+	$(function ()
+	{
+		ko.applyBindings(Page);
+		$.connection.hub.start(function ()
+		{
+			Page.Account.Addresses.init();
+			//Page.Account.Orders.init();
+			//Page.Account.PaymentMethods.init();
+			//Page.Account.Reviews.init();
+			//Page.Account.Settings.init();
+		});
+	});
+</script>
+<div class="row">
+	<div class="col-md-3">
+		<div class="bs-sidebar hidden-print affix" role="complementary" id="sidenav">
+			<h1 class="hidden-xs">
+				<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" class="updating" id="Updating" width="36px" height="36px" style="display:none" />
+				<span class="glyphicon glyphicon-@ViewBag.Glyphicon updated" id="Updated"></span>
+				@ViewBag.Title
+			</h1>
+			@{ Html.RenderPartial( "_Sidebar" ); }
+		</div>
+	</div>
+	<div class="col-md-9">
+		@{
+			@*
+				ViewBag.Path = "/Areas/Account/Views/Order/";
+				Html.RenderPartial( ViewBag.Path as String + "_OrdersWrapper.cshtml", @Model.Orders );
+
+				ViewBag.Path = "/Areas/Account/Views/Profile/";
+				Html.RenderPartial( ViewBag.Path as String + "_ProfileWrapper.cshtml", @Model );
+
+				ViewBag.Path = "/Areas/Account/Views/PaymentMethod/";
+				Html.RenderPartial( ViewBag.Path as String + "_PaymentMethodsWrapper.cshtml", @Model.PaymentMethods );
+			*@
+				ViewBag.Path = "/Views/Address/";
+				Html.RenderPartial( ViewBag.Path as String + "_AddressesWrapper.cshtml" );
+			@*
+				ViewBag.Path = "/Areas/Account/Views/Review/";
+				Html.RenderPartial( ViewBag.Path as String + "_ReviewsWrapper.cshtml", @Model.Reviews );
+
+				ViewBag.Path = "/Areas/Account/Views/Settings/";
+				Html.RenderPartial( ViewBag.Path as String + "_SettingsWrapper.cshtml", @Model );
+			*@
+		}	
+	</div>
+</div>

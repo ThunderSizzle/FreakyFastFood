@@ -36,6 +36,9 @@ namespace FFF.ViewModels
 		[Display( Name="State", Description="State Abbreviation" )]
 		[Required]
 		public String State { get; set; }
+		[Display( Name="State ID", Description="State ID" )]
+		[Required]
+		public Guid StateRID { get; set; }
 		[Display( Name="ZIP Code" )]
 		[Required]
 		public String ZIP { get; set; }
@@ -53,9 +56,10 @@ namespace FFF.ViewModels
 			this.Line2 = Address.Line2;
 			this.City = Address.City;
 			this.State = Address.State.Abbreviation;
-			this.ZIP = ZIP;
+			this.StateRID = Address.State.RID;
+			this.ZIP = Address.ZIP;
 		}
-		public AddressView( Guid RID, string Nick, string Line1, string Line2, string City, string State, String ZIP )
+		public AddressView( Guid RID, string Nick, string Line1, string Line2, string City, string State, Guid StateRID, String ZIP )
 			: base( RID )
 		{
 			this.Nick = Nick;
@@ -63,6 +67,7 @@ namespace FFF.ViewModels
 			this.Line2 = Line2;
 			this.City = City;
 			this.State = State;
+			this.StateRID = StateRID;
 			this.ZIP = ZIP;
 		}
 	}

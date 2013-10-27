@@ -1,0 +1,26 @@
+﻿<script type="text/html" id="AddressTemplate">
+	<div class="col-lg-3 col-xs-6 col-sm-4 well well-sm">
+		<address style="height:90px">
+			<strong data-bind="text: nick"></strong><br>
+			<span data-bind="text: line1"></span><br>
+			<span data-bind="if: line2 == null">
+				<span data-bind="text: line2"></span><br>
+			</span>
+			<span data-bind="text: city"></span>, <span data-bind="text: state"></span> <span data-bind="text: zip"></span>
+		</address>
+		<div class="col-xs-4">
+			<a class="btn btn-info" data-bind="click: Page.Account.Addresses.Edit">
+				<span class=" glyphicon glyphicon-edit">
+				</span>
+				Edit
+			</a>
+		</div>
+		<div class="col-xs-8">
+			<a class="btn btn-danger pull-right" data-bind="click: Page.Account.Addresses.Remove">
+				<span class=" glyphicon glyphicon-remove">
+				</span>
+				Delete
+			</a>
+		</div>
+	</div>
+</script>

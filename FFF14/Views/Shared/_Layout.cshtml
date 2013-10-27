@@ -14,8 +14,8 @@
 		<!-- Modal Wrapper - This will be dynamically loaded. -->
 		<div class="modal fade" id="Modal">
 			<div class="modal-dialog">
-				<div class="modal-content" id="ModalContent">
-
+				<div class="modal-content" id="ModalContent" data-bind="template: { name: Page.Modal.displayMode, data: Page.Modal.data } ">
+					<p>This does exist, right?</p>
 				</div>
 			</div>
 		</div>
@@ -27,4 +27,6 @@
 		</div>
 		@{ Html.RenderPartial( "_Foot" ); }
 	</body>
+
+	@{ Html.RenderPartial("_ModalTester"); }
 </html>

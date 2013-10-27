@@ -26,7 +26,7 @@ namespace FFF.Hubs
 				ICollection<AddressView> AddressesView = new Collection<AddressView>();
 				foreach ( var address in Addresses )
 				{
-					AddressesView.Add( new AddressView( address.RID, address.Nick, address.Line1, address.Line2, address.City, address.State.Abbreviation, address.ZIP ) );
+					AddressesView.Add( new AddressView( address ) );
 				}
 				Clients.Clients( ( await this.ConnectionIds() ).ToList() ).indexBack( AddressesView );
 			}
@@ -46,6 +46,7 @@ namespace FFF.Hubs
 						contentresult.Content.Line2,
 						contentresult.Content.City,
 						contentresult.Content.State.Abbreviation,
+						contentresult.Content.State.RID,
 						contentresult.Content.ZIP
 					);
 					Clients.Clients( ( await this.ConnectionIds() ).ToList() ).postBack( Address );
@@ -71,6 +72,7 @@ namespace FFF.Hubs
 						contentresult.Content.Line2,
 						contentresult.Content.City,
 						contentresult.Content.State.Abbreviation,
+						contentresult.Content.State.RID,
 						contentresult.Content.ZIP
 					);
 					Clients.Clients( ( await this.ConnectionIds() ).ToList() ).putBack( Address );
@@ -93,6 +95,7 @@ namespace FFF.Hubs
 						contentresult.Content.Line2,
 						contentresult.Content.City,
 						contentresult.Content.State.Abbreviation,
+						contentresult.Content.State.RID,
 						contentresult.Content.ZIP
 					);
 					Clients.Clients( ( await this.ConnectionIds() ).ToList() ).deleteBack( Address );
@@ -100,7 +103,7 @@ namespace FFF.Hubs
 				Clients.Clients( ( await this.ConnectionIds() ).ToList() ).error( result );
 			}
 		}
-		public async Task StateList()
+		public async Task StateList( AddressInput model )
 		{
 			var States = await db.States.ToListAsync();
 			ICollection<StateDropDownItem> StateList = new Collection<StateDropDownItem>();

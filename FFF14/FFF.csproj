@@ -551,6 +551,7 @@
     <Content Include="Views\Account\_AddressEdit.cshtml" />
     <Content Include="Views\Account\_Addresses.cshtml" />
     <Content Include="Views\Account\_AddressesWrapper.cshtml" />
+    <Content Include="Views\Shared\_ModalTester.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,34 @@
+﻿<div id="@ViewBag.SubTitle" class="subcontainer">
+	<div class="row subheader">
+		<div class="col-xs-6 subtitle">
+			<h2>
+				<span class="glyphicon glyphicon-@ViewBag.Glyphicon">
+				</span>
+				@ViewBag.SubTitle
+			</h2>
+		</div>
+		@if ( ViewBag.CreateButton )
+		{
+			<div class="col-xs-6">
+				<h2>
+					<a class="btn btn-success pull-right" data-bind="click: Account.Addresses.Create">
+						<span class="glyphicon glyphicon-plus-sign">
+						</span>
+						@ViewBag.CreateButtonMessage
+					</a>
+				</h2>
+			</div>
+		}
+	</div>
+	<div id="@(ViewBag.SubTitle)Content" class="subcontent">
+		<div data-bind="if: Account.@(ViewBag.SubTitle).empty">
+			<div class="well well-lg">
+				<p class="text-center"><strong>You have no Addresses.</strong> If you add an Address, you can view, edit, and delete it here.</p>
+			</div>
+		</div>
+		<div data-bind="ifnot: Account.@(ViewBag.SubTitle).empty">
+			<div class="row" id="address" data-bind="template: { name: Page.Account.@(ViewBag.SubTitle).displayMode, foreach: Page.Account.@(ViewBag.SubTitle).list }">
+			</div>
+		</div>
+	</div>
+</div>
