@@ -1,17 +1,23 @@
-﻿<script type="text/html" id="AddressDelete">
+﻿<script type="text/html" id="AddressRemove">
 	<form data-bind="submit: Page.Account.Addresses.delete">
+		<input name="RID" data-bind="value: rid" hidden />
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h3>Deleting<span data-bind="text: nick"></span> Address</h3>
+			<h3>Deleting <span data-bind="text: nick"></span> Address</h3>
 		</div>
 		<div class="modal-body">
 			<span class="help-inline field-validation-error">
 			</span>
 			<p>Are you sure you wish to delete this Address?</p>
 			<div class="well">
-				<div data-bind ="template: Addresses.displayMode">
-
-				</div>
+				<address style="height:90px">
+					<strong data-bind="text: nick"></strong><br>
+					<span data-bind="text: line1"></span><br>
+					<span data-bind="if: line2 == null">
+						<span data-bind="text: line2"></span><br>
+					</span>
+					<span data-bind="text: city"></span>, <span data-bind="text: state"></span> <span data-bind="text: zip"></span>
+				</address>
 			</div>
 		</div>
 		<div class="modal-footer">

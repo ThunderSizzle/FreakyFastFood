@@ -1,14 +1,14 @@
 ﻿function AddressViewModel(rid, nick, line1, line2, city, state, stateid, zip)
 {
 	var self = this;
-	self.rid = rid;
-	self.nick = nick;
-	self.line1 = line1;
-	self.line2 = line2;
-	self.city = city;
-	self.state = state;
-	self.stateid = stateid;
-	self.zip = zip;
+	self.rid = ko.observable(rid);
+	self.nick = ko.observable(nick);
+	self.line1 = ko.observable(line1);
+	self.line2 = ko.observable(line2);
+	self.city = ko.observable(city);
+	self.state = ko.observable(state);
+	self.stateid = ko.observable(stateid);
+	self.zip = ko.observable(zip);
 }
 function OrderViewModel()
 {
@@ -39,10 +39,15 @@ function Modal()
 	self.LoadModal = function()
 	{
 		$('#Modal').modal('show');
-		$.validator.unobtrusive.parse('#ModalForm');
+		$.validator.unobtrusive.parse('#ModalContent');
+	}
+	self.CloseModal = function()
+	{
+		$('#Modal').modal('hide');
+		$('body').removeClass('modal-open');
+		$('.modal-backdrop').remove();
 	}
 }
-
 function Account()
 {
 	var self = this;
@@ -84,22 +89,34 @@ function Account()
 		}
 		selfadd.hub.client.postback = function (address)
 		{
-			selfadd.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.CityTitle, address.StateAbbreviation, address.ZIP));
+			selfadd.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, address.State, address.StateRID, address.ZIP));
 		}
 		selfadd.hub.client.putBack = function (address)
 		{
-			var selectedAddress = self.list.filter(function ()
+			var selectedAddress = ko.utils.arrayFirst(selfadd.list(), function (item)
 			{
-				return address.RID == this.rid;
-			})
+				return address.RID == item.rid();
+			});
+			selectedAddress.nick(address.Nick);
+			selectedAddress.line1(address.Line1);
+			selectedAddress.line2(address.Line2);
+			selectedAddress.city(address.City);
+			selectedAddress.state(address.State);
+			selectedAddress.stateid(address.StateRID);
+			selectedAddress.zip(address.ZIP);
 		}
 		selfadd.hub.client.deleteBack = function(address)
 		{
-
+			selfadd.list.remove(function (item)
+			{
+				return item.rid() == address.RID;
+			});
 		}
 
 		selfadd.post = function (addressForm)
 		{
+			dataSent();
+			Page.Modal.CloseModal();
 			var address =
 			{
 				Nick: addressForm.Nick.value,
@@ -114,6 +131,8 @@ function Account()
 		}
 		selfadd.put = function (addressForm)
 		{
+			dataSent();
+			Page.Modal.CloseModal();
 			var address =
 			{
 				RID: addressForm.RID.value,
@@ -126,6 +145,13 @@ function Account()
 			}
 			console.log(address);
 			selfadd.hub.server.put(address);
+		}
+		selfadd.delete = function (addressForm)
+		{
+			dataSent();
+			Page.Modal.CloseModal();
+			console.log(addressForm);
+			selfadd.hub.server.delete(addressForm.RID.value);
 		}
 
 		selfadd.Create = function ()
@@ -258,3 +284,40 @@ function Profiles()
 {
 
 }
+
+
+function dataSent()
+{
+	$('.updated').hide();
+	$('.updating').show();
+}
+$(function ()
+{
+	$.connection.hub.starting(function ()
+	{
+		$('.updated').hide();
+		$('.updating').show();
+	});
+	$.connection.hub.received(function ()
+	{
+		$('.updating').hide();
+		$('.updated').show();
+	});
+	$.connection.hub.reconnecting(function ()
+	{
+		$('.updated').hide();
+		$('.updating').show();
+	});
+	$.connection.hub.reconnected(function ()
+	{
+		$('.updating').hide();
+		$('.updated').show();
+	});
+	$.connection.hub.disconnected(function ()
+	{
+		setTimeout(function ()
+		{
+			$.connection.hub.start();
+		}, 5000); // Restart connection after 5 seconds.
+	});
+});

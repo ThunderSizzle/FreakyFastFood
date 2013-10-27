@@ -6,6 +6,8 @@ using System.Web.Mvc;
 
 namespace FFF.Controllers
 {
+	[RequireHttps]
+	[Authorize]
     public class AccountController : Controller
     {
         //
