@@ -1,10 +1,23 @@
-﻿<script type="text/html" id="AddressCreate">
-	<form data-bind="submit: $parent.post">
+﻿<script type="text/html" id="SelectAddress">
+	<form data-bind="submit: Page.Account.PaymentMethods.post">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-			<h3>
-				Creating New Address
-			</h3>
+			<div class="row">
+				<div class="col-xs-6">
+					<h3>
+						Select A Billing Address
+					</h3>
+				</div>
+				<div class="col-xs-6">
+					<h3>
+						<a class="btn btn-success pull-right" data-bind="click: Page.Account.PaymentMethods.newAddress">
+							<span class="glyphicon glyphicon-plus-sign">
+							</span>
+							@ViewBag.CreateButtonMessage
+						</a>
+					</h3>
+				</div>
+			</div>
 		</div>
 		<div class="modal-body">
 			@Html.ValidationSummary( true )

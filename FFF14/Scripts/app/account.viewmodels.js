@@ -98,20 +98,20 @@ function Modal()
 }
 function Account()
 {
-	var self = this;
-	self.Addresses = new function()
+	var thisAccount = this;
+	thisAccount.Addresses = new function ()
 	{
-		var selfadd = this;
-		selfadd.hub = $.connection.accountAddressHub;
-		selfadd.list = ko.observableArray([]);
+		var self = this;
+		self.hub = $.connection.accountAddressHub;
+		self.list = ko.observableArray([]);
 
-		selfadd.displayMode = ko.computed(function ()
+		self.displayMode = ko.computed(function ()
 		{
-			return 'AddressTemplate';
+			return 'Address';
 		});
-		selfadd.empty = ko.computed(function ()
+		self.empty = ko.computed(function ()
 		{
-			if (selfadd.list().length == 0)
+			if (self.list().length == 0)
 			{
 				return true;
 			}
@@ -120,14 +120,14 @@ function Account()
 				return false;
 			}
 		});
-		selfadd.loading = ko.observable('true');
+		self.loading = ko.observable('true');
 
-		selfadd.init = function ()
+		self.init = function ()
 		{
-			selfadd.hub.server.index();
+			self.hub.server.index();
 		}
 
-		selfadd.hub.client.indexBack = function (addressList)
+		self.hub.client.indexBack = function (addressList)
 		{
 			$.map(addressList, function (address)
 			{
@@ -137,22 +137,22 @@ function Account()
 					return state.rid == address.State.RID;
 				});
 				console.log(selectedState);
-				selfadd.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, selectedState, address.ZIP));
-				selfadd.loading('false');
+				self.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, selectedState, address.ZIP));
+				self.loading('false');
 			});
-			console.log(selfadd.list());
+			console.log(self.list());
 		}
-		selfadd.hub.client.postback = function (address)
+		self.hub.client.postback = function (address)
 		{
 			var selectedState = ko.utils.arrayFirst(Page.States.list(), function (state)
 			{
 				return state.rid == address.State.RID;
 			});
-			selfadd.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, selectedState, address.ZIP));
+			self.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, selectedState, address.ZIP));
 		}
-		selfadd.hub.client.putBack = function (address)
+		self.hub.client.putBack = function (address)
 		{
-			var selectedAddress = ko.utils.arrayFirst(selfadd.list(), function (item)
+			var selectedAddress = ko.utils.arrayFirst(self.list(), function (item)
 			{
 				return address.RID == item.rid();
 			});
@@ -163,15 +163,15 @@ function Account()
 			selectedAddress.state(address.State);
 			selectedAddress.zip(address.ZIP);
 		}
-		selfadd.hub.client.deleteBack = function(address)
+		self.hub.client.deleteBack = function(address)
 		{
-			selfadd.list.remove(function (item)
+			self.list.remove(function (item)
 			{
 				return item.rid() == address.RID;
 			});
 		}
 
-		selfadd.post = function (addressForm)
+		self.post = function (addressForm)
 		{
 			dataSent();
 			Page.Modal.CloseModal();
@@ -185,9 +185,9 @@ function Account()
 				ZIP: addressForm.ZIP.value
 			}
 			console.log(address);
-			selfadd.hub.server.post(address);
+			self.hub.server.post(address);
 		}
-		selfadd.put = function (addressForm)
+		self.put = function (addressForm)
 		{
 			dataSent();
 			Page.Modal.CloseModal();
@@ -202,31 +202,31 @@ function Account()
 				ZIP: addressForm.ZIP.value
 			}
 			console.log(address);
-			selfadd.hub.server.put(address);
+			self.hub.server.put(address);
 		}
-		selfadd.delete = function (addressForm)
+		self.delete = function (addressForm)
 		{
 			dataSent();
 			Page.Modal.CloseModal();
 			console.log(addressForm);
-			selfadd.hub.server.delete(addressForm.RID.value);
+			self.hub.server.delete(addressForm.RID.value);
 		}
 
-		selfadd.Create = function ()
+		self.Create = function ()
 		{
 			console.log("Create Button Pressed.");
 			Page.Modal.data(new AddressViewModel());
 			Page.Modal.displayMode('AddressCreate');
 			Page.Modal.LoadModal();
 		}
-		selfadd.Edit = function (address)
+		self.Edit = function (address)
 		{
 			console.log("Edit Button Pressed.");
 			Page.Modal.data(address);
 			Page.Modal.displayMode('AddressEdit');
 			Page.Modal.LoadModal();
 		}
-		selfadd.Remove = function (address)
+		self.Remove = function (address)
 		{
 			console.log("Remove Button Pressed.");
 			Page.Modal.data(address);
@@ -234,115 +234,27 @@ function Account()
 			Page.Modal.LoadModal();
 		}
 	}
-}
-function Addresses()
-{
-	var self = this;
-	self.hub = $.connection.accountAddressHub;
-	self.list = ko.observableArray([]);
+	thisAccount.Orders = new function ()
+	{
 
-	self.displayMode = ko.computed(function ()
+	}
+	thisAccount.PaymentMethods = new function ()
 	{
-		return 'AddressTemplate';
-	});
-	self.empty = ko.computed(function ()
-	{
-		if (self.list().length == 0)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	});
 
-	self.init = function ()
-	{
-		this.hub.server.index();
 	}
+	thisAccount.Settings = new function ()
+	{
 
-	self.hub.client.indexBack = function (addressList)
-	{
-		$.map(addressList, function (address)
-		{
-			self.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, address.State, address.StateRID, address.ZIP));
-			console.log(address);
-		});
-		console.log(self.list());
 	}
-	self.hub.client.postback = function (address)
+	thisAccount.Review = new function ()
 	{
-		self.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.CityTitle, address.State, address.StateRID,  address.ZIP));
-	}
 
-	self.post = function (addressForm)
-	{
-		var address =
-		{
-			Nick: addressForm.Nick.value,
-			Line1: addressForm.Line1.value,
-			Line2: addressForm.Line2.value,
-			City: addressForm.City.value,
-			StateID: addressForm.StateID.value,
-			ZIP: addressForm.ZIP.value
-		}
-		console.log(address);
-		self.hub.server.post(address);
 	}
-	self.put = function (addressForm)
+	thisAccount.Profiles = new function ()
 	{
-		var address =
-		{
-			RID: addressForm.RID.value,
-			Nick: addressForm.Nick.value,
-			Line1: addressForm.Line1.value,
-			Line2: addressForm.Line2.value,
-			City: addressForm.City.value,
-			StateID: addressForm.StateID.value,
-			ZIP: addressForm.ZIP.value
-		}
-		console.log(address);
-		self.hub.server.put(address);
-	}
 
-	self.Create = function()
-	{
-		$parent.Modal.displayMode = '#AddressCreate';
-		LoadModal(template);
-	}
-	self.Edit = function(address)
-	{
-		$parent.Modal.displayMode = '#AddressEdit';
-		LoadModal(template);
-	}
-	self.Remove = function(address)
-	{
-		$parent.Modal.displayMode = '#AddressRemove';
-		LoadModal(template);
 	}
 }
-function Orders()
-{
-
-}
-function PaymentMethods()
-{
-
-}
-function Settings()
-{
-
-}
-function Reviews()
-{
-
-}
-function Profiles()
-{
-
-}
-
 
 function dataSent()
 {

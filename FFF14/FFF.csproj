@@ -387,12 +387,6 @@
     <Content Include="Areas\Store\Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Areas\Store\Views\Shared\_RegisterLayout.cshtml" />
     <Content Include="Areas\Store\Views\Shared\_SubLayout.cshtml" />
-    <Content Include="Views\Address\_Address.cshtml" />
-    <Content Include="Views\Address\_Addresses.cshtml" />
-    <Content Include="Views\Address\_AddressesWrapper.cshtml" />
-    <Content Include="Views\Address\_AddressCreate.cshtml" />
-    <Content Include="Views\Address\_AddressDelete.cshtml" />
-    <Content Include="Views\Address\_AddressEdit.cshtml" />
     <None Include="Properties\PublishProfiles\SmarterASP.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <None Include="Scripts\jquery-2.0.3-vsdoc.js" />
@@ -548,9 +542,25 @@
     <Content Include="Views\Account\_AddressCreate.cshtml" />
     <Content Include="Views\Account\_AddressDelete.cshtml" />
     <Content Include="Views\Account\_AddressEdit.cshtml" />
-    <Content Include="Views\Account\_Addresses.cshtml" />
     <Content Include="Views\Account\_AddressesWrapper.cshtml" />
     <Content Include="Views\Shared\_ModalTester.cshtml" />
+    <Content Include="Views\Account\_ReviewsWrapper.cshtml" />
+    <Content Include="Views\Account\_ReviewCreate.cshtml" />
+    <Content Include="Views\Account\_ReviewEdit.cshtml" />
+    <Content Include="Views\Account\_ReviewDelete.cshtml" />
+    <Content Include="Views\Account\_OrdersWrapper.cshtml" />
+    <Content Include="Views\Account\_ProfileWrapper.cshtml" />
+    <Content Include="Views\Account\_PaymentMethodsWrapper.cshtml" />
+    <Content Include="Views\Account\_SettingsWrapper.cshtml" />
+    <Content Include="Views\Account\_OrderEdit.cshtml" />
+    <Content Include="Views\Account\_Order.cshtml" />
+    <Content Include="Views\Account\_OrderCreate.cshtml" />
+    <Content Include="Views\Account\_OrderDelete.cshtml" />
+    <Content Include="Views\Account\_PaymentMethod.cshtml" />
+    <Content Include="Views\Account\_PaymentMethodCreate.cshtml" />
+    <Content Include="Views\Account\_PaymentMethodDelete.cshtml" />
+    <Content Include="Views\Account\_PaymentMethodEdit.cshtml" />
+    <Content Include="Views\Account\_PaymentMethodAddressSelector.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

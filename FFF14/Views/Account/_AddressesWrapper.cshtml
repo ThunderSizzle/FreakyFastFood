@@ -3,14 +3,6 @@
 	ViewBag.Prefix = "Address";
 	ViewBag.Glyphicon = "home";
 	ViewBag.CreateButton = true;
-	ViewBag.CreateButtonMessage = "Add a New Address";
-	<div data-bind="with: Page.Account.@ViewBag.SubTitle">
-		@{
-			Html.RenderPartial("_AccountObject");
-			Html.RenderPartial( "_" + ViewBag.Prefix as String );
-			Html.RenderPartial( "_" + ViewBag.Prefix as String + "Create" );
-			Html.RenderPartial( "_" + ViewBag.Prefix as String + "Edit" );
-			Html.RenderPartial( "_" + ViewBag.Prefix as String + "Delete" );
-		}
-	</div>
+	ViewBag.CreateButtonMessage = "New Address";
+	Html.RenderPartial("_AccountObjectLayout");
 }

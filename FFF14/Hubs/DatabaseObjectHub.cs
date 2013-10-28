@@ -25,7 +25,6 @@ namespace FFF.Hubs
 						UserAgent = Context.Request.Headers["User-Agent"],
 						Connected = true
 					} );
-					db.SaveChanges();
 				}
 			}
 			else
@@ -33,15 +32,19 @@ namespace FFF.Hubs
 				Clients.Caller.showErrorMessage( "We could not find your user account." );
 			}
 			db.SaveChanges();
-
 			return base.OnConnected();
 		}
 		public override Task OnDisconnected()
 		{
 			var connection = db.Connections.FirstOrDefault( c => c.ConnectionID == Context.ConnectionId );
-			connection.Connected = false;
+			db.Connections.Remove(connection);
 			db.SaveChanges();
 			return base.OnDisconnected();
+		}
+		protected override void Dispose( bool disposing )
+		{
+			db.Dispose();
+			base.Dispose( disposing );
 		}
 	}
 }

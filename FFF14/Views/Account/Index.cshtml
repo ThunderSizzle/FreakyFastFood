@@ -41,25 +41,12 @@
 	</div>
 	<div class="col-md-9">
 		@{
-			@*
-				ViewBag.Path = "/Areas/Account/Views/Order/";
-				Html.RenderPartial( ViewBag.Path as String + "_OrdersWrapper.cshtml", @Model.Orders );
-
-				ViewBag.Path = "/Areas/Account/Views/Profile/";
-				Html.RenderPartial( ViewBag.Path as String + "_ProfileWrapper.cshtml", @Model );
-
-				ViewBag.Path = "/Areas/Account/Views/PaymentMethod/";
-				Html.RenderPartial( ViewBag.Path as String + "_PaymentMethodsWrapper.cshtml", @Model.PaymentMethods );
-			*@
-				ViewBag.Path = "/Views/Address/";
-				Html.RenderPartial( ViewBag.Path as String + "_AddressesWrapper.cshtml" );
-			@*
-				ViewBag.Path = "/Areas/Account/Views/Review/";
-				Html.RenderPartial( ViewBag.Path as String + "_ReviewsWrapper.cshtml", @Model.Reviews );
-
-				ViewBag.Path = "/Areas/Account/Views/Settings/";
-				Html.RenderPartial( ViewBag.Path as String + "_SettingsWrapper.cshtml", @Model );
-			*@
+		//	Html.RenderPartial( "_OrdersWrapper" );
+		//	Html.RenderPartial( "_ProfileWrapper" );
+		//	Html.RenderPartial( "_PaymentMethodsWrapper" );
+			Html.RenderPartial( "_AddressesWrapper" );
+		//	Html.RenderPartial( "_ReviewsWrapper" );
+		//	Html.RenderPartial( "_SettingsWrapper" );
 		}	
 	</div>
 </div>

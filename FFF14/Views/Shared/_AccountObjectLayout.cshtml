@@ -1,41 +1,74 @@
-﻿<div id="@ViewBag.SubTitle" class="subcontainer">
-	<div class="row subheader">
-		<div class="col-xs-6 subtitle">
-			<h2>
-				<span class="glyphicon glyphicon-@ViewBag.Glyphicon">
-				</span>
-				@ViewBag.SubTitle
-			</h2>
-		</div>
-		@if ( ViewBag.CreateButton )
+﻿<div data-bind="with: Page.Account.@ViewBag.SubTitle">
+	@{
+		Html.RenderPartial( "_" + ViewBag.Prefix as String );
+		if(ViewBag.CreateButton)
 		{
-			<div class="col-xs-6">
+			Html.RenderPartial( "_" + ViewBag.Prefix as String + "Create" );
+		}
+		Html.RenderPartial( "_" + ViewBag.Prefix as String + "Edit" );
+		Html.RenderPartial( "_" + ViewBag.Prefix as String + "Delete" );
+	}
+	<div id="@ViewBag.SubTitle" class="subcontainer">
+		<div class="row subheader">
+			<div class="col-xs-6 subtitle">
 				<h2>
-					<a class="btn btn-success pull-right" data-bind="click: Account.@(ViewBag.SubTitle).Create">
-						<span class="glyphicon glyphicon-plus-sign">
-						</span>
-						@ViewBag.CreateButtonMessage
-					</a>
+					<span class="glyphicon glyphicon-@ViewBag.Glyphicon">
+					</span>
+					@if(ViewBag.SubTitleDisplay != null)
+					{
+						@ViewBag.SubTitleDisplay
+					}
+					else
+					{
+						@ViewBag.SubTitle
+					}
 				</h2>
 			</div>
-		}
-	</div>
-	<div id="@(ViewBag.SubTitle)Content" class="subcontent">
-		<div class="row panel panel-primary">
-			<div data-bind="if: Account.@(ViewBag.SubTitle).empty">
-				<div data-bind="if:Account.@(ViewBag.SubTitle).loading">
-					<div class="well well-lg">
-						<p class="text-center"><strong>We are updating your @(ViewBag.SubTitle).</strong> This should only take a moment.</p>
+			@if ( ViewBag.CreateButton )
+			{
+				<div class="col-xs-6">
+					<h2>
+						<a class="btn btn-success pull-right" data-bind="click: Page.Account.@(ViewBag.SubTitle).Create">
+							<span class="glyphicon glyphicon-plus-sign">
+							</span>
+							@ViewBag.CreateButtonMessage
+						</a>
+					</h2>
+				</div>
+			}
+		</div>
+		<div id="@(ViewBag.SubTitle)Content" class="subcontent">
+			<div class="row panel panel-primary">
+				<div data-bind="if: Page.Account.@(ViewBag.SubTitle).empty">
+					<div data-bind="if:Page.Account.@(ViewBag.SubTitle).loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" />
+								<strong>
+									We are updating your @if ( ViewBag.SubTitleDisplay != null ) { @ViewBag.SubTitleDisplay  } else { @ViewBag.SubTitle }.</strong> This should only take a moment.
+							</p>
+						</div>
+					</div>
+					<div data-bind="ifnot:Page.Account.@(ViewBag.SubTitle).loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<strong>You have no 
+								@if ( ViewBag.SubTitleDisplay != null )
+								{
+									@ViewBag.SubTitleDisplay
+								}
+								else
+								{
+									@ViewBag.SubTitle
+								}
+								.</strong> If you add an @(ViewBag.SubTitle), you can view, edit, and delete it here.
+							</p>
+						</div>
 					</div>
 				</div>
-				<div data-bind="ifnot:Account.@(ViewBag.SubTitle).loading">
-					<div class="well well-lg">
-						<p class="text-center"><strong>You have no @(ViewBag.SubTitle).</strong> If you add an @(ViewBag.SubTitle), you can view, edit, and delete it here.</p>
+				<div data-bind="ifnot: Page.Account.@(ViewBag.SubTitle).empty">
+					<div data-bind="template: { name: Page.Account.@(ViewBag.SubTitle).displayMode, foreach: Page.Account.@(ViewBag.SubTitle).list }">
 					</div>
-				</div>
-			</div>
-			<div data-bind="ifnot: Account.@(ViewBag.SubTitle).empty">
-				<div data-bind="template: { name: Page.Account.@(ViewBag.SubTitle).displayMode, foreach: Page.Account.@(ViewBag.SubTitle).list }">
 				</div>
 			</div>
 		</div>
