@@ -33,12 +33,9 @@ namespace FFF.ViewModels
 		[Required]
 		[Display( Name="City" )]
 		public String City { get; set; }
-		[Display( Name="State", Description="State Abbreviation" )]
+		[Display( Name="State", Description="State" )]
 		[Required]
-		public String State { get; set; }
-		[Display( Name="State ID", Description="State ID" )]
-		[Required]
-		public Guid StateRID { get; set; }
+		public StateView State { get; set; }
 		[Display( Name="ZIP Code" )]
 		[Required]
 		public String ZIP { get; set; }
@@ -55,20 +52,8 @@ namespace FFF.ViewModels
 			this.Line1 = Address.Line1;
 			this.Line2 = Address.Line2;
 			this.City = Address.City;
-			this.State = Address.State.Abbreviation;
-			this.StateRID = Address.State.RID;
+			this.State = new StateView(Address.State);
 			this.ZIP = Address.ZIP;
-		}
-		public AddressView( Guid RID, string Nick, string Line1, string Line2, string City, string State, Guid StateRID, String ZIP )
-			: base( RID )
-		{
-			this.Nick = Nick;
-			this.Line1 = Line1;
-			this.Line2 = Line2;
-			this.City = City;
-			this.State = State;
-			this.StateRID = StateRID;
-			this.ZIP = ZIP;
 		}
 	}
 	public class OrderView : ViewModel
@@ -254,5 +239,28 @@ namespace FFF.ViewModels
 		public Guid GenderID { get; set; }
 		[Required]
 		public string LoginProvider { get; set; }
+	}
+	public class StateView : ViewModel
+	{
+		public String Title { get; set; }
+		public String Abbreviation { get; set; }
+
+		public StateView()
+			: base()
+		{
+
+		}
+		public StateView(State State)
+			: base(State.RID)
+		{
+			this.Title = State.Title;
+			this.Abbreviation = State.Abbreviation;
+		}
+		public StateView( Guid RID, String Title, String Abbreviation )
+			: base(RID)
+		{
+			this.Title = Title;
+			this.Abbreviation = Abbreviation;
+		}
 	}
 }

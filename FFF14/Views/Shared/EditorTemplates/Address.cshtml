@@ -42,7 +42,7 @@
 </div>
 <div class="form-group">
 	@Html.LabelFor( model => model.StateID )
-	@Html.DropDownListFor( model => model.StateID, ViewData["States"] as SelectList, "Select State", new { @class = "form-control" } )
+	@Html.DropDownListFor( model => model.StateID, ViewData["States"] as SelectList, new { @class= "form-control", data_bind="value: state().rid, options: Page.States.list, optionsText: 'title', optionsValue: 'rid', optionsCaption: 'Select State'" } )
 	@Html.ValidationMessageFor( model => model.StateID, null, new { @class = "help-inline" } )
 </div>
 <div class="form-group">

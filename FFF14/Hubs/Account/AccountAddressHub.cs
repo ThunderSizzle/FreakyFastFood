@@ -1,5 +1,4 @@
 ﻿using FFF.Controllers.AccountObject;
-using FFF.DropDownModels;
 using FFF.InputModels;
 using FFF.Models;
 using FFF.ViewModels;
@@ -28,7 +27,7 @@ namespace FFF.Hubs
 				{
 					AddressesView.Add( new AddressView( address ) );
 				}
-				Clients.Clients( ( await this.ConnectionIds() ).ToList() ).indexBack( AddressesView );
+				Clients.Client( Context.ConnectionId ).indexBack( AddressesView );
 			}
 		}
 		public async Task Post( AddressInput model)
@@ -39,16 +38,7 @@ namespace FFF.Hubs
 				var contentresult = result as OkNegotiatedContentResult<Address>;
 				if(contentresult != null)
 				{
-					AddressView Address = new AddressView( 
-						contentresult.Content.RID, 
-						contentresult.Content.Nick,
-						contentresult.Content.Line1,
-						contentresult.Content.Line2,
-						contentresult.Content.City,
-						contentresult.Content.State.Abbreviation,
-						contentresult.Content.State.RID,
-						contentresult.Content.ZIP
-					);
+					AddressView Address = new AddressView( contentresult.Content );
 					Clients.Clients( ( await this.ConnectionIds() ).ToList() ).postBack( Address );
 				}
 				else
@@ -65,16 +55,7 @@ namespace FFF.Hubs
 				var contentresult = result as OkNegotiatedContentResult<Address>;
 				if ( contentresult != null )
 				{
-					AddressView Address = new AddressView(
-						contentresult.Content.RID,
-						contentresult.Content.Nick,
-						contentresult.Content.Line1,
-						contentresult.Content.Line2,
-						contentresult.Content.City,
-						contentresult.Content.State.Abbreviation,
-						contentresult.Content.State.RID,
-						contentresult.Content.ZIP
-					);
+					AddressView Address = new AddressView( contentresult.Content );
 					Clients.Clients( ( await this.ConnectionIds() ).ToList() ).putBack( Address );
 				}
 				Clients.Clients( ( await this.ConnectionIds() ).ToList() ).error( result );
@@ -88,28 +69,19 @@ namespace FFF.Hubs
 				var contentresult = result as OkNegotiatedContentResult<Address>;
 				if ( contentresult != null )
 				{
-					AddressView Address = new AddressView(
-						contentresult.Content.RID,
-						contentresult.Content.Nick,
-						contentresult.Content.Line1,
-						contentresult.Content.Line2,
-						contentresult.Content.City,
-						contentresult.Content.State.Abbreviation,
-						contentresult.Content.State.RID,
-						contentresult.Content.ZIP
-					);
+					AddressView Address = new AddressView( contentresult.Content );
 					Clients.Clients( ( await this.ConnectionIds() ).ToList() ).deleteBack( Address );
 				}
 				Clients.Clients( ( await this.ConnectionIds() ).ToList() ).error( result );
 			}
 		}
-		public async Task StateList( AddressInput model )
+		public async Task StateList()
 		{
 			var States = await db.States.ToListAsync();
-			ICollection<StateDropDownItem> StateList = new Collection<StateDropDownItem>();
+			ICollection<StateView> StateList = new Collection<StateView>();
 			foreach ( var state in States )
 			{
-				StateList.Add( new StateDropDownItem( state.RID, state.Title ) );
+				StateList.Add( new StateView( state ) );
 			}
 			Clients.Clients( ( await this.ConnectionIds() ).ToList() ).stateListBack( StateList );
 		}

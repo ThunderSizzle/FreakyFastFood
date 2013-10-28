@@ -5,6 +5,7 @@
 <script>
 	var Page = 
 	{
+		States: new States(),
 		Modal: new Modal(),
 		Account: new Account()
 		//Account: 
@@ -18,6 +19,7 @@
 		ko.applyBindings(Page);
 		$.connection.hub.start(function ()
 		{
+			Page.States.init();
 			Page.Account.Addresses.init();
 			//Page.Account.Orders.init();
 			//Page.Account.PaymentMethods.init();

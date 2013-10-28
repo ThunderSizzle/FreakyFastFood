@@ -11,7 +11,7 @@
 		{
 			<div class="col-xs-6">
 				<h2>
-					<a class="btn btn-success pull-right" data-bind="click: Account.Addresses.Create">
+					<a class="btn btn-success pull-right" data-bind="click: Account.@(ViewBag.SubTitle).Create">
 						<span class="glyphicon glyphicon-plus-sign">
 						</span>
 						@ViewBag.CreateButtonMessage
@@ -21,13 +21,22 @@
 		}
 	</div>
 	<div id="@(ViewBag.SubTitle)Content" class="subcontent">
-		<div data-bind="if: Account.@(ViewBag.SubTitle).empty">
-			<div class="well well-lg">
-				<p class="text-center"><strong>You have no Addresses.</strong> If you add an Address, you can view, edit, and delete it here.</p>
+		<div class="row panel panel-primary">
+			<div data-bind="if: Account.@(ViewBag.SubTitle).empty">
+				<div data-bind="if:Account.@(ViewBag.SubTitle).loading">
+					<div class="well well-lg">
+						<p class="text-center"><strong>We are updating your @(ViewBag.SubTitle).</strong> This should only take a moment.</p>
+					</div>
+				</div>
+				<div data-bind="ifnot:Account.@(ViewBag.SubTitle).loading">
+					<div class="well well-lg">
+						<p class="text-center"><strong>You have no @(ViewBag.SubTitle).</strong> If you add an @(ViewBag.SubTitle), you can view, edit, and delete it here.</p>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div data-bind="ifnot: Account.@(ViewBag.SubTitle).empty">
-			<div class="row" id="address" data-bind="template: { name: Page.Account.@(ViewBag.SubTitle).displayMode, foreach: Page.Account.@(ViewBag.SubTitle).list }">
+			<div data-bind="ifnot: Account.@(ViewBag.SubTitle).empty">
+				<div data-bind="template: { name: Page.Account.@(ViewBag.SubTitle).displayMode, foreach: Page.Account.@(ViewBag.SubTitle).list }">
+				</div>
 			</div>
 		</div>
 	</div>

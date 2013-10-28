@@ -1,4 +1,4 @@
-﻿function AddressViewModel(rid, nick, line1, line2, city, state, stateid, zip)
+﻿function AddressViewModel(rid, nick, line1, line2, city, state, zip)
 {
 	var self = this;
 	self.rid = ko.observable(rid);
@@ -6,8 +6,14 @@
 	self.line1 = ko.observable(line1);
 	self.line2 = ko.observable(line2);
 	self.city = ko.observable(city);
-	self.state = ko.observable(state);
-	self.stateid = ko.observable(stateid);
+	if (state != null)
+	{
+		self.state = ko.observable(state);
+	}
+	else
+	{
+		self.state = ko.observable(new StateViewModel("", "", ""));
+	}
 	self.zip = ko.observable(zip);
 }
 function OrderViewModel()
@@ -29,6 +35,48 @@ function ReviewViewModel()
 function ProfileViewModel()
 {
 
+}
+function StateViewModel(rid, title, abbreviation)
+{
+	var self = this;
+	self.rid = rid;
+	self.title = title;
+	self.abbreviation = abbreviation;
+}
+
+function States()
+{
+	var self = this;
+	self.hub = $.connection.accountAddressHub;
+	self.list = ko.observableArray([]);
+
+	self.init = function ()
+	{
+		this.hub.server.stateList();
+	}
+
+	self.hub.client.stateListBack = function (stateList)
+	{
+		$.map(stateList, function (state)
+		{
+			self.list.push(new StateViewModel(state.RID, state.Title, state.Abbreviation));
+		});
+		self.list.sort(function (left, right)
+		{
+			if(left.title == right.title)
+			{
+				return 0;
+			}
+			else if( left.title < right.title)
+			{
+				return -1;
+			}
+			else
+			{
+				return 1;
+			}
+		});
+	}
 }
 
 function Modal()
@@ -72,6 +120,7 @@ function Account()
 				return false;
 			}
 		});
+		selfadd.loading = ko.observable('true');
 
 		selfadd.init = function ()
 		{
@@ -82,14 +131,24 @@ function Account()
 		{
 			$.map(addressList, function (address)
 			{
-				selfadd.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, address.State, address.StateRID, address.ZIP));
 				console.log(address);
+				var selectedState = ko.utils.arrayFirst(Page.States.list(), function (state)
+				{
+					return state.rid == address.State.RID;
+				});
+				console.log(selectedState);
+				selfadd.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, selectedState, address.ZIP));
+				selfadd.loading('false');
 			});
 			console.log(selfadd.list());
 		}
 		selfadd.hub.client.postback = function (address)
 		{
-			selfadd.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, address.State, address.StateRID, address.ZIP));
+			var selectedState = ko.utils.arrayFirst(Page.States.list(), function (state)
+			{
+				return state.rid == address.State.RID;
+			});
+			selfadd.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, selectedState, address.ZIP));
 		}
 		selfadd.hub.client.putBack = function (address)
 		{
@@ -102,7 +161,6 @@ function Account()
 			selectedAddress.line2(address.Line2);
 			selectedAddress.city(address.City);
 			selectedAddress.state(address.State);
-			selectedAddress.stateid(address.StateRID);
 			selectedAddress.zip(address.ZIP);
 		}
 		selfadd.hub.client.deleteBack = function(address)

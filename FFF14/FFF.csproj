@@ -288,7 +288,6 @@
     <Compile Include="ViewModels\HtmlExtensions.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="ViewModels\InputModel.cs" />
-    <Compile Include="ViewModels\DropDownModels.cs" />
     <Compile Include="ViewModels\Profile.cs" />
   </ItemGroup>
   <ItemGroup>
