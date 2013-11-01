@@ -73,18 +73,18 @@
 					</ul>
 				</li>
 			}
-			<li  id="ShoppingCartNavbar">
-				<a href="#" onclick="$('#ShoppingCartLink').submit()">
-					<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" width="14px" height="14px" />
-					Shopping Cart: Loading
+			<li  id="ShoppingCartNavbar" data-bind="with: Page.Account.ShoppingCart">
+				<a>
+					<span data-bind="if: loading">
+						<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" width="14px" height="14px" />
+						Shopping Cart: Loading
+					</span>
+					<span data-bind="ifnot: loading">
+						<span class="glyphicon-shopping-cart"></span>
+						Shopping Cart: <span data-bind="if: empty">Empty</span> <span data-bind="ifnot: shoppingCart.empty"><span data-bind="products().length"></span>@@ $<span data-bind="subtotal"></span></span>
+					</span>
 				</a>
 			</li>
 		</ul>
-		<div style="display:none" id="ShoppingCart">
-			@using ( Html.BeginForm( "Navbar", "ShoppingCart", new { area = "" }, FormMethod.Post, new { @class="refresher", @for="#ShoppingCartNavbar" } ) )
-			{
-				@Html.AntiForgeryToken()
-			}
-		</div>
 	</div>
 </nav>

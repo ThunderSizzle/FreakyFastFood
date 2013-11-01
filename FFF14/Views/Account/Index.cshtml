@@ -2,32 +2,6 @@
 	ViewBag.Title = "My Account";
 	ViewBag.Glyphicon = "user";
 }
-<script>
-	var Page = 
-	{
-		States: new States(),
-		Modal: new Modal(),
-		Account: new Account()
-		//Account: 
-		//{
-		//	Addresses: new Addresses()
-		//}
-	}
-
-	$(function ()
-	{
-		ko.applyBindings(Page);
-		$.connection.hub.start(function ()
-		{
-			Page.States.init();
-			Page.Account.Addresses.init();
-			//Page.Account.Orders.init();
-			//Page.Account.PaymentMethods.init();
-			//Page.Account.Reviews.init();
-			//Page.Account.Settings.init();
-		});
-	});
-</script>
 <div class="row">
 	<div class="col-md-3">
 		<div class="bs-sidebar hidden-print affix" role="complementary" id="sidenav">
@@ -41,12 +15,12 @@
 	</div>
 	<div class="col-md-9">
 		@{
-		//	Html.RenderPartial( "_OrdersWrapper" );
-		//	Html.RenderPartial( "_ProfileWrapper" );
-		//	Html.RenderPartial( "_PaymentMethodsWrapper" );
+			Html.RenderPartial( "_OrdersWrapper" );
+			Html.RenderPartial( "_ProfileWrapper" );
+			Html.RenderPartial( "_PaymentMethodsWrapper" );
 			Html.RenderPartial( "_AddressesWrapper" );
-		//	Html.RenderPartial( "_ReviewsWrapper" );
-		//	Html.RenderPartial( "_SettingsWrapper" );
+			Html.RenderPartial( "_ReviewsWrapper" );
+			Html.RenderPartial( "_SettingsWrapper" );
 		}	
 	</div>
 </div>

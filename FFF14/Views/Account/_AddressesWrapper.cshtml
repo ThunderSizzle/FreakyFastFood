@@ -1,8 +1,54 @@
-﻿@{
-	ViewBag.SubTitle = "Addresses";
-	ViewBag.Prefix = "Address";
-	ViewBag.Glyphicon = "home";
-	ViewBag.CreateButton = true;
-	ViewBag.CreateButtonMessage = "New Address";
-	Html.RenderPartial("_AccountObjectLayout");
-}
+﻿<div data-bind="with: Page.Account.Addresses">
+	@{
+		Html.RenderPartial( "_Address" );
+		Html.RenderPartial( "_AddressCreate" );
+		Html.RenderPartial( "_AddressEdit" );
+		Html.RenderPartial( "_AddressDelete" );
+	}
+	<div id="Addresses" class="subcontainer">
+		<div class="row subheader">
+			<div class="col-xs-6 subtitle">
+				<h2>
+					<span class="glyphicon glyphicon-home">
+					</span>
+					Addresses
+				</h2>
+			</div>
+			<div class="col-xs-6">
+				<h2>
+					<a class="btn btn-success pull-right" data-bind="click: Page.Account.Addresses.Create">
+						<span class="glyphicon glyphicon-plus-sign">
+						</span>
+						New Address
+					</a>
+				</h2>
+			</div>
+		</div>
+		<div id="AddressesContent" class="subcontent">
+			<div class="row panel panel-primary">
+				<div data-bind="if: Page.Account.Addresses.empty">
+					<div data-bind="if:Page.Account.Addresses.loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" width="50px" height="50px" />
+								<strong>We are updating your Addresses.</strong> 
+								This should only take a moment.
+							</p>
+						</div>
+					</div>
+					<div data-bind="ifnot:Page.Account.Addresses.loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<strong>You have no Addresses.</strong> If you add an Addresses, you can view, edit, and delete it here.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div data-bind="ifnot: Page.Account.Addresses.empty">
+					<div data-bind="template: { name: Page.Account.Addresses.displayMode, foreach: Page.Account.Addresses.list }">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

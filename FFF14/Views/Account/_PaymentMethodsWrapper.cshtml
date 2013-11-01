@@ -1,10 +1,54 @@
-﻿@{
-	ViewBag.SubTitle = "PaymentMethods";
-	ViewBag.Prefix = "PaymentMethod";
-	ViewBag.SubTitleDisplay = "Payment Methods";
-	ViewBag.PrefixDisplay = "Payment Method";
-	ViewBag.Glyphicon = "credit-card";
-	ViewBag.CreateButton = true;
-	ViewBag.CreateButtonMessage = "New Payment Method";
-	Html.RenderPartial("_AccountObject");
-}
+﻿<div data-bind="with: Page.Account.PaymentMethods">
+	@{
+		Html.RenderPartial( "_PaymentMethod" );
+		Html.RenderPartial( "_PaymentMethodCreate" );
+		Html.RenderPartial( "_PaymentMethodEdit" );
+		Html.RenderPartial( "_PaymentMethodDelete" );
+	}
+	<div id="PaymentMethods" class="subcontainer">
+		<div class="row subheader">
+			<div class="col-xs-6 subtitle">
+				<h2>
+					<span class="glyphicon glyphicon-credit-card">
+					</span>
+					Payment Methods
+				</h2>
+			</div>
+			<div class="col-xs-6">
+				<h2>
+					<a class="btn btn-success pull-right" data-bind="click: Page.Account.PaymentMethods.Create">
+						<span class="glyphicon glyphicon-plus-sign">
+						</span>
+						New Payment Method
+					</a>
+				</h2>
+			</div>
+		</div>
+		<div id="AddressesContent" class="subcontent">
+			<div class="row panel panel-primary">
+				<div data-bind="if: Page.Account.PaymentMethods.empty">
+					<div data-bind="if:Page.Account.PaymentMethods.loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" width="50px" height="50px" />
+								<strong>We are updating your Payment Methods.</strong>
+								This should only take a moment.
+							</p>
+						</div>
+					</div>
+					<div data-bind="ifnot:Page.Account.PaymentMethods.loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<strong>You have no Payment Methods.</strong> If you add an Payment Methods, you can view, edit, and delete it here.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div data-bind="ifnot: Page.Account.PaymentMethods.empty">
+					<div data-bind="template: { name: Page.Account.PaymentMethods.displayMode, foreach: Page.Account.PaymentMethods.list }">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

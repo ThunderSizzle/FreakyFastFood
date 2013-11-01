@@ -47,6 +47,18 @@ namespace FFF.Controllers.AccountObject
 			return Ok( PaymentMethod );
         }
 
+		public IHttpActionResult VerifyCardInfo(CardInput model)
+		{
+			if ( !ModelState.IsValid )
+			{
+				return BadRequest( ModelState );
+			}
+			else
+			{
+				return Ok();
+			}
+		}
+
         // PUT api/Address/5
 		public async Task<IHttpActionResult> Put( PaymentMethodInput model )
         {

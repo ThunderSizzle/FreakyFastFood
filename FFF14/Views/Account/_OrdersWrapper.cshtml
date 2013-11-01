@@ -1,8 +1,54 @@
-﻿@{
-	ViewBag.SubTitle = "Orders";
-	ViewBag.Prefix = "Order";
-	ViewBag.Glyphicon = "briefcase";
-	ViewBag.CreateButton = true;
-	ViewBag.CreateButtonMessage = "New Order";
-	Html.RenderPartial("_AccountObject");
-}
+﻿<div data-bind="with: Page.Account.Orders">
+	@{
+		//Html.RenderPartial( "_Order" );
+		//Html.RenderPartial( "_OrderCreate" );
+		//Html.RenderPartial( "_OrderEdit" );
+		//Html.RenderPartial( "_OrderDelete" );
+	}
+	<div id="Orders" class="subcontainer">
+		<div class="row subheader">
+			<div class="col-xs-6 subtitle">
+				<h2>
+					<span class="glyphicon glyphicon-briefcase">
+					</span>
+					Orders
+				</h2>
+			</div>@*
+			<div class="col-xs-6">
+				<h2>
+					<a class="btn btn-success pull-right" data-bind="click: Page.Account.Orders.Create">
+						<span class="glyphicon glyphicon-plus-sign">
+						</span>
+						New Order
+					</a>
+				</h2>
+			</div>*@
+		</div>
+		<div id="AddressesContent" class="subcontent">
+			<div class="row panel panel-primary">
+				<div data-bind="if: Page.Account.Orders.empty">
+					<div data-bind="if:Page.Account.Orders.loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" width="50px" height="50px" />
+								<strong>We are updating your Orders.</strong>
+								This should only take a moment.
+							</p>
+						</div>
+					</div>
+					<div data-bind="ifnot:Page.Account.Orders.loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<strong>You have no Orders.</strong> If you add an Orders, you can view, edit, and delete it here.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div data-bind="ifnot: Page.Account.Orders.empty">
+					<div data-bind="template: { name: Page.Account.Orders.displayMode, foreach: Page.Account.Orders.list }">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

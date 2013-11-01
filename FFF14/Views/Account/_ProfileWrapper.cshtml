@@ -1,8 +1,45 @@
-﻿@{
-	ViewBag.SubTitle = "Profile";
-	ViewBag.Prefix = "Profile";
-	ViewBag.Glyphicon = "font";
-	ViewBag.CreateButton = false;
-	ViewBag.CreateButtonMessage = "";
-	Html.RenderPartial("_AccountObject");
-}
+﻿<div data-bind="with: Page.Account.Profile">
+	@{
+		Html.RenderPartial( "_Address" );
+		Html.RenderPartial( "_AddressCreate" );
+		Html.RenderPartial( "_AddressEdit" );
+		Html.RenderPartial( "_AddressDelete" );
+	}
+	<div id="Profile" class="subcontainer">
+		<div class="row subheader">
+			<div class="col-xs-6 subtitle">
+				<h2>
+					<span class="glyphicon glyphicon-font">
+					</span>
+					Profile
+				</h2>
+			</div>
+		</div>
+		<div id="AddressesContent" class="subcontent">
+			<div class="row panel panel-primary">
+				<div data-bind="if: Page.Account.Profile.empty">
+					<div data-bind="if:Page.Account.Profile.loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" width="50px" height="50px" />
+								<strong>We are updating your Profile.</strong>
+								This should only take a moment.
+							</p>
+						</div>
+					</div>
+					<div data-bind="ifnot:Page.Account.Profile.loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<strong>You have no Profile.</strong> If you add an Profile, you can view, edit, and delete it here.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div data-bind="ifnot: Page.Account.Profile.empty">
+					<div data-bind="template: { name: Page.Account.Profile.displayMode, foreach: Page.Account.Profile.list }">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

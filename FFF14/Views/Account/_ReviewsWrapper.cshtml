@@ -1,8 +1,54 @@
-﻿@{
-	ViewBag.SubTitle = "Reviews";
-	ViewBag.Prefix = "Review";
-	ViewBag.Glyphicon = "message";
-	ViewBag.CreateButton = true;
-	ViewBag.CreateButtonMessage = "Write a New Review";
-	Html.RenderPartial( "_AccountObject" );
-}
+﻿<div data-bind="with: Page.Account.Reviews">
+	@{
+	//	Html.RenderPartial( "_Review" );
+	//	Html.RenderPartial( "_ReviewCreate" );
+	//	Html.RenderPartial( "_ReviewEdit" );
+	//	Html.RenderPartial( "_ReviewDelete" );
+	}
+	<div id="Reviews" class="subcontainer">
+		<div class="row subheader">
+			<div class="col-xs-6 subtitle">
+				<h2>
+					<span class="glyphicon glyphicon-message">
+					</span>
+					Reviews
+				</h2>
+			</div>
+			<div class="col-xs-6">
+				<h2>
+					<a class="btn btn-success pull-right" data-bind="click: Page.Account.Reviews.Create">
+						<span class="glyphicon glyphicon-plus-sign">
+						</span>
+						New Review
+					</a>
+				</h2>
+			</div>
+		</div>
+		<div id="AddressesContent" class="subcontent">
+			<div class="row panel panel-primary">
+				<div data-bind="if: Page.Account.Reviews.empty">
+					<div data-bind="if:Page.Account.Reviews.loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" width="50px" height="50px" />
+								<strong>We are updating your Reviews.</strong>
+								This should only take a moment.
+							</p>
+						</div>
+					</div>
+					<div data-bind="ifnot:Page.Account.Reviews.loading">
+						<div class="well well-lg">
+							<p class="text-center">
+								<strong>You have no Reviews.</strong> If you add an Reviews, you can view, edit, and delete it here.
+							</p>
+						</div>
+					</div>
+				</div>
+				<div data-bind="ifnot: Page.Account.Reviews.empty">
+					<div data-bind="template: { name: Page.Account.Reviews.displayMode, foreach: Page.Account.Reviews.list }">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

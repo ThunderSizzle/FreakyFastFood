@@ -17,9 +17,7 @@ namespace FFF
 						"~/Scripts/jquery-ui-{version}.js",
 						"~/Scripts/bootbox.js",
 						"~/Scripts/jquery.signalR-2.0.0-rc1.js",
-						"~/Scripts/knockout-2.3.0.js", 
-						"~/Scripts/app/account.viewmodels.js",
-						"~/Scripts/app/modal.viewmodels.js" ) );
+						"~/Scripts/knockout-2.3.0.js" ) );
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

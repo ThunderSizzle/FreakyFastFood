@@ -28,6 +28,22 @@ namespace FFF.Hubs
 				Clients.Clients( ( await this.ConnectionIds() ).ToList() ).IndexBack( PaymentMethodsView );
 			}
 		}
+		public async Task VerifyCardInfo( CardInput model )
+		{
+			using ( PaymentMethodController api = new PaymentMethodController( await this.Account() ) )
+			{
+				var result = api.VerifyCardInfo( model );
+				var contentresult = result as OkResult;
+				if(contentresult != null)
+				{
+					Clients.Caller.VerifyCardInfoBack( true );
+				}
+				else
+				{
+					Clients.Caller.VerifyCardInfoBack( result );
+				}
+			}
+		}
 		public async Task Post( PaymentMethodInput model)
 		{
 			using ( PaymentMethodController api = new PaymentMethodController( await this.Account() ) )

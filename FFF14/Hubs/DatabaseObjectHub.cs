@@ -13,7 +13,7 @@ namespace FFF.Hubs
 		{
 			var name = Context.User.Identity.Name;
 
-			var User = db.Users.First( c => c.UserName == name ) as FFFUser;
+			var User = db.Users.FirstOrDefault( c => c.UserName == name ) as FFFUser;
 			if ( User != null )
 			{
 				var connection = User.Connections.FirstOrDefault( c => c.ConnectionID == Context.ConnectionId );

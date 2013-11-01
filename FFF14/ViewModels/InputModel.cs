@@ -61,7 +61,7 @@ namespace FFF.InputModels
 	{
 
 	}
-	public class PaymentMethodInput : InputModel
+	public class CardInput : InputModel
 	{
 		[Required]
 		[Display( Name = "Credit Card Holder's Name" )]
@@ -89,12 +89,12 @@ namespace FFF.InputModels
 		[MaxLength( 4 )]
 		public String CCV { get; set; }
 
-		public PaymentMethodInput()
+		public CardInput()
 			: base()
 		{
 
 		}
-		public PaymentMethodInput(Guid RID, String CardHolderName, Guid CardTypeID, String CardNumber, int Month, int Year, String CCV)
+		public CardInput(Guid RID, String CardHolderName, Guid CardTypeID, String CardNumber, int Month, int Year, String CCV)
 			: base (RID)
 		{
 			this.CardHolderName = CardHolderName;
@@ -103,6 +103,21 @@ namespace FFF.InputModels
 			this.Month = Month;
 			this.Year = Year;
 			this.CCV = CCV;
+		}
+	}
+	public class PaymentMethodInput : CardInput
+	{
+		public AddressInput BillingAddress { get; set; }
+
+		public PaymentMethodInput()
+			: base()
+		{
+
+		}
+		public PaymentMethodInput(AddressInput AddressInput)
+			: base()
+		{
+			this.BillingAddress = AddressInput;
 		}
 	}
 	public class ReviewInput : InputModel
