@@ -80,8 +80,8 @@
 						Shopping Cart: Loading
 					</span>
 					<span data-bind="ifnot: loading">
-						<span class="glyphicon-shopping-cart"></span>
-						Shopping Cart: <span data-bind="if: empty">Empty</span> <span data-bind="ifnot: shoppingCart.empty"><span data-bind="products().length"></span>@@ $<span data-bind="subtotal"></span></span>
+						<span class="glyphicon glyphicon-shopping-cart"></span>
+						Shopping Cart: <span data-bind="if: empty">Empty</span><span data-bind="ifnot: empty"><span data-bind="products().length"></span> Items @@ $<span data-bind="subtotal"></span></span>
 					</span>
 				</a>
 			</li>

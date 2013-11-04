@@ -270,8 +270,8 @@ var Page = new function()
 				$.map(addressList, function (address)
 				{
 					addresses.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, address.State, address.ZIP));
-					addresses.loading('false');
 				});
+				addresses.loading('false');
 				console.log(addresses.list());
 			}
 			addresses.hub.client.postback = function (address)
@@ -402,9 +402,10 @@ var Page = new function()
 		{
 			var shoppingCart = this;
 			shoppingCart.hub = $.connection.accountShoppingCartHub;
-			shoppingCart.loading = ko.observable('true');
+			shoppingCart.loading = ko.observable(true);
 			shoppingCart.products = ko.observableArray([]);
-			shoppingCart.subtotal = ko.obserable(0.00);
+			shoppingCart.address = ko.observable();
+			shoppingCart.subtotal = ko.observable(0.00);
 			shoppingCart.empty = ko.computed(function ()
 			{
 				if (shoppingCart.products().length == 0)
@@ -419,6 +420,21 @@ var Page = new function()
 			shoppingCart.init = function ()
 			{
 				shoppingCart.hub.server.index();
+			}
+			shoppingCart.hub.client.indexBack = function(ShoppingCart)
+			{
+				shoppingCart.address = ko.utils.arrayFirst(Page.Account.Addresses.list(), function (address)
+				{
+					return ShoppingCart.DeliveryAddressRID == address.RID;
+				});
+				$.map(ShoppingCart.Products, function (product)
+				{
+				 	shoppingCart.products.push(new ProductViewModel());
+				 });
+				shoppingCart.loading(false);
+				shoppingCart.subtotal = ShoppingCart.Subtotal;
+				console.log(ShoppingCart);
+				console.log(shoppingCart);
 			}
 
 			//todo Build Shopping Cart System for Logged Out user but allow migration upon login.

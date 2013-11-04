@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FFF.InputModels;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -12,7 +13,7 @@ namespace FFF.Models
 			get
 			{
 				Decimal price = this.Item.Price;
-				foreach(var selectedOption in SelectedOptions)
+				foreach(var selectedOption in this.SelectedOptions)
 				{
 					price += selectedOption.AdditionalPrice;
 				}
@@ -21,6 +22,7 @@ namespace FFF.Models
 		}
 		[Required]
 		public virtual Item Item { get; set; }
+		[Required]
 		public virtual ICollection<Option> SelectedOptions { get; set; }
 		public virtual ShoppingCart ShoppingCart { get; set; }
 		public virtual Order Order { get; set; }
@@ -28,7 +30,7 @@ namespace FFF.Models
 		{
 			get
 			{
-				if(Order != null)
+				if ( Order != null || ShoppingCart != null )
 					return false;
 				else
 					return base.Removeable;
@@ -51,6 +53,12 @@ namespace FFF.Models
 					this.SelectedOptions.Add( selectedOption );
 				}
 			}
+		}
+		public Product(Item Item, ProductInput model)
+			: base()
+		{
+			this.Item = Item;
+			this.SelectedOptions = model.SelectedOptions;
 		}
 
 	}

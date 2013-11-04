@@ -213,6 +213,8 @@
     <Compile Include="Controllers\AccountObject\ProfileController.cs" />
     <Compile Include="Controllers\AccountObject\ReviewController.cs" />
     <Compile Include="Controllers\AccountObject\SettingsController.cs" />
+    <Compile Include="Controllers\AccountObject\ShoppingCartController.cs" />
+    <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Controllers\TesterController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\Store\Controllers\ItemController.cs" />
@@ -239,6 +241,10 @@
     <Compile Include="Migrations\201310200051163_Zero.cs" />
     <Compile Include="Migrations\201310200051163_Zero.Designer.cs">
       <DependentUpon>201310200051163_Zero.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201311031900068_UpdatingStoreForKnockOut.cs" />
+    <Compile Include="Migrations\201311031900068_UpdatingStoreForKnockOut.Designer.cs">
+      <DependentUpon>201311031900068_UpdatingStoreForKnockOut.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attributes.cs" />
@@ -562,6 +568,8 @@
     <Content Include="Views\Account\_PaymentMethodDelete.cshtml" />
     <Content Include="Views\Account\_PaymentMethodEdit.cshtml" />
     <Content Include="Views\Account\_PaymentMethodAddressSelector.cshtml" />
+    <Content Include="Views\Store\Index.cshtml" />
+    <Content Include="Views\Store\_SideBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -584,6 +592,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201310200051163_Zero.resx">
       <DependentUpon>201310200051163_Zero.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201311031900068_UpdatingStoreForKnockOut.resx">
+      <DependentUpon>201311031900068_UpdatingStoreForKnockOut.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

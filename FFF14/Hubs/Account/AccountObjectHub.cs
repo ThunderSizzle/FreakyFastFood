@@ -35,26 +35,15 @@ namespace FFF.Hubs
 			return ConnectionIds;
 		}
 		protected async Task<Account> Account()
-		{
-			
+		{			
 			var name = Context.User.Identity.Name;
-			Account Account;
 			if(name != null)
 			{
-				Account = await db.Accounts.FirstAsync( c => c.User.UserName == name);
-				return Account;
+				return await db.Accounts.FirstAsync( c => c.User.UserName == name );
 			}
 			else
 			{
-				Account = new Account();
-				Account.User = new FFFUser();
-				( Account.User as FFFUser ).Connections.Add(new Connection
-				{
-					ConnectionID = Context.ConnectionId,
-					UserAgent = Context.Request.Headers["User-Agent"],
-					Connected = true
-				} );
-				return Account;
+				return (await db.Connections.FindAsync(Context.ConnectionId)).User.Account;
 			}
 		}
 	}

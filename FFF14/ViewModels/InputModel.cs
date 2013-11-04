@@ -132,4 +132,16 @@ namespace FFF.InputModels
 	{
 
 	}
+
+	public class ProductInput : InputModel
+	{
+		public Guid ItemRID { get; set; }
+		public ICollection<Option> SelectedOptions { get; set; }
+
+		public ProductInput()
+			: base()
+		{
+
+		}
+	}
 }

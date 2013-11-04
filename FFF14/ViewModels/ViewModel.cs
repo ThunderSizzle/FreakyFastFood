@@ -263,4 +263,47 @@ namespace FFF.ViewModels
 			this.Abbreviation = Abbreviation;
 		}
 	}
+	public class ProductView : ViewModel
+	{
+		public Guid ShoppingCartRID { get; set; }
+		public Guid OrderRID { get; set; }
+		public ICollection<Option> SelectedOptions { get; set; }
+		public ProductView()
+			: base()
+		{
+			
+		}
+		public ProductView(Product Product)
+			: base(Product.RID)
+		{
+			this.ShoppingCartRID = Product.ShoppingCart.RID;
+			this.OrderRID = Product.Order.RID;
+			this.SelectedOptions = Product.SelectedOptions;
+		}
+	}
+	public class ShoppingCartView : ViewModel
+	{
+		public Guid DeliveryAddressRID { get; set; }
+		public ICollection<ProductView> Products { get; set; }
+		public Decimal SubTotal { get; set; }
+		public ShoppingCartView()
+			: base()
+		{
+
+		}
+		public ShoppingCartView(ShoppingCart ShoppingCart)
+			: base(ShoppingCart.RID)
+		{
+			if(ShoppingCart.DeliveryAddress != null)
+				this.DeliveryAddressRID = ShoppingCart.DeliveryAddress.RID;
+			else
+				this.DeliveryAddressRID = Guid.Empty;
+			this.Products = new Collection<ProductView>();
+			foreach(var product in ShoppingCart.Products)
+			{
+				this.Products.Add(new ProductView(product));
+			}
+			this.SubTotal = ShoppingCart.Subtotal;
+		}
+	}
 }

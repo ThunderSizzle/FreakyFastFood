@@ -18,13 +18,9 @@ namespace FFF.Hubs
 		{
 			using ( ShoppingCartController api = new ShoppingCartController( await this.Account() ) )
 			{
-				var Settingss = api.Get();
-				ICollection<SettingView> SettingsView = new Collection<SettingView>();
-				foreach ( var address in Settingss )
-				{
-					SettingsView.Add( new SettingView() );
-				}
-				Clients.Clients( ( await this.ConnectionIds() ).ToList() ).IndexBack( SettingsView );
+				var ShoppingCart = api.Get();
+				var ShoppingCartView = new ShoppingCartView(ShoppingCart);
+				Clients.Caller.IndexBack( ShoppingCartView );
 			}
 		}
 		public async Task Post( SettingInput model )

@@ -5,15 +5,17 @@ using System.Linq;
 
 namespace FFF.Hubs
 {
-	[Authorize]
 	public abstract class DatabaseObjectHub : Hub
 	{
 		protected DatabaseContext db = new DatabaseContext();
 		public override Task OnConnected()
 		{
-			var name = Context.User.Identity.Name;
-
-			var User = db.Users.FirstOrDefault( c => c.UserName == name ) as FFFUser;
+			FFFUser User = null;
+			if ( Context.User != null )
+			{
+				var name = Context.User.Identity.Name;
+				User = db.Users.FirstOrDefault( c => c.UserName == name ) as FFFUser;
+			}
 			if ( User != null )
 			{
 				var connection = User.Connections.FirstOrDefault( c => c.ConnectionID == Context.ConnectionId );
@@ -29,7 +31,15 @@ namespace FFF.Hubs
 			}
 			else
 			{
-				Clients.Caller.showErrorMessage( "We could not find your user account." );
+				var Account = new Account();
+				Account.ShoppingCart = new ShoppingCart();
+				Account.User = new FFFUser();
+				( Account.User as FFFUser ).Connections.Add( new Connection
+				{
+					ConnectionID = Context.ConnectionId,
+					UserAgent = Context.Request.Headers["User-Agent"],
+					Connected = true
+				} );
 			}
 			db.SaveChanges();
 			return base.OnConnected();
@@ -37,7 +47,24 @@ namespace FFF.Hubs
 		public override Task OnDisconnected()
 		{
 			var connection = db.Connections.FirstOrDefault( c => c.ConnectionID == Context.ConnectionId );
-			db.Connections.Remove(connection);
+			if(Context.User != null)
+			{
+				var name = Context.User.Identity.Name;
+				var User = db.Users.FirstOrDefault( c => c.UserName == name ) as FFFUser;
+
+			}
+			else if( connection.User.UserName == null )
+			{
+				foreach(var product in connection.User.Account.ShoppingCart.Products)
+				{
+					db.Products.Remove( product );
+				}
+				db.ShoppingCarts.Remove( connection.User.Account.ShoppingCart );
+				db.Accounts.Remove( connection.User.Account );
+				db.Users.Remove( connection.User );
+				db.SaveChanges();
+			}
+			connection.Connected = false;
 			db.SaveChanges();
 			return base.OnDisconnected();
 		}

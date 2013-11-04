@@ -15,7 +15,6 @@ namespace FFF.Models
 		public virtual Account Account { get; set; }
 		public virtual ICollection<Product> Products { get; set; }
 		public virtual Address DeliveryAddress { get; set; }
-		public virtual PaymentMethod PaymentMethod { get; set; }
 		public virtual Decimal Subtotal
 		{
 			get

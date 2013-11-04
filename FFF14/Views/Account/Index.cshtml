@@ -1,13 +1,12 @@
 @{
 	ViewBag.Title = "My Account";
-	ViewBag.Glyphicon = "user";
 }
 <div class="row">
 	<div class="col-md-3">
 		<div class="bs-sidebar hidden-print affix" role="complementary" id="sidenav">
 			<h1 class="hidden-xs">
 				<img src="@Url.Content("~/Content/Images/ajax-loader.gif")" class="updating" id="Updating" width="36px" height="36px" style="display:none" />
-				<span class="glyphicon glyphicon-@ViewBag.Glyphicon updated" id="Updated"></span>
+				<span class="glyphicon glyphicon-user updated" id="Updated"></span>
 				@ViewBag.Title
 			</h1>
 			@{ Html.RenderPartial( "_Sidebar" ); }
