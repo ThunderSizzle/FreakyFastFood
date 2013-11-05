@@ -2,6 +2,7 @@
 using Microsoft.AspNet.SignalR;
 using System.Threading.Tasks;
 using System.Linq;
+using System;
 
 namespace FFF.Hubs
 {
@@ -33,13 +34,14 @@ namespace FFF.Hubs
 			{
 				var Account = new Account();
 				Account.ShoppingCart = new ShoppingCart();
-				Account.User = new FFFUser();
+				Account.User = new FFFUser( Guid.NewGuid().ToString() );
 				( Account.User as FFFUser ).Connections.Add( new Connection
 				{
 					ConnectionID = Context.ConnectionId,
 					UserAgent = Context.Request.Headers["User-Agent"],
 					Connected = true
 				} );
+				db.Accounts.Add(Account);
 			}
 			db.SaveChanges();
 			return base.OnConnected();

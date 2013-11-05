@@ -7,6 +7,7 @@ using System.Web.Mvc;
 namespace FFF.Controllers
 {
 	[AllowAnonymous]
+	[RequireHttps]
     public class StoreController : Controller
     {
         //

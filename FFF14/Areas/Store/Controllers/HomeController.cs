@@ -9,7 +9,7 @@ namespace FFF.Areas.Store.Controllers
 {
 	[RequireHttps]
 	[AllowAnonymous]
-	public class HomeController : FFF.Controllers.MainController
+	public class HomeController : Controller
 	{
 		public ActionResult Index()
 		{

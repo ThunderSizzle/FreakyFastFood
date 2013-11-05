@@ -1,15 +1,8 @@
 ﻿@using Microsoft.Owin.Security
-@model ICollection<AuthenticationDescription>
 
-@if (Model.Count == 0)
-{
-    <div class="message-info">
-        <p>There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=252166">this article</a>
-        for details on setting up this ASP.NET application to support logging in via external services.</p>
-    </div>
-}
-else
-{	
+@{	
+	var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+
 	String returnUrl;
 	if(!(ViewBag.ReturnUrl as String).IsEmpty())
 	{
@@ -21,9 +14,8 @@ else
 	}
 	using ( Html.BeginForm( "ExternalLogin", "User",  new { area="", ReturnUrl = returnUrl }, FormMethod.Post ) )
 	{
-		//ViewBag.ReturnUrls
 		@Html.AntiForgeryToken()
-		foreach ( AuthenticationDescription p in Model )
+		foreach ( AuthenticationDescription p in loginProviders )
 		{
 			<button type="submit" class="btn btn-block btn-@p.AuthenticationType.ToLower()" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">Connect With @p.AuthenticationType</button>
 		}

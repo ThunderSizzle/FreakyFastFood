@@ -25,8 +25,51 @@ namespace FFF.Controllers
 	/// </summary>
     [Authorize]
 	[RequireHttps]
-    public class UserController : MainController
+    public class UserController : Controller
     {
+		protected DatabaseContext db;
+		protected Account Account;
+		protected AuthenticationIdentityManager IdentityManager;
+		protected Microsoft.Owin.Security.IAuthenticationManager AuthenticationManager { get { return HttpContext.GetOwinContext().Authentication; } }
+
+		public UserController() 
+        {
+			db = new DatabaseContext();
+			IdentityManager = new AuthenticationIdentityManager(new IdentityStore(db));
+        }
+		protected override void Initialize( System.Web.Routing.RequestContext requestContext )
+		{
+			var name = requestContext.HttpContext.User.Identity.Name;
+			this.Account = db.Accounts.FirstOrDefault( c => c.User.UserName == name );
+			if ( this.Account != null )
+			{
+				if ( requestContext.HttpContext.Session["Account"] != null )
+				{
+					Account account = requestContext.HttpContext.Session["Account"] as Account;
+					requestContext.HttpContext.Session["Account"] = null;
+
+					foreach ( var product in account.ShoppingCart.Products )
+					{
+						product.Item = db.Items.Find( product.Item.RID );
+						product.ShoppingCart = this.Account.ShoppingCart;
+						db.SaveChanges();
+						db.Products.Add( product );
+						db.SaveChanges();
+					}
+				}
+			}
+			else if ( requestContext.HttpContext.Session["Account"] == null )
+			{
+				this.Account = new Account();
+				this.Account.ShoppingCart = new ShoppingCart();
+				requestContext.HttpContext.Session["Account"] = this.Account;
+			}
+			else
+			{
+				this.Account = requestContext.HttpContext.Session["Account"] as Account;
+			}
+			base.Initialize( requestContext );
+		}
 		#region Logging System
 			protected override void HandleUnknownAction( string actionName )
 			{
@@ -248,7 +291,7 @@ namespace FFF.Controllers
 
 			[AllowAnonymous]
 			//[ChildActionOnly]
-			public PartialViewResult ExternalLoginsList( string returnUrl )
+			public async Task<PartialViewResult> ExternalLoginsList( string returnUrl )
 			{
 				ViewBag.ReturnUrl = returnUrl;
 				return PartialView("_ExternalLoginsListPartial", new List<AuthenticationDescription>(AuthenticationManager.GetExternalAuthenticationTypes()));
@@ -270,6 +313,7 @@ namespace FFF.Controllers
 					IdentityManager.Dispose();
 					IdentityManager = null;
 				}
+				db.Dispose();
 				base.Dispose(disposing);
 			}
 		#endregion
@@ -309,7 +353,6 @@ namespace FFF.Controllers
 				SetPasswordSuccess,
 				RemoveLoginSuccess,
 			}
-        
 		#endregion
     }
 }

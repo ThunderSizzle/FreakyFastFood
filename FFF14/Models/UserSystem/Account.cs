@@ -30,6 +30,7 @@ namespace FFF.Models
         public Account()
 			: base()
 		{
+			this.Birthday = DateTime.Now;
 			this.ReviewsBy = new Collection<Review>();
 			this.PaymentMethods = new Collection<PaymentMethod>();
 			this.Orders = new Collection<Order>();

@@ -1,9 +1,0 @@
-@model FFF.Models.UserSystem.Account
-@{
-	Html.RenderPartial( "_OrdersWrapper", @Model.Orders );
-	Html.RenderPartial( "_ProfileWrapper", @Model );
-	Html.RenderPartial( "_PaymentMethodsWrapper", @Model.PaymentMethods );
-	Html.RenderPartial( "_AddressesWrapper", @Model.Addresses );
-	Html.RenderPartial( "_ReviewsWrapper", @Model.Reviews );
-	Html.RenderPartial( "_SettingsWrapper", @Model );
-}

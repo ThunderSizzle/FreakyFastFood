@@ -263,7 +263,7 @@ var Page = new function()
 					return false;
 				}
 			});
-			addresses.loading = ko.observable('true');
+			addresses.loading = ko.observable(true);
 
 			addresses.hub.client.indexBack = function (addressList)
 			{
@@ -271,7 +271,7 @@ var Page = new function()
 				{
 					addresses.list.push(new AddressViewModel(address.RID, address.Nick, address.Line1, address.Line2, address.City, address.State, address.ZIP));
 				});
-				addresses.loading('false');
+				addresses.loading(false);
 				console.log(addresses.list());
 			}
 			addresses.hub.client.postback = function (address)
@@ -423,10 +423,13 @@ var Page = new function()
 			}
 			shoppingCart.hub.client.indexBack = function(ShoppingCart)
 			{
-				shoppingCart.address = ko.utils.arrayFirst(Page.Account.Addresses.list(), function (address)
+				if (Page.Account.Addresses.list().length > 0)
 				{
-					return ShoppingCart.DeliveryAddressRID == address.RID;
-				});
+					shoppingCart.address(ko.utils.arrayFirst(Page.Account.Addresses.list(), function (address)
+					{
+						return ShoppingCart.DeliveryAddressRID == address.RID;
+					}));
+				}
 				$.map(ShoppingCart.Products, function (product)
 				{
 				 	shoppingCart.products.push(new ProductViewModel());

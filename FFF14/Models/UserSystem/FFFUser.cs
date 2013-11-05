@@ -20,9 +20,9 @@ namespace FFF.Models
 			this.Connections = new Collection<Connection>();
 		}
 		public FFFUser ( String UserName )
-			: this()
+			: base( UserName )
 		{
-			this.UserName = UserName;
+			this.Connections = new Collection<Connection>();
 		}
 	}
 }

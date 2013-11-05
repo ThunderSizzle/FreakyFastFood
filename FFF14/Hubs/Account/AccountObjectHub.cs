@@ -37,13 +37,21 @@ namespace FFF.Hubs
 		protected async Task<Account> Account()
 		{			
 			var name = Context.User.Identity.Name;
-			if(name != null)
+			if(!String.IsNullOrEmpty(name))
 			{
 				return await db.Accounts.FirstAsync( c => c.User.UserName == name );
 			}
 			else
 			{
-				return (await db.Connections.FindAsync(Context.ConnectionId)).User.Account;
+				try
+				{ 
+					return (await db.Connections.FirstOrDefaultAsync( c => c.ConnectionID == Context.ConnectionId)).User.Account;
+				}
+				catch( Exception e)
+				{
+					Console.Write(e);
+					return null;
+				}
 			}
 		}
 	}

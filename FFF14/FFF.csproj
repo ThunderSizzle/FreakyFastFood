@@ -219,8 +219,6 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Areas\Store\Controllers\ItemController.cs" />
     <Compile Include="Areas\Store\Controllers\ProductController.cs" />
-    <Compile Include="Controllers\MainController.cs" />
-    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Areas\Store\Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

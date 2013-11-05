@@ -160,5 +160,5 @@ C:\Users\James\Documents\Visual Studio 2013\Projects\FreakyFastFood\FFF14\bin\Mi
 C:\Users\James\Documents\Visual Studio 2013\Projects\FreakyFastFood\FFF14\bin\System.Net.Http.Formatting.xml
 C:\Users\James\Documents\Visual Studio 2013\Projects\FreakyFastFood\FFF14\bin\System.Web.Http.xml
 C:\Users\James\Documents\Visual Studio 2013\Projects\FreakyFastFood\FFF14\bin\System.Web.Http.WebHost.xml
-C:\Users\James\Documents\Visual Studio 2013\Projects\FreakyFastFood\FFF14\obj\Release\FFF.csprojResolveAssemblyReference.cache
 C:\Users\James\Documents\Visual Studio 2013\Projects\FreakyFastFood\FFF14\obj\Release\FFF.Migrations.UpdatingStoreForKnockOut.resources
+C:\Users\James\Documents\Visual Studio 2013\Projects\FreakyFastFood\FFF14\obj\Release\FFF.csprojResolveAssemblyReference.cache
