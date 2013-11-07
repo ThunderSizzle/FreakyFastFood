@@ -1,15 +1,11 @@
 ﻿using FFF.Models;
 using FFF.ViewModels;
-using FFF.ViewModels.Profile;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
@@ -287,14 +283,6 @@ namespace FFF.Controllers
 			public ActionResult ExternalLoginFailure()
 			{
 				return View();
-			}
-
-			[AllowAnonymous]
-			//[ChildActionOnly]
-			public async Task<PartialViewResult> ExternalLoginsList( string returnUrl )
-			{
-				ViewBag.ReturnUrl = returnUrl;
-				return PartialView("_ExternalLoginsListPartial", new List<AuthenticationDescription>(AuthenticationManager.GetExternalAuthenticationTypes()));
 			}
 
 			[ChildActionOnly]

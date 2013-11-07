@@ -575,6 +575,7 @@
     <Folder Include="Areas\Employee\Views\Shared\" />
     <Folder Include="Areas\Representative\Views\Shared\" />
     <Folder Include="Content\Images\Store\" />
+    <Folder Include="Scripts\demo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
